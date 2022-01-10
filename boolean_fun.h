@@ -16,8 +16,8 @@ class BooleanFun {
     // For example,
     // "0": the all-0 Boolean function
     // "1": the all-1 Boolean function
-    // "x1*x2+1": x1*x2+1
-    // "x1*x2+x4*x5": x1*x2+x4*x5
+    // "x1x2+1": x1*x2+1
+    // "x1x2+x4x5": x1*x2+x4*x5
     // We do not support parenthesis "()" for now.
     BooleanFun(int n, std::string anf_str);
 
