@@ -16,8 +16,8 @@ class BooleanFun {
     // For example,
     // "0": the all-0 Boolean function
     // "1": the all-1 Boolean function
-    // "x1x2+1": x1*x2+1
-    // "x1x2+x4x5": x1*x2+x4*x5
+    // "x1*x2+1": x1*x2+1
+    // "x1*x2+x4*x5": x1*x2+x4*x5
     // We do not support parenthesis "()" for now.
     BooleanFun(int n, std::string anf_str);
 
@@ -27,6 +27,16 @@ class BooleanFun {
     // Evaluate boolean function at a given point.
     // We must have num = n; otherwise returns -1.
     int value(int num, ...);
+
+    // Returns the algebraic normal form as a string. E.g.,
+    //   "0"
+    //   "1"
+    //   "x2+x1+x1x2"
+    // The terms are ordered by the lexicographical order (d(x)).
+    std::string get_anf();
+
+    // Returns the algebraic degree.
+    int get_degree();
 
   private:
     // number of variables
@@ -44,10 +54,28 @@ class BooleanFun {
     // Compute truth table from anf.
     void anf_to_truth_table();
 
+    // Compute anf from truth table.
+    void truth_table_to_anf();
+
     // Returns the decimal representation of the given term.
     // Example terms: "x1x2x3", "x3x11".
     // Each term is of the form x^a = x1^{a1}x2^{a2}...xn^{an},
     // where a is in {0,1}^n
     // Returns the decimal value of the binary number (a1, a2, ..., an).
     int get_term(std::string term);
+
+    // The inverse of the above function.
+    // Given the decimal value of the binary number (a1, a2, ..., an),
+    // returns the term x^a = prod_{i: a_i=1} xi.
+    std::string compose_term(int dec);
+
+    // Computes the mobius inversion of source[2^n], and writes
+    // the result into dest[2^n].
+    // dest[x] = sum_{y <= x bitwise} source[y]
+    // The summation is over GF(2).
+    void mobius_inversion(int* dest, int* source);
+
+    // Returns the base-2 weight of an integer， i.e., returns the
+    // number of one's in its binary representation.
+    int weight(int x);
 };
