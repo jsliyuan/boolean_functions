@@ -47,20 +47,56 @@ BooleanFun::BooleanFun(int n, string anf_str)
   anf_to_truth_table();
 }
 
-// Compute truth table from algebraic normal form.
-void BooleanFun::anf_to_truth_table()
-{
+// Returns the algebraic normal form of the Boolean function.
+std::string BooleanFun::get_anf() {
+  std::string result = "";
+  for (int i = 0; i < (1<<n); i ++) {
+    if (anf[i] == 1) {
+      if (result.size() > 0) {
+        result += "+";
+      }
+      result += compose_term(i);
+    }
+  }
+  if (result.size() == 0) {
+    result = "0";
+  }
+
+  return result;
+}
+
+// Computes the mobius inversion of source[2^n], and writes
+// the result into dest[2^n].
+// dest[x] = XOR_{y <= x bitwise} source[y]
+void BooleanFun::mobius_inversion(int* dest, int* source) {
+  // Initialize
+  for (int i = 0; i < (1<<n); i ++) {
+    dest[i] = 0;
+  }
+
   for (int j = 0; j < (1<<n); j ++) {
-    if (anf[j] == 0)
+    if (source[j] == 0)
       continue;
 
     for (int i = 0; i < (1<<n); i ++) {
       // if j <= i bitwise, i.e., j | i = i
       if ((j | i) == i) {
-        truth_table[i] = (truth_table[i] + anf[j]) % 2;
+        dest[i] = (dest[i] + source[j]) % 2;
       }
     }
   }
+}
+
+// Compute truth table from algebraic normal form.
+void BooleanFun::anf_to_truth_table()
+{
+  this->mobius_inversion(truth_table, anf);
+}
+
+// Compute algebraic normal form from truth table.
+void BooleanFun::truth_table_to_anf()
+{
+  this->mobius_inversion(anf, truth_table);
 }
 
 // Returns the decimal representation of the given term.
@@ -92,6 +128,33 @@ int BooleanFun::get_term(std::string term) {
   return result;
 }
 
+// The inverse of get_term()
+std::string BooleanFun::compose_term(int dec) {
+  if (dec == 0) {
+    return "1";
+  }
+
+  string term;
+  for (int i = n; i >= 1; i --) {
+    if (dec % 2 == 1) {
+      term = "x" + std::to_string(i) + term;
+    }
+    dec = dec / 2;
+  }
+  return term;
+}
+
+// Returns the algebraic degree.
+int BooleanFun::get_degree() {
+  int deg = 0;
+  for (int i = 0; i < (1<<n); i ++) {
+    if (anf[i] == 1 && weight(i) > deg) {
+      deg = weight(i);
+    }
+  }
+  return deg;
+}
+
 // BooleanFun destructor
 BooleanFun::~BooleanFun()
 {
@@ -102,6 +165,18 @@ BooleanFun::~BooleanFun()
 // Returns the number of variables.
 int BooleanFun::var_num() {
   return n;
+}
+
+// Returns the base-2 weight of an integer， i.e., returns the
+// number of one's in its binary representation.
+int BooleanFun::weight(int x) {
+  int sum = 0;
+  while (x > 0) {
+    sum += x % 2;
+    x = x/2;
+  }
+
+  return sum;
 }
 
 // Evaluate the Boolean function at a given point.
