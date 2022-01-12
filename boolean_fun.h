@@ -16,9 +16,10 @@ class BooleanFun {
     // For example,
     // "0": the all-0 Boolean function
     // "1": the all-1 Boolean function
-    // "x1*x2+1": x1*x2+1
-    // "x1*x2+x4*x5": x1*x2+x4*x5
+    // "x1x2+1": x1*x2+1
+    // "x1x2+x4x5": x1*x2+x4*x5
     // We do not support parenthesis "()" for now.
+    // Do not include extra spaces.
     BooleanFun(int n, std::string anf_str);
 
     // Destructor
@@ -65,7 +66,7 @@ class BooleanFun {
 
     // truth table of this Boolean function, of length 2^n
     // value of f(x_1, x_2, ..., x_n) is truth_table[d(x)],
-    // where d(x) := x_1+x_2*2+...+x_n*2^{n-1}.
+    // where d(x) := x_1*2^{n-1}+x_2*2^{n-2}+...+x_n.
     int* truth_table;
 
     // algebraic normal form
