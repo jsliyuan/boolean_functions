@@ -56,13 +56,13 @@ class AffineTrans {
     // bool compose_last(const AffineTrans& T);
 
   private:
-  	// dimension
-  	int n;
+    // dimension
+    int n;
 
-  	// n*n matrix
-  	// (i, j) maps to (i-1)*n+(j-1), where i, j in [1,n]
-  	int* A;
+    // n*n matrix
+    // (i, j) maps to (i-1)*n+(j-1), where i, j in [1,n]
+    int* A;
 
-  	// n*1 array
-  	int* b;
+    // n*1 array
+    int* b;
 };
