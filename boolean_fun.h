@@ -4,7 +4,7 @@
 class BooleanFun {
   public:
     // Returns the number of variables.
-    int var_num();
+    int var_num() const;
 
     // Constructor with parameter (number of variables)
     // Create an all-zero Boolean function in n variables.
@@ -24,19 +24,27 @@ class BooleanFun {
     // Destructor
     ~BooleanFun();
 
-    // Evaluate boolean function at a given point.
+    // Evaluate boolean function at a given point by giving {0,1}^n.
     // We must have num = n; otherwise returns -1.
-    int value(int num, ...);
+    int value(int num, ...) const;
+
+    // Evaluate boolean function at a given point, where d
+    // is the decimal representation of a vector x in {0,1}^n.
+    // d in [0, 2^n-1], otherwise returns -1.
+    int value_dec(int d) const;
 
     // Returns the algebraic normal form as a string. E.g.,
     //   "0"
     //   "1"
     //   "x2+x1+x1x2"
     // The terms are ordered by the lexicographical order (d(x)).
-    std::string get_anf();
+    std::string get_anf() const;
 
     // Returns the algebraic degree.
-    int get_degree();
+    int get_degree() const;
+
+    // Compares if this Boolean function is equal to f.
+    bool is_equal(const BooleanFun& f) const;
 
   private:
     // number of variables
@@ -62,12 +70,12 @@ class BooleanFun {
     // Each term is of the form x^a = x1^{a1}x2^{a2}...xn^{an},
     // where a is in {0,1}^n
     // Returns the decimal value of the binary number (a1, a2, ..., an).
-    int get_term(std::string term);
+    int get_term(std::string term) const;
 
     // The inverse of the above function.
     // Given the decimal value of the binary number (a1, a2, ..., an),
     // returns the term x^a = prod_{i: a_i=1} xi.
-    std::string compose_term(int dec);
+    std::string compose_term(int dec) const;
 
     // Computes the mobius inversion of source[2^n], and writes
     // the result into dest[2^n].
@@ -77,5 +85,5 @@ class BooleanFun {
 
     // Returns the base-2 weight of an integer， i.e., returns the
     // number of one's in its binary representation.
-    int weight(int x);
+    int weight(int x) const;
 };
