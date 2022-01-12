@@ -48,7 +48,7 @@ BooleanFun::BooleanFun(int n, string anf_str)
 }
 
 // Returns the algebraic normal form of the Boolean function.
-std::string BooleanFun::get_anf() {
+std::string BooleanFun::get_anf() const {
   std::string result = "";
   for (int i = 0; i < (1<<n); i ++) {
     if (anf[i] == 1) {
@@ -100,7 +100,7 @@ void BooleanFun::truth_table_to_anf()
 }
 
 // Returns the decimal representation of the given term.
-int BooleanFun::get_term(std::string term) {
+int BooleanFun::get_term(std::string term) const {
   int binary[n];
   for (int i = 0; i < n; i ++)
     binary[i] = 0;
@@ -129,7 +129,7 @@ int BooleanFun::get_term(std::string term) {
 }
 
 // The inverse of get_term()
-std::string BooleanFun::compose_term(int dec) {
+std::string BooleanFun::compose_term(int dec) const {
   if (dec == 0) {
     return "1";
   }
@@ -145,7 +145,7 @@ std::string BooleanFun::compose_term(int dec) {
 }
 
 // Returns the algebraic degree.
-int BooleanFun::get_degree() {
+int BooleanFun::get_degree() const {
   int deg = 0;
   for (int i = 0; i < (1<<n); i ++) {
     if (anf[i] == 1 && weight(i) > deg) {
@@ -163,13 +163,13 @@ BooleanFun::~BooleanFun()
 }
 
 // Returns the number of variables.
-int BooleanFun::var_num() {
+int BooleanFun::var_num() const {
   return n;
 }
 
 // Returns the base-2 weight of an integer， i.e., returns the
 // number of one's in its binary representation.
-int BooleanFun::weight(int x) {
+int BooleanFun::weight(int x) const {
   int sum = 0;
   while (x > 0) {
     sum += x % 2;
@@ -180,7 +180,7 @@ int BooleanFun::weight(int x) {
 }
 
 // Evaluate the Boolean function at a given point.
-int BooleanFun::value(int num, ...) {
+int BooleanFun::value(int num, ...) const {
   if (num != n) {
     return -1;
   }
@@ -193,4 +193,28 @@ int BooleanFun::value(int num, ...) {
   }
   va_end(valist);
   return truth_table[dec];
+}
+
+// Evaluate the Boolean function at a given point,
+// given the decimal representation of a point.
+int BooleanFun::value_dec(int d) const {
+  if (d < 0 || d >= (1<<n)) {
+    return -1;
+  }
+
+  return truth_table[d];
+}
+
+// Checks if this Boolean function equals f.
+bool BooleanFun::is_equal(const BooleanFun& f) const {
+  if (f.var_num() != n) {
+    return false;
+  }
+
+  for (int i = 0; i < (1<<f.var_num()); i ++) {
+    if (f.value_dec(i) != truth_table[i]) {
+      return false;
+    }
+  }
+  return true;
 }
