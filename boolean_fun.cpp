@@ -218,3 +218,45 @@ bool BooleanFun::is_equal(const BooleanFun& f) const {
   }
   return true;
 }
+
+// Let this = 1 + this (over GF(2)). That is,
+// take the negation.
+void BooleanFun::negate() {
+  for (int i = 0; i < (1<<n); i ++) {
+    this->truth_table[i] = (this->truth_table[i] + 1) % 2;
+  }
+
+  this->anf[0] = (1 + this->anf[0]) % 2;
+}
+
+// Let this = this + f (over GF(2)).
+// Returns false if #vars(f) != n.
+bool BooleanFun::add(const BooleanFun& f) {
+  if (n != f.var_num()) {
+    return false;
+  }
+
+  for (int i = 0; i < (1<<n); i ++) {
+    this->truth_table[i] = (this->truth_table[i] + f.value_dec(i)) % 2;
+  }
+
+  this->truth_table_to_anf();
+
+  return true;
+}
+
+// Let this = this * f (over GF(2)).
+// Returns false if #vars(f) != n.
+bool BooleanFun::mult(const BooleanFun& f) {
+  if (n != f.var_num()) {
+    return false;
+  }
+
+  for (int i = 0; i < (1<<n); i ++) {
+    this->truth_table[i] = this->truth_table[i] * f.value_dec(i);
+  }
+
+  this->truth_table_to_anf();
+
+  return true;
+}
