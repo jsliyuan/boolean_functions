@@ -22,6 +22,16 @@ BooleanFun::BooleanFun(int n, string anf_str)
   truth_table = new int[1<<n];
   anf = new int[1<<n];
 
+  // Filter anf_str, igonring extrac spaces etc.
+  string str;
+  const string VALID_ANF_CHARS = "0123456789x+()";
+  for (int i = 0; i < anf_str.size(); i ++) {
+    if (VALID_ANF_CHARS.find(anf_str.at(i)) != std::string::npos) {
+      str = str + anf_str.at(i); 
+    }
+  }
+  anf_str = str;
+
   string term;
   // Split anf by '+'; for each term, set the coefficient to +1.
   int i = 0;
@@ -115,6 +125,7 @@ int BooleanFun::get_term(std::string term) const {
       }
       v = 0;
     } else {
+      // Skip chars other than '0' - '9'
       v = v*10 + term.at(i) - '0';
     }
     i ++;
