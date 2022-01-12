@@ -39,7 +39,7 @@ int main() {
   assert(t3_diag.set_b(3,1));
   assert(t3_diag.get_b_str() == "1 1 1");
   for (int i = 0; i < (1<<3); i ++) {
-  	assert(t3_diag.apply(i) == 7 - i);
+    assert(t3_diag.apply(i) == 7 - i);
   }
   cout << "End of test for t3_diag" << endl;
 
@@ -52,12 +52,31 @@ int main() {
   assert(t3_perm.set_b(1,1));
   assert(t3_perm.get_b_str() == "1 0 0");
   for (int i = 0; i < (1<<3); i ++) {
-  	int i3 = i%2;
-  	int i2 = (i/2)%2;
-  	int i1 = (i/4)%2;
-  	assert(t3_perm.apply(i) == (1-i3)*4+i2*2+i1);
+    int i3 = i%2;
+    int i2 = (i/2)%2;
+    int i1 = (i/4)%2;
+    assert(t3_perm.apply(i) == (1-i3)*4+i2*2+i1);
   }
   cout << "End of test for t3_perm" << endl;
+
+  // t4_upp sends (x1, x2, x3, x4) to (x1+x2+x3+x4, x2+x3+x4, x3+x4, x4)
+  AffineTrans t4_upp(4);
+  for (int i = 1; i <= t4_upp.get_n(); i ++) {
+  	for (int j = i; j <= t4_upp.get_n(); j ++) {
+      assert(t4_upp.set_a(i,j,1));
+    }
+  }
+  for (int i = 0; i < (1<<4); i ++) {
+    int i4 = i%2;
+    int i3 = (i/2)%2;
+    int i2 = (i/4)%2;
+    int i1 = (i/8)%2;
+    int y4 = i4;
+    int y3 = (i3+i4)%2;
+    int y2 = (i2+y3)%2;
+    int y1 = (i1+y2)%2;
+    assert(t4_upp.apply(i) == y1*8+y2*4+y3*2+y4); 
+  }
 
   cout << "Everything looks good. End of all tests." << endl;
 
