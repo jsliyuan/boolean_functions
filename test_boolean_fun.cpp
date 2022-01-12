@@ -70,7 +70,8 @@ int main() {
   assert(g4.get_degree() == 1);
   cout << "End of test for g4." << endl;
 
-  BooleanFun g5(5, "x1x2x3+x4x5");
+  // Check if the extra spaces are filtered.
+  BooleanFun g5(5, "x1x2x3 + x4x5");
   assert(g5.var_num() == 5);
   assert(g5.value(5, 1, 1, 1, 0, 1) == 1);
   assert(g5.value(5, 1, 1, 1, 1, 1) == 0);
