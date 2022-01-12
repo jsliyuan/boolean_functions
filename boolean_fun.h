@@ -46,6 +46,19 @@ class BooleanFun {
     // Compares if this Boolean function is equal to f.
     bool is_equal(const BooleanFun& f) const;
 
+    // Takes the negation of this Boolean function, i.e.,
+    // let this = f + 1 (over GF(2)).
+    // Both truth table and anf are modified.
+    void negate();
+
+    // Let this = this + f (over GF(2)).
+    // Returns false if #vars(f) != n.
+    bool add(const BooleanFun& f);
+
+    // Let this = this * f (over GF(2)).
+    // Returns false if #vars(f) != n.
+    bool mult(const BooleanFun& f);
+
   private:
     // number of variables
     int n;
