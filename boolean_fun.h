@@ -79,9 +79,16 @@ class BooleanFun {
     // Returns the Hamming distance between two Boolean functions.
     // If their #variables do not match, return -1.
     int dist(const BooleanFun& f) const;
+
+    // Returns true if this Boolean function is homogeneous
+    // as a polynomial over GF(2).
+    bool is_homogenous() const;
   private:
     // number of variables
     int n;
+
+    // algebraic degree
+    int degree;
 
     // truth table of this Boolean function, of length 2^n
     // value of f(x_1, x_2, ..., x_n) is truth_table[d(x)],
@@ -119,6 +126,9 @@ class BooleanFun {
     // Returns the base-2 weight of an integer， i.e., returns the
     // number of one's in its binary representation.
     int weight(int x) const;
+
+    // Computes the algebraic degree, and sets this->degree.
+    void compute_degree();
 };
 
 #endif
