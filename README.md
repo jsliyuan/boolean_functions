@@ -6,7 +6,7 @@ The motiviation is to use this library to study the covering radius of Reed Mull
 
 ## How to test
 ### BooleanFun class
-yuanli$ g++ -o test.out test_boolean_fun.cpp boolean_fun.cpp 
+yuanli$ g++ -o test.out test_boolean_fun.cpp boolean_fun.cpp affine_trans.cpp
 
 yuanli$ ./test.out
 
