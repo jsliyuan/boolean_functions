@@ -19,3 +19,8 @@ yuanli$ ./test.out
 yuanli$ g++ -o test.out test_upper_diag_generator.cpp upper_diag_generator.cpp affine_trans.cpp
 
 yuanli$ ./test.out
+
+### example64.cpp
+yuanli$ g++ -o example64.out example64.cpp boolean_fun.cpp affine_trans.cpp upper_diag_generator.cpp
+
+yuanli$ ./example64.out
