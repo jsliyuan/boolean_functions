@@ -1,3 +1,6 @@
+#ifndef AFFINE_TRANS_H
+#define AFFINE_TRANS_H
+
 #include <string>
 
 // Affine transformation Ax + b: GF(2)^n -> GF(2)^n,
@@ -66,3 +69,5 @@ class AffineTrans {
     // n*1 array
     int* b;
 };
+
+#endif
