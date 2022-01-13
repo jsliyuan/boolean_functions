@@ -24,6 +24,7 @@ int main() {
   assert(g.get_anf() == "1");
   assert(g.get_degree() == 0);
   assert(g.is_equal(f) == false);
+  assert(g.dist(f) == -1);
   cout << "End of test for g." << endl;
 
   BooleanFun g2(5, "1+1+0");
@@ -34,6 +35,7 @@ int main() {
   assert(g2.get_degree() == 0);
   assert(g2.is_equal(g) == false);
   assert(g2.is_equal(g2) == true);
+  assert(g2.dist(g) == (1<<5));
   cout << "End of test for g2." << endl;
 
   BooleanFun g3_xor(3, "x1+x2+x3");
@@ -58,6 +60,7 @@ int main() {
   assert(g3_and.value_dec(7) == 1);
   assert(g3_and.get_anf() == "x1x2x3");
   assert(g3_and.get_degree() == 3);
+  assert(g3_and.dist(g3_xor) == 3);
   cout << "End of test for g3_and." << endl;
 
   BooleanFun g4(4, "x1+1");
@@ -138,6 +141,10 @@ int main() {
   // (x1+x2)*(x2+x3)*x3 = x1x2x3 + x1x3
   g3_and3.apply_affine_trans(trans3);
   assert(g3_and3.get_anf() == "x1x3+x1x2x3");
+  assert(g3_and3.set_anf("x1x2x3"));
+  assert(g3_and3.get_anf() == "x1x2x3");
+  assert(g3_and3.value(3, 1, 0, 0) == 0);
+  assert(g3_and3.value(3, 1, 1, 1) == 1);
   cout << "End of test for apply_affine_trans()" << endl;
 
   cout << "Everything looks good. End of all tests." << endl;
