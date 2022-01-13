@@ -271,3 +271,31 @@ bool BooleanFun::mult(const BooleanFun& f) {
 
   return true;
 }
+
+// Apply affine transformation to this Boolean function, i.e.,
+// f = f(T(x)) = f(Ax + b), where T(x) = Ax + b.
+// Returns false if the dimension does not match.
+// Both truth table and anf are updated.
+bool BooleanFun::apply_affine_trans(const AffineTrans& trans) {
+  if (this->n != trans.get_n()) {
+    return false;
+  }
+
+  int* new_tt;
+  new_tt = new int[1<<n];
+  for (int i = 0; i < (1<<n); i ++) {
+    int ti = trans.apply(i);
+    new_tt[i] = this->truth_table[ti];
+  }
+
+  // Copy new_tt to truth_table
+  for (int i = 0; i < (1<<n); i ++) {
+    this->truth_table[i] = new_tt[i];
+  }
+  delete new_tt;
+
+  // Updates ANF
+  this->truth_table_to_anf();
+
+  return true;
+}
