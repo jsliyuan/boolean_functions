@@ -14,6 +14,7 @@ BooleanFun::BooleanFun(int n)
     truth_table[i] = 0;
     anf[i] = 0;
   }
+  degree = 0;
 }
 
 // Constructor with parameters, where n is the number
@@ -34,6 +35,7 @@ BooleanFun::BooleanFun(int n, string anf_str)
 
   // Compute truth_table using anf
   anf_to_truth_table();
+  compute_degree();
 }
 
 // Returns the algebraic normal form of the Boolean function.
@@ -96,6 +98,7 @@ bool BooleanFun::set_anf(std::string anf_str) {
 
   // Compute truth_table using anf
   anf_to_truth_table();
+  compute_degree();
 
   return true;
 }
@@ -180,15 +183,20 @@ std::string BooleanFun::compose_term(int dec) const {
   return term;
 }
 
-// Returns the algebraic degree.
-int BooleanFun::get_degree() const {
+// Computes this->degree.
+void BooleanFun::compute_degree() {
   int deg = 0;
   for (int i = 0; i < (1<<n); i ++) {
     if (anf[i] == 1 && weight(i) > deg) {
       deg = weight(i);
     }
   }
-  return deg;
+  this->degree = deg;
+}
+
+// Returns the algebraic degree.
+int BooleanFun::get_degree() const {
+  return this->degree;
 }
 
 // BooleanFun destructor
@@ -277,6 +285,7 @@ bool BooleanFun::add(const BooleanFun& f) {
   }
 
   this->truth_table_to_anf();
+  this->compute_degree();
 
   return true;
 }
@@ -293,6 +302,7 @@ bool BooleanFun::mult(const BooleanFun& f) {
   }
 
   this->truth_table_to_anf();
+  this->compute_degree();
 
   return true;
 }
@@ -339,4 +349,23 @@ int BooleanFun::dist(const BooleanFun& f) const {
     }
   }
   return total;
+}
+
+// Returns true if this Boolean function is homogeneous
+// as a polynomial over GF(2).
+bool BooleanFun::is_homogenous() const {
+  int degree = -1;
+  for (int i = 0; i < (1 << n); i ++) {
+    if (anf[i] == 1) {
+      int d = this->weight(i);
+      if (degree == -1) {
+        degree = d;
+      } else {
+        if (degree != d) {
+          return false;
+        }
+      }
+    }
+  }
+  return true;
 }
