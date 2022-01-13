@@ -354,18 +354,9 @@ int BooleanFun::dist(const BooleanFun& f) const {
 // Returns true if this Boolean function is homogeneous
 // as a polynomial over GF(2).
 bool BooleanFun::is_homogenous() const {
-  int degree = -1;
   for (int i = 0; i < (1 << n); i ++) {
-    if (anf[i] == 1) {
-      int d = this->weight(i);
-      if (degree == -1) {
-        degree = d;
-      } else {
-        if (degree != d) {
-          return false;
-        }
-      }
-    }
+    if (anf[i] == 1 && weight(i) != degree)
+      return false;
   }
   return true;
 }
