@@ -1,3 +1,5 @@
+#include "affine_trans.h"
+
 #include <cstdarg>
 #include <string>
 
@@ -60,6 +62,11 @@ class BooleanFun {
     // Returns false if #vars(f) != n.
     bool mult(const BooleanFun& f);
 
+    // Apply affine transformation to this Boolean function, i.e.,
+    // f = f(T(x)) = f(Ax + b), where T(x) = Ax + b.
+    // Returns false if the dimension does not match.
+    // Both truth table and anf are updated.
+    bool apply_affine_trans(const AffineTrans& trans);
   private:
     // number of variables
     int n;
