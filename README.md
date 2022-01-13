@@ -14,3 +14,8 @@ yuanli$ ./test.out
 yuanli$ g++ -o test.out test_affine_trans.cpp affine_trans.cpp 
 
 yuanli$ ./test.out
+
+### UpperDiagGenerator
+yuanli$ g++ -o test.out test_upper_diag_generator.cpp upper_diag_generator.cpp affine_trans.cpp
+
+yuanli$ ./test.out
