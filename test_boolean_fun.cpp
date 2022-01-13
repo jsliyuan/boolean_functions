@@ -13,6 +13,7 @@ int main() {
   assert(f.value_dec(15) == 0);
   assert(f.get_anf() == "0");
   assert(f.get_degree() == 0);
+  assert(f.is_homogenous() == true);
   cout << "End of test for f." << endl;
 
   BooleanFun g(5, "1");
@@ -25,6 +26,7 @@ int main() {
   assert(g.get_degree() == 0);
   assert(g.is_equal(f) == false);
   assert(g.dist(f) == -1);
+  assert(g.is_homogenous() == true);
   cout << "End of test for g." << endl;
 
   BooleanFun g2(5, "1+1+0");
@@ -48,6 +50,7 @@ int main() {
   assert(g3_xor.value(3, 0, 0, 1) == 1);
   assert(g3_xor.get_anf() == "x3+x2+x1");
   assert(g3_xor.get_degree() == 1);
+  assert(g3_xor.is_homogenous() == true);
   cout << "End of test for g3_xor." << endl;
 
   BooleanFun g3_and(3, "x1x2x3");
@@ -71,6 +74,7 @@ int main() {
   assert(g4.value(4, 0, 1, 1, 1) == 1);
   assert(g4.get_anf() == "1+x1");
   assert(g4.get_degree() == 1);
+  assert(g4.is_homogenous() == false);
   cout << "End of test for g4." << endl;
 
   // Check if the extra spaces are filtered.
@@ -141,8 +145,10 @@ int main() {
   // (x1+x2)*(x2+x3)*x3 = x1x2x3 + x1x3
   g3_and3.apply_affine_trans(trans3);
   assert(g3_and3.get_anf() == "x1x3+x1x2x3");
+  assert(g3_and3.is_homogenous() == false);
   assert(g3_and3.set_anf("x1x2x3"));
   assert(g3_and3.get_anf() == "x1x2x3");
+  assert(g3_and3.is_homogenous() == true);
   assert(g3_and3.value(3, 1, 0, 0) == 0);
   assert(g3_and3.value(3, 1, 1, 1) == 1);
   cout << "End of test for apply_affine_trans()" << endl;
