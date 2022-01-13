@@ -11,9 +11,11 @@ int main() {
   while (1) {
     BooleanFun f64(6, "x1x2x3x6+x1x2x4x5");
     f64.apply_affine_trans(*gen6.get_affine_trans());
-    cout << f64.get_anf() << endl;
-    cout << "degree = " << f64.get_degree() << endl;
-    total = total + 1;
+    if (f64.is_homogenous()) {
+      cout << f64.get_anf() << endl;
+      cout << "degree = " << f64.get_degree() << endl;
+      total = total + 1;
+    }
     if (gen6.next() == false) {
       break;
     }
