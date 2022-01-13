@@ -125,6 +125,21 @@ int main() {
   g3_xor.negate();
   assert(g3_xor.get_anf() == "x3+x2+x1");
 
+  AffineTrans trans3(3);
+  trans3.set_a(1, 1, 1);
+  trans3.set_a(1, 2, 1);
+  trans3.set_a(2, 2, 1);
+  trans3.set_a(2, 3, 1);
+  trans3.set_a(3, 3, 1);
+  g3_xor.apply_affine_trans(trans3);
+  assert(g3_xor.get_anf() == "x1");
+
+  BooleanFun g3_and3(3, "x1x2x3");
+  // (x1+x2)*(x2+x3)*x3 = x1x2x3 + x1x3
+  g3_and3.apply_affine_trans(trans3);
+  assert(g3_and3.get_anf() == "x1x3+x1x2x3");
+  cout << "End of test for apply_affine_trans()" << endl;
+
   cout << "Everything looks good. End of all tests." << endl;
   return 0;
 }
