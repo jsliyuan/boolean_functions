@@ -1,3 +1,6 @@
+#ifndef UPPER_DIAG_GENERATOR_H
+#define UPPER_DIAG_GENERATOR_H
+
 #include "affine_trans.h"
 
 // Generates all affine transformations Ax+b, where
@@ -30,3 +33,5 @@ class UpperDiagGenerator {
     // current affine transformation.
     AffineTrans* current;
 };
+
+#endif
