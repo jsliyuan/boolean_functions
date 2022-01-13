@@ -1,3 +1,6 @@
+#ifndef BOOLEAN_FUN_H
+#define BOOLEAN_FUN_H
+
 #include "affine_trans.h"
 
 #include <cstdarg>
@@ -23,6 +26,11 @@ class BooleanFun {
     // We do not support parenthesis "()" for now.
     // Do not include extra spaces.
     BooleanFun(int n, std::string anf_str);
+
+    // Resets the ANF.
+    // Both truth table and anf are modified.
+    // Returns false if anf_str is invalid.
+    bool set_anf(std::string anf_str);
 
     // Destructor
     ~BooleanFun();
@@ -67,6 +75,10 @@ class BooleanFun {
     // Returns false if the dimension does not match.
     // Both truth table and anf are updated.
     bool apply_affine_trans(const AffineTrans& trans);
+
+    // Returns the Hamming distance between two Boolean functions.
+    // If their #variables do not match, return -1.
+    int dist(const BooleanFun& f) const;
   private:
     // number of variables
     int n;
@@ -108,3 +120,5 @@ class BooleanFun {
     // number of one's in its binary representation.
     int weight(int x) const;
 };
+
+#endif
