@@ -9,6 +9,12 @@ AffineTrans::AffineTrans(int n) {
   this->n = n;
   A = new int[n*n];
   b = new int[n];
+  for (int i = 0; i < n*n; i ++) {
+    A[i] = 0;
+  }
+  for (int i = 0; i < n; i ++) {
+    b[i] = 0;
+  }
 }
 
 // Constructor with parameters n, A and b.
@@ -134,9 +140,3 @@ int AffineTrans::get_b(int i) const {
 int AffineTrans::get_n() const {
   return n;
 }
-
-
-
-
-
-
