@@ -10,6 +10,10 @@ BooleanFun::BooleanFun(int n)
   this->n = n;
   truth_table = new int[1<<n];
   anf = new int[1<<n];
+  for (int i = 0; i < (1<<n); i ++) {
+    truth_table[i] = 0;
+    anf[i] = 0;
+  }
 }
 
 // Constructor with parameters, where n is the number
@@ -21,6 +25,43 @@ BooleanFun::BooleanFun(int n, string anf_str)
   this->n = n;
   truth_table = new int[1<<n];
   anf = new int[1<<n];
+  for (int i = 0; i < (1<<n); i ++) {
+    truth_table[i] = 0;
+    anf[i] = 0;
+  }
+
+  this->set_anf(anf_str);
+
+  // Compute truth_table using anf
+  anf_to_truth_table();
+}
+
+// Returns the algebraic normal form of the Boolean function.
+std::string BooleanFun::get_anf() const {
+  std::string result = "";
+  for (int i = 0; i < (1<<n); i ++) {
+    if (anf[i] == 1) {
+      if (result.size() > 0) {
+        result += "+";
+      }
+      result += compose_term(i);
+    }
+  }
+  if (result.size() == 0) {
+    result = "0";
+  }
+
+  return result;
+}
+
+// Resets the ANF.
+// Both truth table and anf are modified.
+// Returns false if anf_str is invalid.
+bool BooleanFun::set_anf(std::string anf_str) {
+  // Clears the orginal anf.
+  for (int i = 0; i < (1<<n); i ++) {
+    anf[i] = 0;
+  }
 
   // Filter anf_str, igonring extrac spaces etc.
   string str;
@@ -55,24 +96,8 @@ BooleanFun::BooleanFun(int n, string anf_str)
 
   // Compute truth_table using anf
   anf_to_truth_table();
-}
 
-// Returns the algebraic normal form of the Boolean function.
-std::string BooleanFun::get_anf() const {
-  std::string result = "";
-  for (int i = 0; i < (1<<n); i ++) {
-    if (anf[i] == 1) {
-      if (result.size() > 0) {
-        result += "+";
-      }
-      result += compose_term(i);
-    }
-  }
-  if (result.size() == 0) {
-    result = "0";
-  }
-
-  return result;
+  return true;
 }
 
 // Computes the mobius inversion of source[2^n], and writes
@@ -298,4 +323,20 @@ bool BooleanFun::apply_affine_trans(const AffineTrans& trans) {
   this->truth_table_to_anf();
 
   return true;
+}
+
+// Returns the Hamming distance between two Boolean functions.
+// If their #variables do not match, return -1.
+int BooleanFun::dist(const BooleanFun& f) const {
+  if (this->n != f.var_num()) {
+    return -1;
+  }
+
+  int total = 0;
+  for (int i = 0; i < (1<<n); i ++) {
+    if (f.value_dec(i) != truth_table[i]) {
+      total ++;
+    }
+  }
+  return total;
 }
