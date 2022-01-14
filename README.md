@@ -3,6 +3,12 @@ Basic operations on Boolean functions (viewed as GF(2) polynomials)
 
 The motiviation is to use this library to study the covering radius of Reed Muller codes.
 
+## Classes
+BooleanFun: Boolean function class
+
+AffineTrans: affine transformation Ax + b
+
+UpperDiagGenerator: generates all affine transformation Ax one by one, where A is an upper diagonal matrix and the diagonal elements are all 1
 
 ## How to test
 ### BooleanFun class
