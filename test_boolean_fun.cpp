@@ -159,6 +159,12 @@ int main() {
   assert(g5_mixed.value(5, 1, 1, 1, 1, 1) == 1);
   assert(g5_mixed.value(5, 1, 1, 0, 1, 1) == 0);
   assert(g5_mixed.value(5, 1, 0, 0, 0, 0) == 0);
+
+  g5_mixed.set_anf("x1x2x3x4x5+1");
+  g5_mixed.trim_degree_below(1);
+  assert(g5_mixed.get_anf() == "x1x2x3x4x5");
+  g5_mixed.trim_degree_below(6);
+  assert(g5_mixed.get_anf() == "0");
   cout << "End of test for trim_degree_below()" << endl;
 
   cout << "Everything looks good. End of all tests." << endl;
