@@ -307,6 +307,24 @@ bool BooleanFun::mult(const BooleanFun& f) {
   return true;
 }
 
+// Trim all monomials whose degree is less than deg_upper.
+void BooleanFun::trim_degree_below(int deg_upper) {
+  bool modified = false;
+
+  for (int i = 0; i < (1<<n); i ++) {
+    if (this->weight(i) < deg_upper && anf[i] > 0) {
+      anf[i] = 0;
+      modified = true;
+    }
+  }
+  if (modified) {
+    this->anf_to_truth_table();
+    if (deg_upper > this->degree) {
+      this->degree = 0;
+    }
+  }
+}
+
 // Apply affine transformation to this Boolean function, i.e.,
 // f = f(T(x)) = f(Ax + b), where T(x) = Ax + b.
 // Returns false if the dimension does not match.
