@@ -153,6 +153,14 @@ int main() {
   assert(g3_and3.value(3, 1, 1, 1) == 1);
   cout << "End of test for apply_affine_trans()" << endl;
 
+  BooleanFun g5_mixed(5, "x1x2x3x4x5+x1x2x4x5+x3x4+x5+x1");
+  g5_mixed.trim_degree_below(5);
+  assert(g5_mixed.get_anf() == "x1x2x3x4x5");
+  assert(g5_mixed.value(5, 1, 1, 1, 1, 1) == 1);
+  assert(g5_mixed.value(5, 1, 1, 0, 1, 1) == 0);
+  assert(g5_mixed.value(5, 1, 0, 0, 0, 0) == 0);
+  cout << "End of test for trim_degree_below()" << endl;
+
   cout << "Everything looks good. End of all tests." << endl;
   return 0;
 }
