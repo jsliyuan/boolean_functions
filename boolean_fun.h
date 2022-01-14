@@ -76,6 +76,10 @@ class BooleanFun {
     // Both truth table and anf are updated.
     bool apply_affine_trans(const AffineTrans& trans);
 
+    // Trim all monomials whose degree is less than deg_upper.
+    // Both truth table and anf are updated.
+    void trim_degree_below(int deg_upper);
+
     // Returns the Hamming distance between two Boolean functions.
     // If their #variables do not match, return -1.
     int dist(const BooleanFun& f) const;
