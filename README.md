@@ -26,6 +26,11 @@ yuanli$ g++ -o test.out test_upper_diag_generator.cpp upper_diag_generator.cpp a
 
 yuanli$ ./test.out
 
+### NonsingularGenerator
+yuanli$ g++ -o test.out test_nonsingular_generator.cpp nonsingular_generator.cpp affine_trans.cpp
+
+yuanli$ ./test.out
+
 ### example64.cpp
 yuanli$ g++ -o example64.out example64.cpp boolean_fun.cpp affine_trans.cpp upper_diag_generator.cpp
 
