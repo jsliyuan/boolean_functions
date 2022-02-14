@@ -1,6 +1,7 @@
 #include "affine_trans.h"
 
 #include <iostream>
+#include <unordered_set>
 
 using namespace std;
 
@@ -49,6 +50,11 @@ int main() {
   assert(t3_perm.set_a(2,2,1));
   assert(t3_perm.set_a(3,1,1));
   assert(t3_perm.get_a_str() == "0 0 1\n0 1 0\n1 0 0");
+  assert(t3_perm.get_a_row(0) == -1);
+  assert(t3_perm.get_a_row(1) == 4);
+  assert(t3_perm.get_a_row(2) == 2);
+  assert(t3_perm.get_a_row(3) == 1);
+  assert(t3_perm.get_a_row(4) == -1);
   assert(t3_perm.set_b(1,1));
   assert(t3_perm.get_b_str() == "1 0 0");
   for (int i = 0; i < (1<<3); i ++) {
@@ -77,6 +83,43 @@ int main() {
     int y1 = (i1+y2)%2;
     assert(t4_upp.apply(i) == y1*8+y2*4+y3*2+y4); 
   }
+  cout << "End of test for t4_upp" << endl;
+
+  AffineTrans t4_identity(4);
+  assert(t4_identity.set_row_a(1, 1));
+  assert(t4_identity.set_row_a(2, 2));
+  assert(t4_identity.set_row_a(3, 4));
+  assert(t4_identity.set_row_a(4, 8));
+  assert(t4_identity.set_row_a(4, 16) == false);
+  assert(t4_identity.set_row_a(4, -1) == false);
+  assert(t4_identity.set_row_a(0, 1) == false);
+  assert(t4_identity.set_row_a(5, 1) == false);
+  assert(t4_identity.get_a_str() == "1 0 0 0\n0 1 0 0\n0 0 1 0\n0 0 0 1");
+  cout << "End of test for t4_identity" << endl;
+
+
+  AffineTrans t3_identity(3);
+  assert(t3_identity.set_row_a(1, 7));
+  assert(t3_identity.set_row_a(2, 2));
+  assert(t3_identity.set_row_a(3, 4));
+  assert(t3_identity.get_a_str() == "1 1 1\n0 1 0\n0 0 1");
+  unordered_set<int> span = t3_identity.get_rows_span(1, 3);
+  assert(span.size() == 8);
+  for (int i = 0; i < 8; i ++) {
+    assert(span.find(i) != span.end());
+  }
+
+  assert(t3_identity.set_row_a(2, 7));
+  span = t3_identity.get_rows_span(1, 3);
+  assert(span.size() == 4);
+  assert(span.find(0) != span.end());
+  assert(span.find(4) != span.end());
+  assert(span.find(7) != span.end());
+  assert(span.find(3) != span.end());
+
+  span = t3_identity.get_rows_span(3, 1);
+  assert(span.size() == 1);
+  assert(span.find(0) != span.end());
 
   cout << "Everything looks good. End of all tests." << endl;
 

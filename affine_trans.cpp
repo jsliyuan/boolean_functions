@@ -108,6 +108,25 @@ bool AffineTrans::set_a(int i, int j, int v) {
   return true;
 }
 
+// Set the entire row i, where v is the decimial representation
+// of (A[i][n], A[i][n-1], ..., A[i][1])_2.
+// If i or v is out of range, returns false.
+bool AffineTrans::set_row_a(int i, int v) {
+  if (i < 1 || i > n || v < 0 || v >= (1<<n)) {
+    return false;
+  }
+
+  // Caculate the index of [i][1].
+  int idx = (i-1)*n + 0;
+  for (int k = 1; k <=n; k ++) {
+    A[idx] = v % 2;
+    v = v / 2;
+    idx = idx + 1;
+  }
+
+  return true;
+}
+
 // Let b[i] = v, where 1 <= i <= n.
 // If i is out of range, returns false.
 bool AffineTrans::set_b(int i, int v) {
@@ -125,6 +144,46 @@ int AffineTrans::get_a(int i, int j) const {
   	return -1;
   }
   return A[(i-1)*n + j-1];
+}
+
+// Gets A[i][1], A[i][2], ..., A[i][n] as an integer
+// A[i][1] + A[i][2]*2 + ... + A[i][n]*2^{n-1}
+// in range [0, 2^n-1].
+// Returns -1 if i is not in [1, n].
+int AffineTrans::get_a_row(int i) const {
+  if (i < 1 || i > n) {
+    return -1;
+  }
+  // Get the index of A[i][n]
+  int idx = (i-1)*n + n-1;
+  int sum = 0;
+  for (int k = 1; k <= n; k ++) {
+    sum = sum*2 + A[idx];
+    idx = idx-1;
+  }
+
+  return sum;
+}
+
+std::unordered_set<int> AffineTrans::get_rows_span(int i, int j) const {
+  if (i < 1) {
+    i = 1;
+  }
+  if (j > n) {
+    j = n;
+  }
+  std::unordered_set<int> result;
+  result.insert(0);
+  for (int k = i; k <= j; k ++) {
+    std::unordered_set<int> temp = result;
+    int ai = this->get_a_row(k);
+    for (int element : temp) {
+      // insert element + ai (over GF(2))
+      result.insert((element ^ ai));
+    }
+  }
+
+  return result;
 }
 
 // Gets b[i], where 1 <= i <= n.
