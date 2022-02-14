@@ -21,9 +21,9 @@ class NonsingularGenerator {
 
     // Generates the next nonsingular transformation.
     // For example,
-    // 1 0 0 => 1 1 0 => 1 0 1 => 1 1 1 => ... => 1 0 1
+    // 0 0 1 => 1 0 1 => 0 1 1 => 1 1 1 => ... => 1 0 1
     // 0 1 0    0 1 0    0 1 0    0 1 0           0 1 1
-    // 0 0 1    0 0 1    0 0 1    0 0 1           1 1 1
+    // 1 0 0    1 0 0    1 0 0    1 0 0           1 1 1
     // Returns false it hits the last one.
     bool next();
   private:
@@ -34,6 +34,7 @@ class NonsingularGenerator {
     AffineTrans* current;
 
     // Span of the (row2, row3, ..., rown) in current.
+    // This is for speeding the search process.
     std::unordered_set<int> row_span_2n;
 };
 
