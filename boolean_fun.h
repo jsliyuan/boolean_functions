@@ -87,6 +87,16 @@ class BooleanFun {
     // Returns true if this Boolean function is homogeneous
     // as a polynomial over GF(2).
     bool is_homogenous() const;
+
+    // Compute the Walsh transform on w, where w is in [0, 2^n-1]
+    // (w1, w2, ..., wn) -> d(w) := w_1*2^{n-1}+w_2*2^{n-2}+...+w_n.
+    // W(w) = sum_{x} (-1)^(f(x) + w*x)
+    int walsh_transform(int w) const;
+
+    // Returns the first-order nonlinearity, which is
+    // 2^{n-1} - max_w walsh_transform(w) / 2.
+    int nonlinearity() const;
+
   private:
     // number of variables
     int n;
@@ -133,6 +143,9 @@ class BooleanFun {
 
     // Computes the algebraic degree, and sets this->degree.
     void compute_degree();
+
+    // Compute the inner product of x and y, viewed as vector {0,1}^n
+    int inner_product(int x, int y) const;
 };
 
 #endif

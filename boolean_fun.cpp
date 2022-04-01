@@ -378,3 +378,49 @@ bool BooleanFun::is_homogenous() const {
   }
   return true;
 }
+
+// Compute the Walsh transform on w, where w is in [0, 2^n-1]
+// (w1, w2, ..., wn) -> d(w) := w_1*2^{n-1}+w_2*2^{n-2}+...+w_n.
+// W(w) = sum_{x} (-1)^(f(x) + w*x)
+int BooleanFun::walsh_transform(int w) const {
+  int sum = 0;
+  for (int i = 0; i < (1 << n); i ++) {
+    int parity = truth_table[i] + inner_product(i, w);
+    if (parity % 2 == 0) {
+      sum += 1;
+    } else {
+      sum -= 1;
+    }
+  }
+
+  return sum;
+}
+
+// Compute the inner product of x and y, viewed as vector {0,1}^n
+int BooleanFun::inner_product(int x, int y) const {
+  int prod = x & y;
+  int sum = 0;
+  while (prod > 0) {
+    sum += prod % 2;
+    prod = prod / 2;
+  }
+
+  return sum;
+}
+
+// Returns the first-order nonlinearity, which is
+// 2^{n-1} - max_w |walsh_transform(w)| / 2.
+int BooleanFun::nonlinearity() const {
+  int max_w = 0;
+  for (int w = 0; w < (1 << n); w ++) {
+    int walsh = walsh_transform(w);
+    if (walsh < 0) {
+      walsh = -walsh;
+    }
+    if (walsh > max_w) {
+      max_w = walsh;
+    }
+  }
+  return (1<<(n-1)) - max_w/2;
+}
+

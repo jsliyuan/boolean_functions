@@ -14,6 +14,8 @@ int main() {
   assert(f.get_anf() == "0");
   assert(f.get_degree() == 0);
   assert(f.is_homogenous() == true);
+  assert(f.walsh_transform(0) == (1<<6));
+  assert(f.nonlinearity() == 0);
   cout << "End of test for f." << endl;
 
   BooleanFun g(5, "1");
@@ -27,6 +29,8 @@ int main() {
   assert(g.is_equal(f) == false);
   assert(g.dist(f) == -1);
   assert(g.is_homogenous() == true);
+  assert(g.walsh_transform(0) == -(1<<5));
+  assert(g.nonlinearity() == 0);
   cout << "End of test for g." << endl;
 
   BooleanFun g2(5, "1+1+0");
@@ -51,6 +55,9 @@ int main() {
   assert(g3_xor.get_anf() == "x3+x2+x1");
   assert(g3_xor.get_degree() == 1);
   assert(g3_xor.is_homogenous() == true);
+  assert(g3_xor.walsh_transform(0) == 0);
+  assert(g3_xor.walsh_transform(7) == 8);
+  assert(g3_xor.nonlinearity() == 0);
   cout << "End of test for g3_xor." << endl;
 
   BooleanFun g3_and(3, "x1x2x3");
@@ -64,6 +71,9 @@ int main() {
   assert(g3_and.get_anf() == "x1x2x3");
   assert(g3_and.get_degree() == 3);
   assert(g3_and.dist(g3_xor) == 3);
+  assert(g3_and.walsh_transform(0) == 6);
+  assert(g3_and.walsh_transform(4) == 2);
+  assert(g3_and.nonlinearity() == 1);
   cout << "End of test for g3_and." << endl;
 
   BooleanFun g4(4, "x1+1");
@@ -75,6 +85,7 @@ int main() {
   assert(g4.get_anf() == "1+x1");
   assert(g4.get_degree() == 1);
   assert(g4.is_homogenous() == false);
+  assert(g4.nonlinearity() == 0);
   cout << "End of test for g4." << endl;
 
   // Check if the extra spaces are filtered.
@@ -86,6 +97,7 @@ int main() {
   assert(g5.value(5, 0, 0, 0, 0, 1) == 0);
   assert(g5.get_anf() == "x4x5+x1x2x3");
   assert(g5.get_degree() == 3);
+  assert(g5.nonlinearity() == 10);
   cout << "End of test for g5." << endl;
 
   BooleanFun g3_and2(3, "1+x1x2x3+1");
@@ -166,6 +178,16 @@ int main() {
   g5_mixed.trim_degree_below(6);
   assert(g5_mixed.get_anf() == "0");
   cout << "End of test for trim_degree_below()" << endl;
+
+  BooleanFun g6_bent(6, "x1x2+x3x4+x5x6");
+  assert(g6_bent.nonlinearity() == 28);
+  cout << "End of test for nonlinearity() for 6-variable bent function" << endl;
+
+  BooleanFun g4_bent(4, "x1x2+x3x4");
+  assert(g4_bent.nonlinearity() == 6);
+  cout << "End of test for nonlinearity() for 4-variable bent function" << endl;
+
+  cout << "End of test for g2." << endl;
 
   cout << "Everything looks good. End of all tests." << endl;
   return 0;
