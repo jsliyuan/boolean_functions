@@ -74,6 +74,11 @@ int main() {
   assert(g3_and.walsh_transform(0) == 6);
   assert(g3_and.walsh_transform(4) == 2);
   assert(g3_and.nonlinearity() == 1);
+  assert(g3_and.nonlinearity(2) == 1);
+  BooleanFun g3_and_sub0 = g3_and.sub_function(0);
+  assert(g3_and_sub0.get_anf() == "0");
+  BooleanFun g3_and_sub1 = g3_and.sub_function(1);
+  assert(g3_and_sub1.get_anf() == "x1x2");
   cout << "End of test for g3_and." << endl;
 
   BooleanFun g4(4, "x1+1");
@@ -187,7 +192,64 @@ int main() {
   assert(g4_bent.nonlinearity() == 6);
   cout << "End of test for nonlinearity() for 4-variable bent function" << endl;
 
-  cout << "End of test for g2." << endl;
+  BooleanFun delta4(4);
+  assert(delta4.get_anf() == "0");
+  assert(delta4.set_truth_table(15, 1));
+  delta4.set_truth_table_done();
+  assert(delta4.get_anf() == "x1x2x3x4");
+  assert(delta4.set_truth_table(15, 0));
+  assert(delta4.set_truth_table(14, 1));
+  delta4.set_truth_table_done();
+  assert(delta4.get_anf() == "x1x2x3+x1x2x3x4");
+  cout << "End of test for set_truth_table() for delta4." << endl;
+
+  BooleanFun xor3(3);
+  assert(xor3.get_anf() == "0");
+  assert(xor3.set_truth_table(1, 1));
+  assert(xor3.set_truth_table(2, 1));
+  assert(xor3.set_truth_table(4, 1));
+  assert(xor3.set_truth_table(7, 1));
+  xor3.set_truth_table_done();
+  assert(xor3.get_anf() == "x3+x2+x1");
+  xor3.set_anf_coe(0, 1);
+  xor3.set_anf_coe(1, 0);
+  xor3.set_anf_coe_done();
+  assert(xor3.get_anf() == "1+x2+x1");
+  assert(xor3.value(3, 0, 1, 1) == 0);
+  assert(xor3.value(3, 0, 0, 0) == 1);
+  cout << "End of test for set_truth_table() for xor3." << endl;
+
+  assert(xor3.set_anf("x3+x2+x1"));
+  BooleanFun sub0 = xor3.sub_function(0);
+  assert(sub0.var_num() == 2);
+  assert(sub0.get_anf() == "x2+x1");
+  BooleanFun sub1 = xor3.sub_function(1);
+  assert(sub1.var_num() == 2);
+  assert(sub1.get_anf() == "1+x2+x1");
+  cout << "End of test for sub_function() for xor3." << endl;
+
+  cout << "Running high-order nonlinearity test... (slow)" << endl;
+  BooleanFun fn61(6, "x1x2x3x4");
+  assert(fn61.nonlinearity(3) == 4);
+  BooleanFun fn62(6, "x1x2x4x5+x1x2x3x6");
+  assert(fn62.nonlinearity(3) == 6);
+  BooleanFun fn63(6, "x2x3x4x5+x1x3x4x6+x1x2x5x6");
+  assert(fn63.nonlinearity(3) == 8);
+  BooleanFun fn64(6, "x1x2x3x4x5");
+  assert(fn64.nonlinearity(3) == 2);
+  BooleanFun fn65(6, "x1x2x3x4x5+x1x2x3x6");
+  assert(fn65.nonlinearity(3) == 4);
+  BooleanFun fn66(6, "x1x2x3x4x5+x1x3x4x6+x1x2x5x6");
+  assert(fn66.nonlinearity(3) == 6);
+  BooleanFun fn67(6, "x1x2x3x4x5x6");
+  assert(fn67.nonlinearity(3) == 1);
+  BooleanFun fn68(6, "x1x2x3x4x5x6+x1x2x3x4");
+  assert(fn68.nonlinearity(3) == 3);
+  BooleanFun fn69(6, "x1x2x3x4x5x6+x1x2x4x5+x1x2x3x6");
+  assert(fn69.nonlinearity(3) == 5);
+  BooleanFun fn610(6, "x1x2x3x4x5x6+x2x3x4x5+x1x3x4x6+x1x2x5x6");
+  assert(fn610.nonlinearity(3) == 7);
+  cout << "End of high-order nonlinearity test." << endl;
 
   cout << "Everything looks good. End of all tests." << endl;
   return 0;

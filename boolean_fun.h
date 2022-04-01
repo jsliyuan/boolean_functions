@@ -32,8 +32,31 @@ class BooleanFun {
     // Returns false if anf_str is invalid.
     bool set_anf(std::string anf_str);
 
+    // Sets the coefficient d(x) of the ANF to constant c,
+    // where d is in [0, 2^n-1], and c is 0 or 1.
+    // If d or c is out of range, returns false.
+    bool set_anf_coe(int d, int c);
+
+    // Call this function after setting all the coefficients
+    // in the ANF.
+    // The truth table and degree will be re-computed.
+    void set_anf_coe_done();
+
+    // Set the truth_table[x] to v, where
+    // x is in [0, 2^n-1], and v is 0 or 1.
+    // Returns false if x or v is out of range.
+    bool set_truth_table(int x, int v);
+
+    // After setting the truth table, call this function.
+    // The degree and ANF will be computed then.
+    void set_truth_table_done();
+
     // Destructor
     ~BooleanFun();
+
+    // Returns the subfunction in n-1 variables by setting
+    // x_n to constant c, where c is 0 or 1.
+    BooleanFun sub_function(int c) const;
 
     // Evaluate boolean function at a given point by giving {0,1}^n.
     // We must have num = n; otherwise returns -1.
@@ -50,6 +73,10 @@ class BooleanFun {
     //   "x2+x1+x1x2"
     // The terms are ordered by the lexicographical order (d(x)).
     std::string get_anf() const;
+
+    // Returns anf[d], where d is in [0, 2^n-1].
+    // Returns -1 if d is out of range.
+    int get_anf_coe(int d) const;
 
     // Returns the algebraic degree.
     int get_degree() const;
@@ -94,8 +121,11 @@ class BooleanFun {
     int walsh_transform(int w) const;
 
     // Returns the first-order nonlinearity, which is
-    // 2^{n-1} - max_w walsh_transform(w) / 2.
+    // 2^{n-1} - max_w |walsh_transform(w)| / 2.
     int nonlinearity() const;
+
+    // Returns the rth-order nonlinearity, where r >= 1.
+    int nonlinearity(int r) const;
 
   private:
     // number of variables

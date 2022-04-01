@@ -1,6 +1,7 @@
 #include "boolean_fun.h"
 
 #include <iostream>
+#include <vector>
 
 using namespace std;
 
@@ -56,6 +57,37 @@ std::string BooleanFun::get_anf() const {
   return result;
 }
 
+// Returns anf[d], where d is in [0, 2^n-1].
+int BooleanFun::get_anf_coe(int d) const {
+  if (d < 0 || d >= (1<<n)) {
+    return -1;
+  }
+
+  return anf[d];
+}
+
+// Set the truth_table[x] to v, where
+// x is in [0, 2^n-1], and v is 0 or 1.
+// Returns false if x or v is out of range.
+bool BooleanFun::set_truth_table(int x, int v) {
+  if (x < 0 || x >= (1<<n)) {
+    return false;
+  }
+  if (v < 0 || v > 1) {
+    return false;
+  }
+
+  truth_table[x] = v;
+  return true;
+}
+
+// After setting the truth table, call this function.
+// The degree and ANF will be computed then.
+void BooleanFun::set_truth_table_done() {
+  this->truth_table_to_anf();
+  this->compute_degree();
+}
+
 // Resets the ANF.
 // Both truth table and anf are modified.
 // Returns false if anf_str is invalid.
@@ -101,6 +133,26 @@ bool BooleanFun::set_anf(std::string anf_str) {
   compute_degree();
 
   return true;
+}
+
+// Sets the coefficient d of the ANF to constant c,
+// where d is in [0, 2^n-1], and c is 0 or 1.
+bool BooleanFun::set_anf_coe(int d, int c) {
+  if (d < 0 || d >= (1 << n)) {
+    return false;
+  }
+  if (c < 0 || c > 1) {
+    return false;
+  }
+  anf[d] = c;
+
+  return true;
+}
+
+void BooleanFun::set_anf_coe_done() {
+  // Compute truth_table using anf
+  anf_to_truth_table();
+  compute_degree();
 }
 
 // Computes the mobius inversion of source[2^n], and writes
@@ -197,6 +249,20 @@ void BooleanFun::compute_degree() {
 // Returns the algebraic degree.
 int BooleanFun::get_degree() const {
   return this->degree;
+}
+
+// Returns the subfunction in n-1 variables by setting
+// x_n to constant c.
+BooleanFun BooleanFun::sub_function(int c) const {
+  BooleanFun sub(n-1);
+  for (int x = 0; x < (1<<n); x ++) {
+    int xn = x % 2;
+    if (xn == c) {
+      sub.set_truth_table(x / 2, truth_table[x]);
+    }
+  }
+  sub.set_truth_table_done();
+  return sub;
 }
 
 // BooleanFun destructor
@@ -422,5 +488,57 @@ int BooleanFun::nonlinearity() const {
     }
   }
   return (1<<(n-1)) - max_w/2;
+}
+
+// Returns the rth-order nonlinearity.
+int BooleanFun::nonlinearity(int r) const {
+  if (r >= degree) {
+    return 0;
+  }
+  if (r == 1) {
+    return nonlinearity();
+  }
+
+  // Find all x in [0, 2^(n-1)-1] with weight r.
+  vector<int> deg_r_x;
+  for (int i = 0; i < (1<<(n-1)); i ++) {
+    if (weight(i) == r) {
+      deg_r_x.push_back(i);
+    }
+  }
+
+  // Enumerates all homogenous functions of degree r, including 0.
+  BooleanFun homr(n-1);
+  int min_non = (1 << n);
+  while (1) {
+    // cout << homr.get_anf() << endl;
+    BooleanFun sub0 = this->sub_function(0);
+    sub0.add(homr);
+    int non0 = sub0.nonlinearity(r-1);
+    BooleanFun sub1 = this->sub_function(1);
+    sub1.add(homr);
+    int non1 = sub1.nonlinearity(r-1);
+    if (non0 + non1 < min_non) {
+      min_non = non0 + non1;
+    }
+
+    // Find the next homogenous function of degree r.
+    // Find the minimal index i such that homr.truth_table[deg_r_x[i]] == 0.
+    int i = 0;
+    while (i < deg_r_x.size() && homr.get_anf_coe(deg_r_x.at(i)) == 1) {
+      i ++;
+    }
+    // The last homogenous function of degree r.
+    if (i == deg_r_x.size()) {
+      break;
+    }
+    homr.set_anf_coe(deg_r_x.at(i), 1);
+    for (int j = 0; j < i; j ++) {
+      homr.set_anf_coe(deg_r_x.at(j), 0);
+    }
+    homr.set_anf_coe_done();
+  }
+
+  return min_non;
 }
 
