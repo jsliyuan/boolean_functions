@@ -37,7 +37,7 @@ class HomogenousBfGenerator {
 
     // ANF coefficients with weight r
     // The size is {n choose r}.
-  	std::vector<int> coefficients;
+    std::vector<int> coefficients;
 
     // Returns the number of one's in the
     // binary representation of x.
