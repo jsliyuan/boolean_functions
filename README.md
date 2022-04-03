@@ -10,6 +10,10 @@ AffineTrans: affine transformation Ax + b
 
 UpperDiagGenerator: generates all affine transformation Ax one by one, where A is an upper diagonal matrix and the diagonal elements are all 1
 
+NonsingularGenerator: generates all nonsingular n-by-n matrices one by one.
+
+HomogenousBfGenerator: generates all homogenous Boolean functions of degree r
+
 ## How to test
 ### BooleanFun class
 yuanli$ g++ -o test.out test_boolean_fun.cpp boolean_fun.cpp affine_trans.cpp
@@ -28,6 +32,11 @@ yuanli$ ./test.out
 
 ### NonsingularGenerator
 yuanli$ g++ -o test.out test_nonsingular_generator.cpp nonsingular_generator.cpp affine_trans.cpp
+
+yuanli$ ./test.out
+
+### HomogenousBfGenerator
+yuanli$ g++ -o test.out test_homogenous_bf_generator.cpp homogenous_bf_generator.cpp boolean_fun.cpp affine_trans.cpp
 
 yuanli$ ./test.out
 
