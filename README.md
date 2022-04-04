@@ -49,3 +49,9 @@ yuanli$ ./example64.out
 yuanli$ g++ -o example_nonsingular.out example_nonsingular.cpp affine_trans.cpp nonsingular_generator.cpp boolean_fun.cpp
 
 yuanli$ ./example_nonsingular.out
+
+### example_orbit.cpp
+yuanli$ g++ -o example.out example_orbit.cpp boolean_fun.cpp affine_trans.cpp
+
+yuanli$ ./example.out
+
