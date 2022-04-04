@@ -1,4 +1,5 @@
 #include <iostream>
+#include <time.h>
 
 #include "boolean_fun.h"
 
@@ -229,6 +230,8 @@ int main() {
   cout << "End of test for sub_function() for xor3." << endl;
 
   cout << "Running high-order nonlinearity test... (slow)" << endl;
+  // Start the clock
+  clock_t tStart = clock();
   BooleanFun fn61(6, "x1x2x3x4");
   assert(fn61.nonlinearity(3) == 4);
   BooleanFun fn62(6, "x1x2x4x5+x1x2x3x6");
@@ -249,6 +252,7 @@ int main() {
   assert(fn69.nonlinearity(3) == 5);
   BooleanFun fn610(6, "x1x2x3x4x5x6+x2x3x4x5+x1x3x4x6+x1x2x5x6");
   assert(fn610.nonlinearity(3) == 7);
+  cout << "Time taken: " << (double)(clock() - tStart)/CLOCKS_PER_SEC << " sec.";
   cout << "End of high-order nonlinearity test." << endl;
 
   cout << "Everything looks good. End of all tests." << endl;
