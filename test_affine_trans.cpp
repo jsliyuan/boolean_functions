@@ -24,6 +24,7 @@ int main() {
   assert(t3_zero.apply(-1) == -1);
   assert(t3_zero.apply(8) == -1);
   assert(t3_zero.apply(7) == 0);
+  assert(t3_zero.det() == 0);
   cout << "End of test for t3_zero" << endl;
 
   // t3_diag sends (x1,x2,x3) to (x1+1,x2,x3).
@@ -42,6 +43,7 @@ int main() {
   for (int i = 0; i < (1<<3); i ++) {
     assert(t3_diag.apply(i) == 7 - i);
   }
+  assert(t3_diag.det() == 1);
   cout << "End of test for t3_diag" << endl;
 
   // t3_perm sends (x1, x2, x3) to (x3+1, x2, x1)
@@ -63,6 +65,7 @@ int main() {
     int i1 = (i/4)%2;
     assert(t3_perm.apply(i) == (1-i3)*4+i2*2+i1);
   }
+  assert(t3_perm.det() == 1);
   cout << "End of test for t3_perm" << endl;
 
   // t4_upp sends (x1, x2, x3, x4) to (x1+x2+x3+x4, x2+x3+x4, x3+x4, x4)
@@ -83,6 +86,7 @@ int main() {
     int y1 = (i1+y2)%2;
     assert(t4_upp.apply(i) == y1*8+y2*4+y3*2+y4); 
   }
+  assert(t4_upp.det() == 1);
   cout << "End of test for t4_upp" << endl;
 
   AffineTrans t4_identity(4);
@@ -95,8 +99,8 @@ int main() {
   assert(t4_identity.set_row_a(0, 1) == false);
   assert(t4_identity.set_row_a(5, 1) == false);
   assert(t4_identity.get_a_str() == "1 0 0 0\n0 1 0 0\n0 0 1 0\n0 0 0 1");
+  assert(t4_identity.det() == 1);
   cout << "End of test for t4_identity" << endl;
-
 
   AffineTrans t3_identity(3);
   assert(t3_identity.set_row_a(1, 7));
@@ -120,6 +124,26 @@ int main() {
   span = t3_identity.get_rows_span(3, 1);
   assert(span.size() == 1);
   assert(span.find(0) != span.end());
+
+  AffineTrans t3_allone(3);
+  assert(t3_allone.set_row_a(1, 7));
+  assert(t3_allone.set_row_a(2, 7));
+  assert(t3_allone.set_row_a(3, 7));
+  assert(t3_allone.det() == 0);
+  cout << "End of test for t3_allone" << endl;
+
+  AffineTrans t3_rk2(3);
+  assert(t3_rk2.set_row_a(1, 7));
+  assert(t3_rk2.set_row_a(2, 5));
+  assert(t3_rk2.set_row_a(3, 5));
+  assert(t3_rk2.det() == 0);
+  cout << "End of test for t3_rk2" << endl;
+
+  AffineTrans t4_rand(4);
+  cout << "Generate a random nonsingular 4*4 matrix" << endl;
+  t4_rand.set_random();
+  cout << t4_rand.get_a_str() << endl;
+  cout << "End of test for t4_rand" << endl;
 
   cout << "Everything looks good. End of all tests." << endl;
 

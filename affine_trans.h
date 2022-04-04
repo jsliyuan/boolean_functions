@@ -31,6 +31,10 @@ class AffineTrans {
     // If i or v is out of range, returns false.
     bool set_row_a(int i, int v);
 
+    // Set the matrix randomly, and make sure it is nonsingular, i.e.,
+    // determinant is 1.
+    void set_random();
+
     // Let b[i] = v, where 1 <= i <= n.
     // If i is out of range, returns false.
     bool set_b(int i, int v);
@@ -76,6 +80,9 @@ class AffineTrans {
     // Let this = T * this, where this is applied first, i.e.,
     // T(this(x))
     // bool compose_last(const AffineTrans& T);
+
+    // Returns the determinant of A, which is 0 or 1.
+    int det() const;
 
   private:
     // dimension

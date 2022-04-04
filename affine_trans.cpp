@@ -1,6 +1,7 @@
 #include "affine_trans.h"
 
 #include <iostream>
+#include <time.h>
 
 using namespace std;
 
@@ -15,6 +16,9 @@ AffineTrans::AffineTrans(int n) {
   for (int i = 0; i < n; i ++) {
     b[i] = 0;
   }
+
+  // initialize random seed
+  srand(time(NULL));
 }
 
 // Constructor with parameters n, A and b.
@@ -138,6 +142,19 @@ bool AffineTrans::set_b(int i, int v) {
   return true;
 }
 
+// Set the matrix randomly, and make sure it is nonsingular, i.e.,
+// determinant is 1.
+void AffineTrans::set_random() {
+  while (1) {
+    for (int i = 0; i < n*n; i ++) {
+      A[i] = rand() % 2;
+    }
+    if (det() == 1) {
+      break;
+    }
+  }
+}
+
 // Gets A[i][j], where 1 <= i, j <= n.
 int AffineTrans::get_a(int i, int j) const {
   if (i < 1 || i > n || j < 1 || j > n) {
@@ -198,4 +215,47 @@ int AffineTrans::get_b(int i) const {
 // Returns the dimension n.
 int AffineTrans::get_n() const {
   return n;
+}
+
+int AffineTrans::det() const {
+  int M[n][n];
+  for (int i = 0; i < n; i ++) {
+    for (int j = 0; j < n; j ++) {
+      M[i][j] = A[i*n+j];
+    }
+  }
+
+  for (int i = 0; i < n; i ++) {
+    // Find a row such that the jth column is nonzero
+    int k = i;
+    while (k < n && M[k][i] == 0) {
+      k ++;
+    }
+
+    // If cannot find, the det is zero
+    if (k == n) {
+      return 0;
+    }
+
+    // swap row i and row k
+    if (k > i) {
+      int tmp;
+      for (int j = 0; j < n; j ++) {
+        tmp = M[i][j];
+        M[i][j] = M[k][j];
+        M[k][j] = tmp;
+      }
+    }
+
+    // Gaussian elimination
+    for (int r = k+1; r < n; r ++) {
+      if (M[r][i] == 1) {
+        for (int j = 0; j < n; j ++) {
+          M[r][j] = M[r][j] ^ M[i][j];
+        }
+      }
+    }
+  }
+
+  return 1;
 }
