@@ -347,7 +347,7 @@ bool BooleanFun::add(const BooleanFun& f) {
   }
 
   for (int i = 0; i < (1<<n); i ++) {
-    this->truth_table[i] = (this->truth_table[i] + f.value_dec(i)) % 2;
+    this->truth_table[i] = (this->truth_table[i] + f.truth_table[i]) % 2;
   }
 
   this->truth_table_to_anf();
@@ -364,7 +364,7 @@ bool BooleanFun::mult(const BooleanFun& f) {
   }
 
   for (int i = 0; i < (1<<n); i ++) {
-    this->truth_table[i] = this->truth_table[i] * f.value_dec(i);
+    this->truth_table[i] = this->truth_table[i] * f.truth_table[i];
   }
 
   this->truth_table_to_anf();
@@ -478,20 +478,40 @@ int BooleanFun::inner_product(int x, int y) const {
 // 2^{n-1} - max_w |walsh_transform(w)| / 2.
 int BooleanFun::nonlinearity() const {
   int max_w = 0;
+  int sum[(1<<n)];
   for (int w = 0; w < (1 << n); w ++) {
-    int walsh = walsh_transform(w);
-    if (walsh < 0) {
-      walsh = -walsh;
-    }
-    if (walsh > max_w) {
-      max_w = walsh;
+    sum[w] = 0;
+  }
+
+  int parity;
+  int val;
+  for (int i = 0; i < (1 << n); i ++) {
+    int val = truth_table[i];
+    for (int w = 0; w < (1 << n); w ++) {
+      parity = val + inner_product(i, w);
+      if (parity % 2 == 0) {
+        sum[w] += 1;
+      } else {
+        sum[w] -= 1;
+      }
     }
   }
+
+  for (int w = 0; w < (1 << n); w ++) {
+    if (sum[w] > max_w) {
+      max_w = sum[w];
+    }
+    if (-sum[w] > max_w) {
+      max_w = -sum[w];
+    }
+  }
+
   return (1<<(n-1)) - max_w/2;
 }
 
 // Returns the rth-order nonlinearity.
-int BooleanFun::nonlinearity(int r) const {
+// Cut the search if existing value is > upper_bound
+int BooleanFun::nonlinearity(int r, int upper_bound) const {
   if (r >= degree) {
     return 0;
   }
@@ -509,36 +529,41 @@ int BooleanFun::nonlinearity(int r) const {
 
   // Enumerates all homogenous functions of degree r, including 0.
   BooleanFun homr(n-1);
-  int min_non = (1 << n);
   while (1) {
-    // cout << homr.get_anf() << endl;
     BooleanFun sub0 = this->sub_function(0);
     sub0.add(homr);
-    int non0 = sub0.nonlinearity(r-1);
-    BooleanFun sub1 = this->sub_function(1);
-    sub1.add(homr);
-    int non1 = sub1.nonlinearity(r-1);
-    if (non0 + non1 < min_non) {
-      min_non = non0 + non1;
+    int non0 = sub0.nonlinearity(r-1, upper_bound);
+    if (non0 < upper_bound) {
+      BooleanFun sub1 = this->sub_function(1);
+      sub1.add(homr);
+      int non1 = sub1.nonlinearity(r-1, upper_bound-non0);
+      if (non0 + non1 < upper_bound) {
+        upper_bound = non0 + non1;
+      }
     }
 
     // Find the next homogenous function of degree r.
     // Find the minimal index i such that homr.truth_table[deg_r_x[i]] == 0.
     int i = 0;
-    while (i < deg_r_x.size() && homr.get_anf_coe(deg_r_x.at(i)) == 1) {
+    while (i < deg_r_x.size() && homr.anf[deg_r_x.at(i)] == 1) {
       i ++;
     }
     // The last homogenous function of degree r.
     if (i == deg_r_x.size()) {
       break;
     }
-    homr.set_anf_coe(deg_r_x.at(i), 1);
+    homr.anf[deg_r_x.at(i)] = 1;
     for (int j = 0; j < i; j ++) {
-      homr.set_anf_coe(deg_r_x.at(j), 0);
+      homr.anf[deg_r_x.at(j)] = 0;
     }
     homr.set_anf_coe_done();
   }
 
-  return min_non;
+  return upper_bound;
+}
+
+// Returns the rth-order nonlinearity.
+int BooleanFun::nonlinearity(int r) const {
+  return nonlinearity(r, (1<<n));
 }
 

@@ -127,21 +127,23 @@ class BooleanFun {
     // Returns the rth-order nonlinearity, where r >= 1.
     int nonlinearity(int r) const;
 
+    // BE CAREFUL!
+    // truth table of this Boolean function, of length 2^n
+    // value of f(x_1, x_2, ..., x_n) is truth_table[d(x)],
+    // where d(x) := x_1*2^{n-1}+x_2*2^{n-2}+...+x_n.
+    int* truth_table;
+
+    // BE CAREFUL!
+    // algebraic normal form
+    // ANF[d(e)] is the coefficient of x1^{e1}x2^{e2}...xn^{en}.
+    int* anf;
+
   private:
     // number of variables
     int n;
 
     // algebraic degree
     int degree;
-
-    // truth table of this Boolean function, of length 2^n
-    // value of f(x_1, x_2, ..., x_n) is truth_table[d(x)],
-    // where d(x) := x_1*2^{n-1}+x_2*2^{n-2}+...+x_n.
-    int* truth_table;
-
-    // algebraic normal form
-    // ANF[d(e)] is the coefficient of x1^{e1}x2^{e2}...xn^{en}.
-    int* anf;
 
     // Compute truth table from anf.
     void anf_to_truth_table();
@@ -176,6 +178,10 @@ class BooleanFun {
 
     // Compute the inner product of x and y, viewed as vector {0,1}^n
     int inner_product(int x, int y) const;
+
+    // Returns the rth-order nonlinearity, where r >= 1.
+    // Cut down the search if the current value is > upper_bound.
+    int nonlinearity(int r, int upper_bound) const;
 };
 
 #endif
