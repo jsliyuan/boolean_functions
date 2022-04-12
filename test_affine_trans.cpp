@@ -25,9 +25,10 @@ int main() {
   assert(t3_zero.apply(8) == -1);
   assert(t3_zero.apply(7) == 0);
   assert(t3_zero.det() == 0);
+  assert(t3_zero.inverse() == false);
   cout << "End of test for t3_zero" << endl;
 
-  // t3_diag sends (x1,x2,x3) to (x1+1,x2,x3).
+  // t3_diag sends (x1,x2,x3) to (x1+1,x2+1,x3+1).
   AffineTrans t3_diag(3);
   assert(t3_diag.get_n() == 3);
 
@@ -44,6 +45,8 @@ int main() {
     assert(t3_diag.apply(i) == 7 - i);
   }
   assert(t3_diag.det() == 1);
+  assert(t3_diag.inverse());
+  assert(t3_diag.get_a_str() == "1 0 0\n0 1 0\n0 0 1");
   cout << "End of test for t3_diag" << endl;
 
   // t3_perm sends (x1, x2, x3) to (x3+1, x2, x1)
@@ -66,6 +69,9 @@ int main() {
     assert(t3_perm.apply(i) == (1-i3)*4+i2*2+i1);
   }
   assert(t3_perm.det() == 1);
+  assert(t3_perm.det() == 1);
+  assert(t3_perm.inverse());
+  assert(t3_perm.get_a_str() == "0 0 1\n0 1 0\n1 0 0");
   cout << "End of test for t3_perm" << endl;
 
   // t4_upp sends (x1, x2, x3, x4) to (x1+x2+x3+x4, x2+x3+x4, x3+x4, x4)
@@ -87,6 +93,8 @@ int main() {
     assert(t4_upp.apply(i) == y1*8+y2*4+y3*2+y4); 
   }
   assert(t4_upp.det() == 1);
+  assert(t4_upp.inverse());
+  assert(t4_upp.get_a_str() == "1 1 0 0\n0 1 1 0\n0 0 1 1\n0 0 0 1");
   cout << "End of test for t4_upp" << endl;
 
   AffineTrans t4_identity(4);

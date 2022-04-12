@@ -84,6 +84,10 @@ class AffineTrans {
     // Returns the determinant of A, which is 0 or 1.
     int det() const;
 
+    // Let A := A^{-1}.
+    // If A is not invertible, returns false.
+    bool inverse();
+
   private:
     // dimension
     int n;

@@ -259,3 +259,38 @@ int AffineTrans::det() const {
 
   return 1;
 }
+
+// Let A := A^{-1}.
+// If A is not invertible, returns false.
+bool AffineTrans::inverse() {
+  if (det() == 0) {
+    return false;
+  }
+
+  int inv[n][n];
+  AffineTrans minor(n-1);
+  for (int i = 0; i < n; i ++) {
+    for (int j = 0; j < n; j ++) {
+      // Take the (n-1)*(n-1) minor by deleting ith row and jth column
+      int y = 0;
+      for (int x = 0; x < n*n; x ++) {
+        int xi = x / n;
+        int xj = x % n;
+        if (xi == j || xj == i) {
+          continue;
+        }
+        minor.set_a(y / (n-1)+1, y % (n-1)+1, A[x]);
+        y ++;
+      }
+      inv[i][j] = minor.det();
+    }
+  }
+
+  for (int i = 0; i < n; i ++) {
+    for (int j = 0; j < n; j ++) {
+      A[i*n + j] = inv[i][j];
+    }
+  }
+
+  return true;
+}
