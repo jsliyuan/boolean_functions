@@ -1,5 +1,6 @@
 #include <iostream>
 #include <time.h>
+#include <set>
 
 #include "boolean_fun.h"
 
@@ -43,6 +44,17 @@ int main() {
   assert(g2.is_equal(g) == false);
   assert(g2.is_equal(g2) == true);
   assert(g2.dist(g) == (1<<5));
+  BooleanFun g2_same(5, "0");
+  assert(g2_same == g2);
+  assert(g2 < g);
+  set<BooleanFun> bf_set;
+  BooleanFun *bf_temp = new BooleanFun(5, "0");
+  bf_set.insert(*bf_temp);
+  bf_temp = new BooleanFun(5, "1");
+  bf_set.insert(*bf_temp);
+  bf_temp = new BooleanFun(5, "1+1");
+  bf_set.insert(*bf_temp);
+  assert(bf_set.size() == 2);
   cout << "End of test for g2." << endl;
 
   BooleanFun g3_xor(3, "x1+x2+x3");
@@ -254,7 +266,7 @@ int main() {
   assert(fn610.nonlinearity(3) == 7);
   cout << "Time taken: " << (double)(clock() - tStart)/CLOCKS_PER_SEC << " sec.";
   cout << "End of high-order nonlinearity test." << endl;
-
+  
   cout << "Everything looks good. End of all tests." << endl;
   return 0;
 }
