@@ -16,10 +16,20 @@ class BooleanFun {
     BooleanFun(int n);
 
     // Reload < opeartor
-    bool operator < (const BooleanFun &g) const { return this->get_anf() < g.get_anf();}
+    bool operator < (const BooleanFun &g) const {
+      if (this->n < g.var_num()) {
+        return true;
+      }
+      return this->get_anf() < g.get_anf();
+    }
 
     // Reload = opeartor
-    bool operator = (const BooleanFun &g) const { return this->get_anf() == g.get_anf();}
+    bool operator == (const BooleanFun &g) const {
+      if (this->n != g.var_num()) {
+        return false;
+      }
+      return this->get_anf() == g.get_anf();
+    }
 
     // Constructor with parameters, where n is the number
     // of variables, and anf is the algebraic normal form.
