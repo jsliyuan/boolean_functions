@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <unordered_set>
+#include <vector>
 
 using namespace std;
 
@@ -152,6 +153,11 @@ int main() {
   t4_rand.set_random();
   cout << t4_rand.get_a_str() << endl;
   cout << "End of test for t4_rand" << endl;
+
+  vector<AffineTrans> trans_vec;
+  trans_vec.push_back(t4_rand);
+  cout << "End of test for vector" << endl;
+
 
   cout << "Everything looks good. End of all tests." << endl;
 
