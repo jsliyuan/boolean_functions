@@ -241,6 +241,13 @@ int main() {
   assert(sub1.get_anf() == "1+x2+x1");
   cout << "End of test for sub_function() for xor3." << endl;
 
+  /*
+  cout << "Computing nl3 for some 7-variable function... (slow)" << endl;
+  BooleanFun fn71(7, "x1x2x3x4+x1x4x6x7+x2x3x6x7+x3x4x5x7");
+  assert(fn71.nonlinearity(3) == 20);
+  cout << "End of nl3 for some 7-variable function." << endl;
+  */
+
   cout << "Running high-order nonlinearity test... (slow)" << endl;
   // Start the clock
   clock_t tStart = clock();
