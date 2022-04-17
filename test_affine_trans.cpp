@@ -42,6 +42,10 @@ int main() {
   assert(t3_diag.set_b(2,1));
   assert(t3_diag.set_b(3,1));
   assert(t3_diag.get_b_str() == "1 1 1");
+  // Test copy constructor
+  AffineTrans t3_diag_copy(t3_diag);
+  assert(t3_diag_copy.get_a_str() == "1 0 0\n0 1 0\n0 0 1");
+  assert(t3_diag_copy.get_b_str() == "1 1 1");
   for (int i = 0; i < (1<<3); i ++) {
     assert(t3_diag.apply(i) == 7 - i);
   }
@@ -63,6 +67,10 @@ int main() {
   assert(t3_perm.get_a_row(4) == -1);
   assert(t3_perm.set_b(1,1));
   assert(t3_perm.get_b_str() == "1 0 0");
+  // Test copy constructor, which performs a deep copy.
+  AffineTrans t3_perm_copy = t3_perm;
+  assert(t3_perm_copy.get_a_str() == "0 0 1\n0 1 0\n1 0 0");
+  assert(t3_perm_copy.get_b_str() == "1 0 0");
   for (int i = 0; i < (1<<3); i ++) {
     int i3 = i%2;
     int i2 = (i/2)%2;

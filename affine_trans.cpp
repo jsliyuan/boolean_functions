@@ -34,6 +34,27 @@ AffineTrans::AffineTrans(int n, int* A, int* b) {
   }
 }
 
+// Copy constructor.
+// Performs a deep copy.
+AffineTrans::AffineTrans(const AffineTrans& T) {
+  this->n = T.get_n();
+  this->A = new int[n*n];
+  this->b = new int[n];
+  memcpy(this->A, T.A, n*n*sizeof(int));
+  memcpy(this->b, T.b, n*sizeof(int));
+}
+
+
+// Destructor
+AffineTrans::~AffineTrans() {
+  if (A) {
+    delete A;
+  }
+  if (b) {
+    delete b;
+  }
+}
+
 // Returns Ax + b, where both x and the result
 // is in the decimal representation.
 // Point (x1, x2, ..., xn) is represented by

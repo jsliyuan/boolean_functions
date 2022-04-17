@@ -15,6 +15,13 @@ class AffineTrans {
     // Constructor with parameters n, A and b.
     AffineTrans(int n, int* A, int* b);
 
+    // Copy constructor.
+    // Performs a deep copy.
+    AffineTrans(const AffineTrans& T);
+
+    // Destructor.
+    ~AffineTrans();
+
     // Returns Ax + b, where both x and the result
     // is in the decimal representation.
     // Point (x1, x2, ..., xn) is represented by
