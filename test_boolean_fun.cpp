@@ -18,6 +18,7 @@ int main() {
   assert(f.is_homogenous() == true);
   assert(f.walsh_transform(0) == (1<<6));
   assert(f.nonlinearity() == 0);
+  assert(f.get_coe_list() == "0000000000000000000000000000000000000000000000000000000000000000");
   cout << "End of test for f." << endl;
 
   BooleanFun g(5, "1");
@@ -33,6 +34,9 @@ int main() {
   assert(g.is_homogenous() == true);
   assert(g.walsh_transform(0) == -(1<<5));
   assert(g.nonlinearity() == 0);
+  assert(g.get_coe_list() == "10000000000000000000000000000000");
+  // Length must be 2^n
+  assert(g.set_coe_list("1000000000000000000000000000000") == false);
   cout << "End of test for g." << endl;
 
   BooleanFun g2(5, "1+1+0");
@@ -71,6 +75,9 @@ int main() {
   assert(g3_xor.walsh_transform(0) == 0);
   assert(g3_xor.walsh_transform(7) == 8);
   assert(g3_xor.nonlinearity() == 0);
+  assert(g3_xor.get_coe_list() == "01101000");
+  assert(g3_xor.set_coe_list("01101000"));
+  assert(g3_xor.get_anf() == "x3+x2+x1");
   cout << "End of test for g3_xor." << endl;
 
   BooleanFun g3_and(3, "x1x2x3");

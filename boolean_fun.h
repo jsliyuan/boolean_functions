@@ -48,6 +48,11 @@ class BooleanFun {
     // Returns false if anf_str is invalid.
     bool set_anf(std::string anf_str);
 
+    // Resets the ANF given the coefficient list.
+    // Returns false if coe_list is invalid, where
+    // coe_list should be a 01 string of length 2^n.
+    bool set_coe_list(std::string coe_list);
+
     // Sets the coefficient d(x) of the ANF to constant c,
     // where d is in [0, 2^n-1], and c is 0 or 1.
     // If d or c is out of range, returns false.
@@ -89,6 +94,10 @@ class BooleanFun {
     //   "x2+x1+x1x2"
     // The terms are ordered by the lexicographical order (d(x)).
     std::string get_anf() const;
+
+    // Returns anf[2^n] as a 01 string of length 2^n.
+    // The order preserves.
+    std::string get_coe_list() const;
 
     // Returns anf[d], where d is in [0, 2^n-1].
     // Returns -1 if d is out of range.

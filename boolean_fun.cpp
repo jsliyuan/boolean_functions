@@ -57,6 +57,17 @@ std::string BooleanFun::get_anf() const {
   return result;
 }
 
+// Returns anf[2^n] as a 01 string of length 2^n.
+// The order preserves.
+string BooleanFun::get_coe_list() const {
+  string result = "";
+  for (int i = 0; i < (1<<n); i ++) {
+    result += std::to_string(anf[i]);
+  }
+
+  return result;
+}
+
 // Returns anf[d], where d is in [0, 2^n-1].
 int BooleanFun::get_anf_coe(int d) const {
   if (d < 0 || d >= (1<<n)) {
@@ -126,6 +137,24 @@ bool BooleanFun::set_anf(std::string anf_str) {
     }
 
     i ++;
+  }
+
+  // Compute truth_table using anf
+  anf_to_truth_table();
+  compute_degree();
+
+  return true;
+}
+
+// Resets the ANF given the coefficient list.
+// Returns false if coe_list is invalid, where
+// coe_list should be a 01 string of length 2^n.
+bool BooleanFun::set_coe_list(std::string coe_list) {
+  if (coe_list.length() != (1<<n)) {
+    return false;
+  }
+  for (int i = 0; i < (1<<n); i ++) {
+    anf[i] = (coe_list[i] == '1' ? 1 : 0);
   }
 
   // Compute truth_table using anf
