@@ -43,6 +43,9 @@ class BooleanFun {
     // Do not include extra spaces.
     BooleanFun(int n, std::string anf_str);
 
+    // Copy constructor.
+    BooleanFun(const BooleanFun& g);
+
     // Resets the ANF.
     // Both truth table and anf are modified.
     // Returns false if anf_str is invalid.

@@ -6,8 +6,7 @@
 using namespace std;
 
 // BooleanFun constructor with parameter (number of variables)
-BooleanFun::BooleanFun(int n)
-{
+BooleanFun::BooleanFun(int n) {
   this->n = n;
   truth_table = new int[1<<n];
   anf = new int[1<<n];
@@ -22,8 +21,7 @@ BooleanFun::BooleanFun(int n)
 // of variables, and anf_str is the algebraic normal form.
 // For example,
 //   anf = "x1x2+x3+1"
-BooleanFun::BooleanFun(int n, string anf_str)
-{
+BooleanFun::BooleanFun(int n, string anf_str) {
   this->n = n;
   truth_table = new int[1<<n];
   anf = new int[1<<n];
@@ -37,6 +35,17 @@ BooleanFun::BooleanFun(int n, string anf_str)
   // Compute truth_table using anf
   anf_to_truth_table();
   compute_degree();
+}
+
+// Copy constructor.
+BooleanFun::BooleanFun(const BooleanFun& g) {
+  this->n = g.var_num();
+  this->degree = g.get_degree();
+  anf = new int[1<<n];
+  truth_table = new int[1<<n];
+
+  memcpy(this->anf, g.anf, (1<<n)*sizeof(int));
+  memcpy(this->truth_table, g.truth_table, (1<<n)*sizeof(int));
 }
 
 // Returns the algebraic normal form of the Boolean function.
