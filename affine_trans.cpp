@@ -234,6 +234,13 @@ void AffineTrans::set_random() {
   }
 }
 
+// Set the vector randomly.
+void AffineTrans::set_random_b() {
+  for (int i = 0; i < n; i ++) {
+    b[i] = rand() % 2;
+  }
+}
+
 // Gets A[i][j], where 1 <= i, j <= n.
 int AffineTrans::get_a(int i, int j) const {
   if (i < 1 || i > n || j < 1 || j > n) {

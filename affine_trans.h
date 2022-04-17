@@ -51,6 +51,9 @@ class AffineTrans {
     // determinant is 1.
     void set_random();
 
+    // Set the vector b randomly.
+    void set_random_b();
+
     // Let b[i] = v, where 1 <= i <= n.
     // If i is out of range, returns false.
     bool set_b(int i, int v);
