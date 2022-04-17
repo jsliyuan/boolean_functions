@@ -26,6 +26,9 @@ class AffineTrans {
     // Destructor.
     ~AffineTrans();
 
+    // Assignment constructor
+    AffineTrans& operator=(const AffineTrans& T);
+
     // Returns Ax + b, where both x and the result
     // is in the decimal representation.
     // Point (x1, x2, ..., xn) is represented by
@@ -121,6 +124,9 @@ class AffineTrans {
 
     // n*1 array
     int* b;
+
+    // Allocate memory and copies all data from T to this.
+    void copy_data(const AffineTrans& T);
 };
 
 #endif

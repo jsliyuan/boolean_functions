@@ -178,6 +178,14 @@ int main() {
   assert(t6_g1.get_b_str() == "1 0 0 0 0 0");
   cout << "End of test for string-format constructor" << endl;
 
+  AffineTrans t3_allone_cpy(3);
+  t3_allone_cpy = t3_allone;
+  assert(t3_allone_cpy.get_a_str() == "1 1 1\n1 1 1\n1 1 1");
+  t3_allone_cpy = t6_g1;
+  assert(t3_allone_cpy.get_n() == 6);
+  assert(t3_allone_cpy.get_ab_str() == "[100000 010000 001000 000100 000010 000001]100000");
+  cout << "End of test for assignment constructor" << endl;
+
   cout << "Everything looks good. End of all tests." << endl;
 
   return 0;

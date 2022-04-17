@@ -35,14 +35,32 @@ AffineTrans::AffineTrans(int n, int* A, int* b) {
   }
 }
 
-// Copy constructor.
-// Performs a deep copy.
-AffineTrans::AffineTrans(const AffineTrans& T) {
+// Allocate memory and copies all data from T to this.
+void AffineTrans::copy_data(const AffineTrans& T) {
   this->n = T.get_n();
   this->A = new int[n*n];
   this->b = new int[n];
   memcpy(this->A, T.A, n*n*sizeof(int));
   memcpy(this->b, T.b, n*sizeof(int));
+}
+
+// Copy constructor.
+// Performs a deep copy.
+AffineTrans::AffineTrans(const AffineTrans& T) {
+  copy_data(T);
+}
+
+// Assignment constructor
+AffineTrans& AffineTrans::operator=(const AffineTrans& T) {
+  if (A) {
+    delete A;
+  }
+  if (b) {
+    delete b;
+  }
+  copy_data(T);
+
+  return *this;
 }
 
 // Constructor with n and (A, b) in string format, e.g.,
