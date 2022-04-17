@@ -135,9 +135,9 @@ int AffineTrans::apply(int x) const {
   int vec_y[n];
   int dec = 0;
   for (int i = 0; i < n; i ++) {
-  	vec_y[i] = 0;
+  	vec_y[i] = b[i];
   	for (int j = 0; j < n; j ++) {
-  	  vec_y[i] = (vec_y[i] + vec_x[j]*A[i*n+j] + b[i]) % 2;
+  	  vec_y[i] = (vec_y[i] + vec_x[j]*A[i*n+j]) % 2;
   	}
   	dec = dec*2 + vec_y[i];
   }

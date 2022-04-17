@@ -273,7 +273,12 @@ int main() {
   assert(fn610.nonlinearity(3) == 7);
   cout << "Time taken: " << (double)(clock() - tStart)/CLOCKS_PER_SEC << " sec.";
   cout << "End of high-order nonlinearity test." << endl;
-  
+
+  AffineTrans g7_1(6, "[010000 001000 000100 000010 000001 110000]010000");
+  fn67.apply_affine_trans(g7_1);
+  fn67.trim_degree_below(4);
+  assert(fn67.get_anf() == "x2x4x5x6+x2x3x4x5x6+x1x2x4x5x6+x1x2x3x4x5x6");
+
   cout << "Everything looks good. End of all tests." << endl;
   return 0;
 }
