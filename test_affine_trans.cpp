@@ -166,6 +166,17 @@ int main() {
   trans_vec.push_back(t4_rand);
   cout << "End of test for vector" << endl;
 
+  AffineTrans t6_g1(6);
+  assert(t6_g1.set_ab("[100000 010000 001000 000100 000010 000001]100000"));
+  assert(t6_g1.get_a_str() == "1 0 0 0 0 0\n0 1 0 0 0 0\n0 0 1 0 0 0\n0 0 0 1 0 0\n0 0 0 0 1 0\n0 0 0 0 0 1");
+  assert(t6_g1.get_b_str() == "1 0 0 0 0 0");
+  assert(t6_g1.get_ab_str() == "[100000 010000 001000 000100 000010 000001]100000");
+  cout << "End of test for set_ab()" << endl;
+
+  AffineTrans t6_g1_cpy(6, "[100000 010000 001000 000100 000010 000001]100000");
+  assert(t6_g1.get_a_str() == "1 0 0 0 0 0\n0 1 0 0 0 0\n0 0 1 0 0 0\n0 0 0 1 0 0\n0 0 0 0 1 0\n0 0 0 0 0 1");
+  assert(t6_g1.get_b_str() == "1 0 0 0 0 0");
+  cout << "End of test for string-format constructor" << endl;
 
   cout << "Everything looks good. End of all tests." << endl;
 

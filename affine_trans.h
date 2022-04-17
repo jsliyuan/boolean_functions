@@ -19,6 +19,10 @@ class AffineTrans {
     // Performs a deep copy.
     AffineTrans(const AffineTrans& T);
 
+    // Constructor with n and (A, b) in string format, e.g.,
+    // [100000 010000 001000 000100 000010 000001]100000
+    AffineTrans(int n, std::string str);
+
     // Destructor.
     ~AffineTrans();
 
@@ -28,6 +32,11 @@ class AffineTrans {
     // x := x_1*2^{n-1}+x_2*2^{n-2}+...+x_n.
     // Returns -1 if x out of range [0, 2^n-1]
     int apply(int x) const;
+
+    // Given a string, set A, b. E.g.,
+    // [100000 010000 001000 000100 000010 000001]100000
+    // Returns false if there are less than n*(n+1) 0 or 1.
+    bool set_ab(std::string str);
 
     // Let A[i][j] = v, where 1 <= i, j <= n.
     // If i or j is out of range, returns false.
@@ -62,6 +71,10 @@ class AffineTrans {
 
     // Returns the dimension n.
     int get_n() const;
+
+    // Returns A and b in string format, e.g.,
+    // [100000 010000 001000 000100 000010 000001]100000
+    std::string get_ab_str() const;
 
     // Returns a as n*n matrix in string, for example,
     // 1 0 1\n

@@ -1,6 +1,7 @@
 #include "affine_trans.h"
 
 #include <iostream>
+#include <string>
 #include <time.h>
 
 using namespace std;
@@ -44,6 +45,15 @@ AffineTrans::AffineTrans(const AffineTrans& T) {
   memcpy(this->b, T.b, n*sizeof(int));
 }
 
+// Constructor with n and (A, b) in string format, e.g.,
+// [100000 010000 001000 000100 000010 000001]100000
+AffineTrans::AffineTrans(int n, std::string str) {
+  this->n = n;
+  A = new int[n*n];
+  b = new int[n];
+
+  this->set_ab(str);
+}
 
 // Destructor
 AffineTrans::~AffineTrans() {
@@ -53,6 +63,54 @@ AffineTrans::~AffineTrans() {
   if (b) {
     delete b;
   }
+}
+
+// Given a string, set A, b. E.g.,
+// [100000 010000 001000 000100 000010 000001]100000
+bool AffineTrans::set_ab(string str) {
+  int idx = 0;
+  for (int i = 0; i < n*(n+1); i ++) {
+    while (idx < str.length() && str[idx] != '0' && str[idx] != '1') {
+      idx ++;
+    }
+    if (idx >= str.length()) {
+      return false;
+    }
+    int val = (str[idx] == '1' ? 1 : 0);
+    if (i < n*n) {
+      A[i] = val;
+    } else {
+      b[i-n*n] = val;
+    }
+
+    idx ++;
+  }
+
+  return true;
+}
+
+// Returns A and b in string format, e.g.,
+// [100000 010000 001000 000100 000010 000001]100000
+std::string AffineTrans::get_ab_str() const {
+  string result = "[";
+  // Append A
+  for (int i = 0; i < n; i ++) {
+    for (int j = 0; j < n; j ++) {
+      result += std::to_string(A[i*n+j]);
+    }
+    if (i < n-1) {
+      result += " ";
+    } else {
+      result += "]";
+    }
+  }
+
+  // Append b
+  for (int i = 0; i < n; i ++) {
+    result += std::to_string(b[i]);
+  }
+
+  return result;
 }
 
 // Returns Ax + b, where both x and the result
