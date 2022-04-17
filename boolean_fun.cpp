@@ -37,8 +37,8 @@ BooleanFun::BooleanFun(int n, string anf_str) {
   compute_degree();
 }
 
-// Copy constructor.
-BooleanFun::BooleanFun(const BooleanFun& g) {
+// Allocate memory and copy all data from g to this.
+void BooleanFun::copy_data(const BooleanFun& g) {
   this->n = g.var_num();
   this->degree = g.get_degree();
   anf = new int[1<<n];
@@ -46,6 +46,24 @@ BooleanFun::BooleanFun(const BooleanFun& g) {
 
   memcpy(this->anf, g.anf, (1<<n)*sizeof(int));
   memcpy(this->truth_table, g.truth_table, (1<<n)*sizeof(int));
+}
+
+// Copy constructor.
+BooleanFun::BooleanFun(const BooleanFun& g) {
+  copy_data(g);
+}
+
+// Assignment constructor
+BooleanFun& BooleanFun::operator=(const BooleanFun& g) {
+  if (anf) {
+    delete anf;
+  }
+  if (truth_table) {
+    delete truth_table;
+  }
+
+  copy_data(g);
+  return *this;
 }
 
 // Returns the algebraic normal form of the Boolean function.

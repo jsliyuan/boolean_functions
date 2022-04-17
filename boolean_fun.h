@@ -31,6 +31,9 @@ class BooleanFun {
       return this->get_anf() == g.get_anf();
     }
 
+    // Assignment constructor
+    BooleanFun& operator=(const BooleanFun& g);
+
     // Constructor with parameters, where n is the number
     // of variables, and anf is the algebraic normal form.
     // If anf is invalid, we throw an exception.
@@ -210,6 +213,9 @@ class BooleanFun {
     // Returns the rth-order nonlinearity, where r >= 1.
     // Cut down the search if the current value is > upper_bound.
     int nonlinearity(int r, int upper_bound) const;
+
+    // Allocate memory and copy all data from g to this.
+    void copy_data(const BooleanFun& g);
 };
 
 #endif

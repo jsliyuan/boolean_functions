@@ -292,6 +292,13 @@ int main() {
   assert(fn61_copy.get_anf() == "x1x2x3x4");
   cout << "End of copy constructor test." << endl;
 
+  fn67_af_copy = fn62;
+  assert(fn67_af_copy.get_anf() == fn62.get_anf());
+  fn67_af_copy = xor3;
+  assert(fn67_af_copy.get_anf() == "x3+x2+x1");
+  assert(fn67_af_copy.var_num() == 3);
+  cout << "End of assignment constructor test." << endl;
+
   cout << "Everything looks good. End of all tests." << endl;
   return 0;
 }
