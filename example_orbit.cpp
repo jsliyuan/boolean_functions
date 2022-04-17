@@ -32,19 +32,28 @@ int count_all_mod_rm36(string fni) {
 
 int main() {
   /*
+  fn1
   cout << count_all_mod_rm36("x1x2x3x4") << endl;
+  fn2
   cout << count_all_mod_rm36("x1x2x4x5+x1x2x3x6") << endl;
+  fn3
   cout << count_all_mod_rm36("x2x3x4x5+x1x3x4x6+x1x2x5x6") << endl;
+  fn4
   cout << count_all_mod_rm36("x1x2x3x4x5") << endl;
+  fn5
   cout << count_all_mod_rm36("x1x2x3x4x5+x1x2x3x6") << endl;
+  fn6
   cout << count_all_mod_rm36("x1x2x3x4x5+x1x3x4x6+x1x2x5x6") << endl;
+  fn7
   cout << count_all_mod_rm36("x1x2x3x4x5x6") << endl;
+  fn8
   cout << count_all_mod_rm36("x1x2x3x4x5x6+x1x2x3x4") << endl;
+  fn9
   cout << count_all_mod_rm36("x1x2x3x4x5x6+x1x2x4x5+x1x2x3x6") << endl;
+  fn10
   cout << count_all_mod_rm36("x1x2x3x4x5x6+x2x3x4x5+x1x3x4x6+x1x2x5x6") << endl;
   */
-  // cout << count_all_mod_rm36("x1x2x4x5+x1x2x3x6") << endl;
-  cout << count_all_mod_rm36("x1x2x3x4x5x6+x2x3x4x5+x1x3x4x6+x1x2x5x6") << endl;
+  cout << count_all_mod_rm36("x1x2x3x4x5x6+x1x2x4x5+x1x2x3x6") << endl;
 
   return 0;
 }

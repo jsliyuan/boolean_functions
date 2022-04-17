@@ -55,3 +55,10 @@ yuanli$ g++ -o example.out example_orbit.cpp boolean_fun.cpp affine_trans.cpp
 
 yuanli$ ./example.out
 
+### bfs_orbit.cpp
+Use BFS to find the full orbit of a given Boolean function under affine transformation.
+
+yuanli$ g++ -o bfs.out bfs_orbit.cpp boolean_fun.cpp affine_trans.cpp
+
+yuanli$ ./bfs.out
+
