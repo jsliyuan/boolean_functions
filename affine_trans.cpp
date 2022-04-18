@@ -1,5 +1,6 @@
 #include "affine_trans.h"
 
+#include <cstring>
 #include <iostream>
 #include <string>
 #include <time.h>
