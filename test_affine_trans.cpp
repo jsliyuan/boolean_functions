@@ -159,7 +159,8 @@ int main() {
   AffineTrans t4_rand(4);
   cout << "Generate a random nonsingular 4*4 matrix" << endl;
   t4_rand.set_random();
-  cout << t4_rand.get_a_str() << endl;
+  t4_rand.set_random_b();
+  cout << t4_rand.get_ab_str() << endl;
   cout << "End of test for t4_rand" << endl;
 
   vector<AffineTrans> trans_vec;
@@ -184,7 +185,21 @@ int main() {
   t3_allone_cpy = t6_g1;
   assert(t3_allone_cpy.get_n() == 6);
   assert(t3_allone_cpy.get_ab_str() == "[100000 010000 001000 000100 000010 000001]100000");
-  cout << "End of test for assignment constructor" << endl;
+  cout << "End of test for assignment operator" << endl;
+
+  AffineTrans t4_shift(4, "[0100 0010 0001 1000]1001");
+  assert(t4_shift.mult(t4_identity));
+  assert(t4_shift.get_ab_str() == "[0100 0010 0001 1000]1001");
+  AffineTrans t4_gen1(4, "[1000 0100 0010 1001]0100");
+  assert(t4_shift.mult(t4_gen1));
+  assert(t4_shift.get_ab_str() == "[0100 0010 1001 1000]0001");
+  // Assume t4_rand = Ax + b
+  // t4_rand*(A^{-1}x) = x + b
+  AffineTrans t4_rand_inv = t4_rand;
+  t4_rand_inv.inverse();
+  t4_rand.mult(t4_rand_inv);
+  assert(t4_rand.get_a_str() == "1 0 0 0\n0 1 0 0\n0 0 1 0\n0 0 0 1");
+  cout << "End of test for mult" << endl;
 
   cout << "Everything looks good. End of all tests." << endl;
 

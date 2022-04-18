@@ -31,7 +31,7 @@ class BooleanFun {
       return this->get_anf() == g.get_anf();
     }
 
-    // Assignment constructor
+    // Assignment operator
     BooleanFun& operator=(const BooleanFun& g);
 
     // Constructor with parameters, where n is the number

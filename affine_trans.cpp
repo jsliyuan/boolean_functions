@@ -398,3 +398,55 @@ bool AffineTrans::inverse() {
 
   return true;
 }
+
+// Helper function, matrix multplication
+// n is the dimension, and dest = M1*M2
+// M[i][j] -> M[(i-1)*n + (j-1)]
+void AffineTrans::matrix_mult(int n, int* dest, int* M1, int* M2) {
+  for (int i = 0; i < n; i ++) {
+    for (int j = 0; j < n; j ++) {
+      // dest[i+1][j+1]
+      dest[i*n+j] = 0;
+      for (int k = 0; k < n; k ++) {
+        // dest[i+1][j+1] += M1[i+1][k+1]*M2[k+1][j+1]
+        dest[i*n+j] = dest[i*n+j] ^ (M1[i*n+k] & M2[k*n+j]);
+      }
+    }
+  }
+}
+
+// Helper function, matrix * vector of dimension n
+// dest = A*b
+// A[i][j] -> A[(i-1)*n + (j-1)]
+void AffineTrans::matrix_vec_mult(int n, int *dest, int* A, int* b) {
+  // dest = A*b
+  // => dest[i] = \sum_j A[i][j]*b[j]
+  for (int i = 0; i < n; i ++) {
+    dest[i] = 0;
+    for (int j = 0; j < n; j ++) {
+      dest[i] = dest[i] ^ (A[i*n+j] & b[j]);
+    }
+  }
+}
+
+// Let this = this * T, where T is applied first, i.e.,
+// this(T(x)) = this(T.Ax + T.b)
+//            = A*T.Ax + A*T.b + b
+// Returns false if the dimension does not match.
+bool AffineTrans::mult(const AffineTrans& T) {
+  if (this->n != T.get_n()) {
+    return false;
+  }
+
+  int new_A[n*n];
+  int new_b[n];
+
+  matrix_mult(n, new_A, this->A, T.A);
+  matrix_vec_mult(n, new_b, this->A, T.b);
+
+  memcpy(A, new_A, n*n*sizeof(int));
+  for (int i = 0; i < n; i ++) {
+    b[i] = b[i] ^ new_b[i];
+  }
+  return true;
+}

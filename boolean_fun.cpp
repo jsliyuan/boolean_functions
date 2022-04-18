@@ -53,7 +53,7 @@ BooleanFun::BooleanFun(const BooleanFun& g) {
   copy_data(g);
 }
 
-// Assignment constructor
+// Assignment operator
 BooleanFun& BooleanFun::operator=(const BooleanFun& g) {
   if (anf) {
     delete anf;

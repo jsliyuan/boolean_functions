@@ -26,7 +26,7 @@ class AffineTrans {
     // Destructor.
     ~AffineTrans();
 
-    // Assignment constructor
+    // Assignment operator
     AffineTrans& operator=(const AffineTrans& T);
 
     // Returns Ax + b, where both x and the result
@@ -100,12 +100,10 @@ class AffineTrans {
     std::unordered_set<int>  get_rows_span(int i, int j) const;
 
     // Let this = this * T, where T is applied first, i.e.,
-    // this(T(x))
-    // bool compose(const AffineTrans& T);
-
-    // Let this = T * this, where this is applied first, i.e.,
-    // T(this(x))
-    // bool compose_last(const AffineTrans& T);
+    // this(T(x)) = this(T.Ax + T.b)
+    //            = A*T.Ax + A*T.b + T.b
+    // Returns false if the dimension does not match.
+    bool mult(const AffineTrans& T);
 
     // Returns the determinant of A, which is 0 or 1.
     int det() const;
@@ -114,19 +112,31 @@ class AffineTrans {
     // If A is not invertible, returns false.
     bool inverse();
 
-  private:
-    // dimension
-    int n;
-
+    // ACCESS TO MEMBER VARIABLE. BE CAREFUL!
     // n*n matrix
     // (i, j) maps to (i-1)*n+(j-1), where i, j in [1,n]
     int* A;
 
+    // ACCESS TO MEMBER VARIABLE. BE CAREFUL!
     // n*1 array
     int* b;
 
+  private:
+    // dimension
+    int n;
+
     // Allocate memory and copies all data from T to this.
     void copy_data(const AffineTrans& T);
+
+    // Helper function, matrix multplication
+    // n is the dimension, and dest = M1*M2
+    // M[i][j] -> M[(i-1)*n + (j-1)]
+    void matrix_mult(int n, int* dest, int* M1, int* M2);
+
+    // Helper function, matrix * vector of dimension n
+    // dest = A*b
+    // A[i][j] -> A[(i-1)*n + (j-1)]
+    void matrix_vec_mult(int n, int *dest, int* A, int* b);
 };
 
 #endif
