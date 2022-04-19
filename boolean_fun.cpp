@@ -89,7 +89,15 @@ std::string BooleanFun::get_anf() const {
 string BooleanFun::get_coe_list() const {
   string result = "";
   for (int i = 0; i < (1<<n); i ++) {
-    result += std::to_string(anf[i]);
+    if (anf[i] == 0) {
+      result += "0";
+    }
+    if (anf[i] == 1) {
+      result += "1";
+    }
+    if (anf[i] != 0 && anf[i] != 1) {
+      cout << "ERROR: invalid anf[" << i << "] = " << anf[i] << endl;
+    }
   }
 
   return result;
@@ -177,11 +185,18 @@ bool BooleanFun::set_anf(std::string anf_str) {
 // Returns false if coe_list is invalid, where
 // coe_list should be a 01 string of length 2^n.
 bool BooleanFun::set_coe_list(std::string coe_list) {
-  if (coe_list.length() != (1<<n)) {
-    return false;
-  }
+  int idx = 0;
   for (int i = 0; i < (1<<n); i ++) {
-    anf[i] = (coe_list[i] == '1' ? 1 : 0);
+    while (idx < coe_list.length() &&
+           coe_list[idx] != '0' && coe_list[idx] != '1') {
+      idx ++;
+    }
+    if (idx >= coe_list.length()) {
+      cout << "ERROR: coe_list is too short!";
+      return false;
+    }
+    anf[i] = (coe_list[idx] == '1' ? 1 : 0);
+    idx ++;
   }
 
   // Compute truth_table using anf

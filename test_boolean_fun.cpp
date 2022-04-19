@@ -6,6 +6,19 @@
 
 using namespace std;
 
+// s1, s2 are 01 string of the same length
+// Return the bitwise xor (as a string).
+string string_xor(string s1, string s2) {
+  string result = "";
+  for (int i = 0; i < s1.length(); i ++) {
+    if ((s1[i] == '0' && s2[i] == '1') ||(s1[i] == '1' && s2[i] == '0'))
+      result += "1";
+    else
+      result += "0";
+  }
+  return result;
+}
+
 int main() {
   BooleanFun f(6);
   assert(f.var_num() == 6);
@@ -298,6 +311,20 @@ int main() {
   assert(fn67_af_copy.get_anf() == "x3+x2+x1");
   assert(fn67_af_copy.var_num() == 3);
   cout << "End of assignment constructor test." << endl;
+
+  BooleanFun fn6a(6, "x1x2x6+x1x2x5");
+  assert(fn6a.get_coe_list() == "0000000000000000000000000000000000000000000000000110000000000000");
+  fn6a.set_coe_list(fn6a.get_coe_list());
+  assert(fn6a.get_anf() == "x1x2x6+x1x2x5");
+  BooleanFun fn6b(6, "x2x3x6+x1x5x6+x1x4x6+x1x3x5+x1x2x5+x1x2x4");
+  assert(fn6b.get_coe_list() == "0000000000000000000000000100000000010100001000000010100000000000");
+  fn6b.set_coe_list(fn6b.get_coe_list());
+  assert(fn6b.get_anf() == "x2x3x6+x1x5x6+x1x4x6+x1x3x5+x1x2x5+x1x2x4");
+  BooleanFun fn6apb = fn6a;
+  fn6apb.add(fn6b);
+  assert(fn6apb.get_anf() == "x2x3x6+x1x5x6+x1x4x6+x1x3x5+x1x2x6+x1x2x4");
+  assert(fn6apb.get_coe_list() == string_xor(fn6a.get_coe_list(), fn6b.get_coe_list()));
+  cout << "End of get_coe_list and set_coe_list test." << endl;
 
   cout << "Everything looks good. End of all tests." << endl;
   return 0;
