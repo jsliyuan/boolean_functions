@@ -62,3 +62,11 @@ yuanli$ g++ -o bfs.out bfs_orbit.cpp boolean_fun.cpp affine_trans.cpp
 
 yuanli$ ./bfs.out
 
+### ffn_distribution.cpp
+Compute F_f(r) = {homo g : nl_2(f+g) = r}, and wrtie the results into a file.
+
+The file is ~400MB, and it takes about one day to finish
+
+yuanli$ g++ -o ffn.out ffn_distribution.cpp boolean_fun.cpp homogenous_bf_generator.cpp affine_trans.cpp
+
+yuanli$ ./ffn.out
