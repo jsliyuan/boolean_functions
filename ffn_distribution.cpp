@@ -61,7 +61,7 @@ int main() {
   fn10 "x1x2x3x4x5x6+x2x3x4x5+x1x3x4x6+x1x2x5x6"
   */
   ofstream myfile;
-  myfile.open("Ff10.txt");
+  myfile.open("Ff6.txt");
   //count("x1x2x4x5+x1x2x3x6");
   string anf;
   cout << "Please provide the ANF:";
