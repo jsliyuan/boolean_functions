@@ -70,3 +70,10 @@ The file is ~120MB, and it takes about one day to finish
 yuanli$ g++ -o ffn.out ffn_distribution.cpp boolean_fun.cpp homogenous_bf_generator.cpp affine_trans.cpp
 
 yuanli$ ./ffn.out
+
+### verification.cpp
+Verify that f6(Ax+b) + g || f10 must have nl3 < 21.
+
+yuanli$ g++ -o verification.out verification.cpp boolean_fun.cpp homogenous_bf_generator.cpp affine_trans.cpp
+
+yuanli$ ./verification.out
