@@ -547,6 +547,8 @@ int BooleanFun::inner_product(int x, int y) const {
 
 // Returns the first-order nonlinearity, which is
 // 2^{n-1} - max_w |walsh_transform(w)| / 2.
+// Computed using FFT (Fast Fourier Transform)
+// Time complexity is O(n2^n)
 int BooleanFun::nonlinearity() const {
   // Fast Fourier Transform
   int buf[(1<<n)];
