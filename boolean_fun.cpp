@@ -1,5 +1,5 @@
 #include "boolean_fun.h"
-
+#include <memory.h>
 #include <iostream>
 #include <vector>
 
@@ -548,7 +548,8 @@ int BooleanFun::inner_product(int x, int y) const {
 // Returns the first-order nonlinearity, which is
 // 2^{n-1} - max_w |walsh_transform(w)| / 2.
 int BooleanFun::nonlinearity() const {
-  int max_w = 0;
+ //According to definition of nl=2^{n-1} - max_w |walsh_transform(w)| / 2.
+ /* int max_w = 0;
   int sum[(1<<n)];
   for (int w = 0; w < (1 << n); w ++) {
     sum[w] = 0;
@@ -577,7 +578,31 @@ int BooleanFun::nonlinearity() const {
     }
   }
 
-  return (1<<(n-1)) - max_w/2;
+  return (1<<(n-1)) - max_w/2;*/
+  
+  // Fast Fourier Transform
+  int buf[(1<<n)];
+  int tt[(1<<n)];
+
+  for(int m=0;m< (1<<n);m++)
+  {
+    if(truth_table[m]==1)
+    tt[m]=-1;
+    else
+    tt[m]=1;
+  }
+  register int i, j, k;
+  for (i = 0; i < n; ++i) {
+    for (j = 0; j < 1<<(n-1); ++j) {
+      k = j << 1;
+      buf[j] = tt[k] + tt[k + 1];
+      buf[j + (1<<(n-1))] = tt[k] - tt[k + 1];
+    }
+  memcpy(tt, buf,  (1<<n)*sizeof(int));
+ }
+ int max = 0;
+ for (i = 0; i < 1<<(n); ++i)if (abs(tt[i]) > max)max = abs(tt[i]);
+ return (1<<(n-1)) - (max >> 1);
 }
 
 // Returns the rth-order nonlinearity.
