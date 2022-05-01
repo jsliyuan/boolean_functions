@@ -78,6 +78,11 @@ class BooleanFun {
     // The degree and ANF will be computed then.
     void set_truth_table_done();
 
+    // Sets the truth table at random, i.e.,
+    // For every x in [0, 2^n-1], set f(x) = 0 / 1 uniformly
+    // at random.
+    void set_truth_table_random();
+
     // Destructor
     ~BooleanFun();
 

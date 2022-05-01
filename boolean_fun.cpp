@@ -1,5 +1,6 @@
 #include "boolean_fun.h"
 #include <memory.h>
+#include <time.h>
 #include <iostream>
 #include <vector>
 
@@ -15,6 +16,9 @@ BooleanFun::BooleanFun(int n) {
     anf[i] = 0;
   }
   degree = 0;
+
+  // initialize random seed
+  srand(time(NULL));
 }
 
 // Constructor with parameters, where n is the number
@@ -35,6 +39,9 @@ BooleanFun::BooleanFun(int n, string anf_str) {
   // Compute truth_table using anf
   anf_to_truth_table();
   compute_degree();
+
+  // initialize random seed
+  srand(time(NULL));
 }
 
 // Allocate memory and copy all data from g to this.
@@ -132,6 +139,16 @@ bool BooleanFun::set_truth_table(int x, int v) {
 void BooleanFun::set_truth_table_done() {
   this->truth_table_to_anf();
   this->compute_degree();
+}
+
+// Sets the truth table at random, i.e.,
+// For every x in [0, 2^n-1], set f(x) = 0 / 1 uniformly
+// at random.
+void BooleanFun::set_truth_table_random() {
+  for (int i = 0; i < (1<<n); i ++) {
+    this->truth_table[i] = rand() % 2;
+  }
+  set_truth_table_done();
 }
 
 // Resets the ANF.

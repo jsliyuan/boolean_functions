@@ -326,6 +326,12 @@ int main() {
   assert(fn6apb.get_coe_list() == string_xor(fn6a.get_coe_list(), fn6b.get_coe_list()));
   cout << "End of get_coe_list and set_coe_list test." << endl;
 
+  BooleanFun fn6_rand(6);
+  fn6_rand.set_truth_table_random();
+  cout << "Generate a random 6-variable Boolean function" << endl;
+  cout << fn6_rand.get_anf() << endl;
+  cout << "End of set_truth_table_random test." << endl;
+
   cout << "Everything looks good. End of all tests." << endl;
   return 0;
 }
