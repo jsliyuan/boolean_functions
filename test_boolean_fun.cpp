@@ -335,9 +335,9 @@ int main() {
   BooleanFun f9a(9);
   f9a.set_truth_table_hex("125425D30A398F36508C06817BEE122E250D973314F976AED58A3EA9120DA4FE0E4D4575C42DD0426365EBA7FC5F45BE9B2F336981B5E1863618F49474F6FE00");
   f9a.set_truth_table_done();
-   assert(f9a.var_num() == 9);
+  assert(f9a.var_num() == 9);
   cout<<f9a.get_anf()<<endl;
-  cout<<f9a.nonlinearity()<<endl;
+  assert(f9a.nonlinearity() == 242);
   BooleanFun sub0_f9a = f9a.sub_function(0);
   assert(sub0_f9a.var_num() == 8);
   cout<<sub0_f9a.get_anf()<<endl;
@@ -352,7 +352,7 @@ int main() {
   f9b.set_truth_table_done();
   assert(f9b.var_num() == 9);
   cout<<f9b.get_anf()<<endl;
-  cout<<f9b.nonlinearity()<<endl;
+  assert(f9b.nonlinearity() == 242);
   BooleanFun sub0_f9b = f9b.sub_function(0);
   assert(sub0_f9b.var_num() == 8);
   cout<<sub0_f9b.get_anf()<<endl;
@@ -367,7 +367,7 @@ int main() {
   f9c.set_truth_table_done();
   assert(f9c.var_num() == 9);
   cout<<f9c.get_anf()<<endl;
-  cout<<f9c.nonlinearity()<<endl;
+  assert(f9c.nonlinearity() == 242);
   BooleanFun sub0_f9c = f9c.sub_function(0);
   assert(sub0_f9c.var_num() == 8);
   cout<<sub0_f9c.get_anf()<<endl;
@@ -382,7 +382,7 @@ int main() {
   f9d.set_truth_table_done();
   assert(f9d.var_num() == 9);
   cout<<f9d.get_anf()<<endl;
-  cout<<f9d.nonlinearity()<<endl;
+  assert(f9d.nonlinearity() == 242);
   BooleanFun sub0_f9d = f9d.sub_function(0);
   assert(sub0_f9d.var_num() == 8);
   cout<<sub0_f9d.get_anf()<<endl;
@@ -397,7 +397,7 @@ int main() {
   f9e.set_truth_table_done();
   assert(f9e.var_num() == 9);
   cout<<f9e.get_anf()<<endl;
-  cout<<f9e.nonlinearity()<<endl;
+  assert(f9e.nonlinearity() == 242);
   BooleanFun sub0_f9e = f9e.sub_function(0);
   assert(sub0_f9e.var_num() == 8);
   cout<<sub0_f9e.get_anf()<<endl;
