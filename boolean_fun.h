@@ -78,6 +78,12 @@ class BooleanFun {
     // The degree and ANF will be computed then.
     void set_truth_table_done();
 
+    //Convert hexadecimal string to binary string, and 
+    // set the truth_table[x] to v, where
+    // x is in [0, 2^n-1], and v is 0 or 1.
+    // Returns false if x or v is out of range.
+    bool set_truth_table_hex(std::string str);
+  
     // Sets the truth table at random, i.e.,
     // For every x in [0, 2^n-1], set f(x) = 0 / 1 uniformly
     // at random.
