@@ -332,6 +332,81 @@ int main() {
   cout << fn6_rand.get_anf() << endl;
   cout << "End of set_truth_table_random test." << endl;
 
+  BooleanFun f9a(9);
+  f9a.set_truth_table_hex("125425D30A398F36508C06817BEE122E250D973314F976AED58A3EA9120DA4FE0E4D4575C42DD0426365EBA7FC5F45BE9B2F336981B5E1863618F49474F6FE00");
+  f9a.set_truth_table_done();
+   assert(f9a.var_num() == 9);
+  cout<<f9a.get_anf()<<endl;
+  cout<<f9a.nonlinearity()<<endl;
+  BooleanFun sub0_f9a = f9a.sub_function(0);
+  assert(sub0_f9a.var_num() == 8);
+  cout<<sub0_f9a.get_anf()<<endl;
+  cout<<sub0_f9a.nonlinearity()<<endl;
+  BooleanFun sub1_f9a = f9a.sub_function(1);
+  cout<<sub1_f9a.get_anf()<<endl;
+  cout<<sub1_f9a.nonlinearity()<<endl;
+  cout << "End of test for sub_function() for f9a." << endl;
+  
+  BooleanFun f9b(9);
+  f9b.set_truth_table_hex("68B7EF2DA03B0D3EA00DB6A96DD99AEAFDB9C842B6D5DC8C4526CE0DD29020DBB75FE3314568344E73688FF0CB2482E065231869E1AA4583765CC491F8A8DB12");
+  f9b.set_truth_table_done();
+  assert(f9b.var_num() == 9);
+  cout<<f9b.get_anf()<<endl;
+  cout<<f9b.nonlinearity()<<endl;
+  BooleanFun sub0_f9b = f9b.sub_function(0);
+  assert(sub0_f9b.var_num() == 8);
+  cout<<sub0_f9b.get_anf()<<endl;
+  cout<<sub0_f9b.nonlinearity()<<endl;
+  BooleanFun sub1_f9b = f9b.sub_function(1);
+  cout<<sub1_f9b.get_anf()<<endl;
+  cout<<sub1_f9b.nonlinearity()<<endl;
+  cout << "End of test for sub_function() for f9b." << endl;
+
+  BooleanFun f9c(9);
+  f9c.set_truth_table_hex("3740B6A118A1E19642A85E2B7E2F3C3CB65FA0D95EC9DB1EA92BDB3666185AE0087F5FE6E0757106A12FC918754C40E8A1BCCB7A714032A8961456E066E8A801");
+  f9c.set_truth_table_done();
+  assert(f9c.var_num() == 9);
+  cout<<f9c.get_anf()<<endl;
+  cout<<f9c.nonlinearity()<<endl;
+  BooleanFun sub0_f9c = f9c.sub_function(0);
+  assert(sub0_f9c.var_num() == 8);
+  cout<<sub0_f9c.get_anf()<<endl;
+  cout<<sub0_f9c.nonlinearity()<<endl;
+  BooleanFun sub1_f9c = f9c.sub_function(1);
+  cout<<sub1_f9c.get_anf()<<endl;
+  cout<<sub1_f9c.nonlinearity()<<endl;
+  cout << "End of test for sub_function() for f9c." << endl;
+  
+  BooleanFun f9d(9);
+  f9d.set_truth_table_hex("7B8F94BAD364DAC9931906F9465FF33E921E13D7552DAFD684757B662FDA3C68FA8D94B3C3659B5FCC46FD1518050F97A1E02039AAF74337134F30AB5B41D9DE");
+  f9d.set_truth_table_done();
+  assert(f9d.var_num() == 9);
+  cout<<f9d.get_anf()<<endl;
+  cout<<f9d.nonlinearity()<<endl;
+  BooleanFun sub0_f9d = f9d.sub_function(0);
+  assert(sub0_f9d.var_num() == 8);
+  cout<<sub0_f9d.get_anf()<<endl;
+  cout<<sub0_f9d.nonlinearity()<<endl;
+  BooleanFun sub1_f9d = f9d.sub_function(1);
+  cout<<sub1_f9d.get_anf()<<endl;
+  cout<<sub1_f9d.nonlinearity()<<endl;
+  cout << "End of test for sub_function() for f9d." << endl;
+
+  BooleanFun f9e(9);
+  f9e.set_truth_table_hex("0331786B34D878855663A2E961F1CB4F779EBBF6881ABB24AC033E6C2B32E0493D0891DB1888EA5E6F910310311532FC68D5F2A4B5BE6445E41F64299F0CC99A");
+  f9e.set_truth_table_done();
+  assert(f9e.var_num() == 9);
+  cout<<f9e.get_anf()<<endl;
+  cout<<f9e.nonlinearity()<<endl;
+  BooleanFun sub0_f9e = f9e.sub_function(0);
+  assert(sub0_f9e.var_num() == 8);
+  cout<<sub0_f9e.get_anf()<<endl;
+  cout<<sub0_f9e.nonlinearity()<<endl;
+  BooleanFun sub1_f9e = f9e.sub_function(1);
+  cout<<sub1_f9e.get_anf()<<endl;
+  cout<<sub1_f9e.nonlinearity()<<endl;
+  cout << "End of test for sub_function() for f9e." << endl;
+  
   cout << "Everything looks good. End of all tests." << endl;
   return 0;
 }
