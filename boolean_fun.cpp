@@ -141,6 +141,47 @@ void BooleanFun::set_truth_table_done() {
   this->compute_degree();
 }
 
+// Convert hexadecimal string to binary string, and 
+// set the truth_table[x] to v, where
+// x is in [0, 2^n-1], and v is 0 or 1.
+// Returns false if x or v is out of range.
+bool BooleanFun::set_truth_table_hex(string str) {
+  string sReturn;
+  unsigned int length=str.length();
+  for(int i=0;i<length;i++)
+  {
+    switch (str[i])
+    {
+      case '0': sReturn.append("0000");break;
+      case '1': sReturn.append("0001");break;
+      case '2': sReturn.append("0010");break;
+      case '3': sReturn.append("0011");break;
+      case '4': sReturn.append("0100");break;
+      case '5': sReturn.append("0101");break;
+      case '6': sReturn.append("0110");break;
+      case '7': sReturn.append("0111");break;
+      case '8': sReturn.append("1000");break;
+      case '9': sReturn.append("1001");break;
+      case 'A': sReturn.append("1010");break;
+      case 'B': sReturn.append("1011");break;
+      case 'C': sReturn.append("1100");break;
+      case 'D': sReturn.append("1101");break;
+      case 'E': sReturn.append("1110");break;
+      case 'F': sReturn.append("1111");break;
+    }
+  }
+  unsigned int length1=sReturn.length();
+  for(int i=0;i<length1;i++)
+  {
+    switch (sReturn[i])
+    {
+      case '0': truth_table[i] = 0;break;
+      case '1': truth_table[i] = 1;break;
+    }
+  }
+  return true;
+}
+
 // Sets the truth table at random, i.e.,
 // For every x in [0, 2^n-1], set f(x) = 0 / 1 uniformly
 // at random.
