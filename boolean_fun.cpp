@@ -163,11 +163,17 @@ bool BooleanFun::set_truth_table_hex(string str) {
       case '8': sReturn.append("1000");break;
       case '9': sReturn.append("1001");break;
       case 'A': sReturn.append("1010");break;
+      case 'a': sReturn.append("1010");break;
       case 'B': sReturn.append("1011");break;
+      case 'b': sReturn.append("1011");break;
       case 'C': sReturn.append("1100");break;
+      case 'c': sReturn.append("1100");break;
       case 'D': sReturn.append("1101");break;
+      case 'd': sReturn.append("1101");break;
       case 'E': sReturn.append("1110");break;
+      case 'e': sReturn.append("1110");break;
       case 'F': sReturn.append("1111");break;
+      case 'f': sReturn.append("1111");break;
     }
   }
   unsigned int length1=sReturn.length();
