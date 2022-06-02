@@ -63,7 +63,7 @@ bool Permutation::set(int idx, int val){
   return true;
 }
 
-std::string Permutation::get_str(){
+std::string Permutation::get_str() const {
   string result ="";
   for (int i = 0; i < n; i ++) {
     if(i<n-1)
@@ -96,7 +96,7 @@ Permutation::Permutation(const Permutation& P){
 }
 
 int Permutation::var_num() const {
-  return n;
+  return this->n;
 }
 
 void Permutation::left_mult(const Permutation& perm1){
@@ -128,3 +128,4 @@ Permutation::~Permutation()
 {
   delete perm;
 }
+
