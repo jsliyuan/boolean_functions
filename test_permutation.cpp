@@ -9,6 +9,7 @@ using namespace std;
 
 int main() {
   Permutation p(6);
+  assert(p.var_num() == 6);
   assert(p.get_str()=="1,2,3,4,5,6");
   p.set("3,4,5,6,1,2");
   assert(p.get_str()=="3,4,5,6,1,2");
@@ -52,7 +53,13 @@ int main() {
   assert(term[6]==5);
   assert(term[7]==6);
   assert(term[8]==7);
-  
+
+  Permutation p_same(9);
+  int num1[]={2,3,4,5,6,7,8,9,1};
+  p_same.set(num1);
+  assert(p_9.var_num()==9);
+  assert(p_9==p_same);
+
   cout << "Everything looks good. End of all tests." << endl;
   return 0;
 }
