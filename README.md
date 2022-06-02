@@ -65,7 +65,7 @@ yuanli$ ./bfs.out
 ### ffn_distribution.cpp
 Compute F_f(r) = {homo g : nl_2(f+g) = r}, and wrtie the results into a file.
 
-The file is ~120MB, and it takes about one day to finish
+The file is ~100MB, and it takes about one day to finish
 
 yuanli$ g++ -o ffn.out ffn_distribution.cpp boolean_fun.cpp homogenous_bf_generator.cpp affine_trans.cpp
 
