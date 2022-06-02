@@ -45,12 +45,10 @@ class Permutation {
     // this = this * perm
     void right_mult(const Permutation& perm1);
   
-    // array of length n
-    
-
   private:
     int n;
 
+    // array of length n  
     int* perm;
 
     void copy_data(const Permutation& perm1);
