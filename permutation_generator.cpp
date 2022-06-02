@@ -21,8 +21,11 @@ Permutation::Permutation(int n) {
 }
 
 bool Permutation::set(int* perm1) {
-  if((int) sizeof(perm)>n) {
+  if((int) sizeof(perm)>n-1) {
     cout<<"ERR: too many numbers in set()"<<endl;
+  }
+  if((int) sizeof(perm)<n-1) {
+    cout<<"ERR: too few numbers in set()"<<endl;
   }
   for(int i=0;i<n;i++) {
     this->perm[i]=perm1[i];
@@ -35,12 +38,16 @@ bool Permutation::set(string perm1) {
   string item;
   int num=0;
   while (std::getline(text_stream, item, ',')) {
-      this->perm[num]=stoi(item); 
-      num++;
-      if(num>n) {
-        cout << "ERR: too many numbers in set()"<<endl;
-        return false;
-      }
+    this->perm[num]=stoi(item); 
+    num++;
+    if(num>n) {
+      cout << "ERR: too many numbers in set()"<<endl;
+      return false;
+    }
+  }
+  if(num<n) {
+    cout << "ERR: too few numbers in set()"<<endl;
+    return false;
   }
   return true;
 }
@@ -68,6 +75,8 @@ std::string Permutation::get_str(){
 }
 
 void Permutation::copy_data(const Permutation& perm1) {
+  //if(this->perm)
+  //  delete this->perm;
   this->n = perm1.var_num();
   this->perm = new int[n];
   memcpy(this->perm, perm1.perm, n*sizeof(int));
@@ -119,4 +128,3 @@ Permutation::~Permutation()
 {
   delete perm;
 }
-
