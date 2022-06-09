@@ -1,5 +1,5 @@
-#ifndef PERMUTATION_GENERATOR_H
-#define PERMUTATION_GENERATOR_H
+#ifndef PERMUTATION_H
+#define PERMUTATION_H
 
 #include <string>
 #include <unordered_set>
