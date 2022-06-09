@@ -14,6 +14,8 @@ NonsingularGenerator: generates all nonsingular n-by-n matrices one by one.
 
 HomogenousBfGenerator: generates all homogenous Boolean functions of degree r
 
+Permutation: permutation table of the binary input x.
+
 ## How to test
 ### BooleanFun class
 yuanli$ g++ -o test.out test_boolean_fun.cpp boolean_fun.cpp affine_trans.cpp
@@ -24,6 +26,11 @@ yuanli$ ./test.out
 yuanli$ g++ -o test.out test_affine_trans.cpp affine_trans.cpp 
 
 yuanli$ ./test.out
+
+### Permutation class
+$ g++ -o test.out test_permutation.cpp permutation.cpp 
+
+$ ./test.out
 
 ### UpperDiagGenerator
 yuanli$ g++ -o test.out test_upper_diag_generator.cpp upper_diag_generator.cpp affine_trans.cpp
