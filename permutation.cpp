@@ -1,4 +1,4 @@
-#include "permutation_generator.h"
+#include "permutation.h"
 
 #include <cstring>
 #include <iostream>
