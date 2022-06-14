@@ -18,34 +18,31 @@ RotationSym::RotationSym(int n) {
   perms.clear();
 
   //initialize permuration 
-  for (int i=1;i<n+1;i++)
-  {
+  for (int i=1;i<n+1;i++) {
     int num=i;
-    Permutation p(n);
+    Permutation *p = new Permutation(n);
     for (int j=1;j<n+1;j++){
       if (num<n+1)
-        p.set(j,num);
+        (*p).set(j,num);
       else 
-        p.set(j,num-n);     
+        (*p).set(j,num-n);     
       num++;
     }
-    perms.push_back(p);
+    perms.push_back(*p);
     //cout<< p.get_str()<<endl;
   }
 
   int count=0;
   for (int i=0;i<(1<<n);i++) {
-    vector<int> a;
+    vector<int> bin;
     int num1;
-    
-    const int* term;
 
     // transform decimal to binary
     int number=i;
     for (int t =n-1; t>-1; t--) {
       num1= (number>>t) ;
       number =number- num1*(pow(2,t));
-      a.push_back(num1);
+      bin.push_back(num1);
     }
     // check the result 
     /*for (int z =0; z<n; z++) {
@@ -53,13 +50,13 @@ RotationSym::RotationSym(int n) {
     }
     cout<<endl;*/
 
-    vector <int>::iterator iter;
+    vector <int>::iterator iter1;
     int flag=0;
 
     // whether the orbit of i has been found
     for(vector<vector<int> >::iterator it=orbits.begin();it!=orbits.end();it++) {
-      iter=find((*it).begin(),(*it).end(),i);
-      if(iter!=(*it).end()) {
+      iter1=find((*it).begin(),(*it).end(),i);
+      if(iter1!=(*it).end()) {
         flag=1;
         break;
       } 
@@ -71,18 +68,18 @@ RotationSym::RotationSym(int n) {
       count++;
       int value=0;
       vector<int> b;
-      int* store;
+      
       for (vector<Permutation>:: iterator iter=perms.begin();iter!=perms.end();iter++) {
-        term= (*iter).get_perm();
-        /*for (int j=0;j<n;j++) {
-          cout<<term[j]<<" ";
-        }*/
+        const int* term=(*iter).get_perm();
+        
         //cout<<(*iter).get_str()<<endl;
 
         // permutation of i
+        int* store;
+        store=new int[n];
         for (int j=0;j<n;j++) {
           int pos=term[j]-1;
-          store[j]=a[pos];
+          store[j]=bin[pos];
         }
         
         /*for (int m=0;m<n;m++) {
@@ -118,8 +115,13 @@ RotationSym::RotationSym(int n) {
 void RotationSym::copy_data(const RotationSym& RS) {
   this->n = RS.get_n();
   this->perms.clear();
+  this->orbits.clear();
   for (const Permutation &it: RS.perms) {
     this->perms.push_back(it);
+  }
+
+  for (const vector<int> &itt: RS.orbits) {
+    this->orbits.push_back(itt);
   }
 }
 
@@ -135,13 +137,11 @@ RotationSym& RotationSym::operator=(const RotationSym& RS) {
 }
 
 // Returns the orbit of i .
-vector<int> RotationSym::get_orbit(int i) {
+std::vector<int> RotationSym::get_orbit(int i) {
   vector<int> c;
   vector<int> d;
   int num;
   int value=0;
-  const int* term;
-  int* store;
   // decimal to binary
   int number=i;
   for (int t =n-1; t>-1; t--) {
@@ -154,9 +154,12 @@ vector<int> RotationSym::get_orbit(int i) {
   }
   cout<<endl;*/
 
-  for (vector<Permutation>:: iterator iter=perms.begin();iter!=perms.end();iter++) {
-    term= (*iter).get_perm();
+  for (vector<Permutation>:: iterator iter= this->perms.begin();iter!=this->perms.end();iter++) {
+    const int* term=(*iter).get_perm();
+    
     // permutation of i
+    int* store;
+    store=new int[n];
     for (int j=0;j<n;j++) {
       int pos=term[j]-1;
       store[j]=c[pos];
@@ -175,7 +178,12 @@ vector<int> RotationSym::get_orbit(int i) {
     }
     value=0;
   }
+  
   return d;
+}
+
+std::vector<int> RotationSym::get_orbit_order(int i) const {
+  return orbits.at(i);
 }
 
 int RotationSym::get_orbits_number() const {
