@@ -1,65 +1,41 @@
-#ifndef PERMUTATION_GENERATOR_H
-#define PERMUTATION_GENERATOR_H
+#ifndef NONSINGULAR_GENERATOR_H
+#define NONSINGULAR_GENERATOR_H
 
-#include <string>
-#include <unordered_set>
+#include "affine_trans.h"
 
-// Permutation class
-class Permutation {
+// Generates all affine transformations Ax+b, where
+// A is a nonsingular matrix, and b = 0.
+class NonsingularGenerator {
   public:
-    // Returns the number of variables.
-    int var_num() const;
+    // Constructor with parameter (dimension).
+    // Creates an identity affine transformation.
+    NonsingularGenerator(int n);
 
-    // Sets to the idenitiy by default;
-    Permutation(int n);
-    
-    //deep copy
-    Permutation(const Permutation& P);
+    // Returns the current affine transformaton.
+    // The initial one is the diagonal maxtir I_n.
+    AffineTrans* get_affine_trans() const;
 
-    // Destructor.
-    ~Permutation();
+    // Initialize. That is, set current to the identity matrix.
+    // You don't need to call it for the first time.
+    void init();
 
-    //Sets the table of permutation
-    //e.g. [2,3,4,5,6,7,8,9,1]
-    bool set(int* perm1);
-
-    //Sets the table of permutation
-    //e.g. "2,3,4,5,6,7,8,9,1"
-    bool set(std::string perm1);
-    
-    bool set(int idx, int val);
-    
-    // Return "2,3,4,5,6,7,8,9,1"
-    std::string get_str() const;
-
-    const int* get_perm() {
-      return this->perm;
-    }
-
-    // Assignment operator
-    Permutation& operator=(const Permutation& perm1);
-    
-    // Reload = opeartor
-    bool operator == (const Permutation &p) const {
-      if (this->n != p.var_num()) {
-        return false;
-      }
-      return this->get_str() == p.get_str();
-    }
-
-    // this = perm * this
-    void left_mult(const Permutation& perm1);
-    
-    // this = this * perm
-    void right_mult(const Permutation& perm1);
-
+    // Generates the next nonsingular transformation.
+    // For example,
+    // 0 0 1 => 1 0 1 => 0 1 1 => 1 1 1 => ... => 1 0 1
+    // 0 1 0    0 1 0    0 1 0    0 1 0           0 1 1
+    // 1 0 0    1 0 0    1 0 0    1 0 0           1 1 1
+    // Returns false it hits the last one.
+    bool next();
   private:
+  	// dimension
     int n;
 
-    // array of length n
-    int* perm;
+    // current affine transformation.
+    AffineTrans* current;
 
-    void copy_data(const Permutation& perm1);
+    // Span of the (row2, row3, ..., rown) in current.
+    // This is for speeding the search process.
+    std::unordered_set<int> row_span_2n;
 };
 
 #endif
