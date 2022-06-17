@@ -3,7 +3,7 @@
 #include <set>
 #include <assert.h>
 
-#include "permutation_generator.h"
+#include "permutation.h"
 
 using namespace std;
 
