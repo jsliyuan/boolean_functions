@@ -63,6 +63,8 @@ int main() {
   assert(total == 15 * 14 * 12 * 8);
   cout << "End of test for enumerating all 4*4" << endl;
 
+  // Test is slow
+  /*
   NonsingularGenerator gen5(5);
   total = 0;
   do {
@@ -73,6 +75,7 @@ int main() {
   } while (gen5.next());
   assert(total == 9999360);
   cout << "End of test for enumerating all 5*5" << endl;
+  */
 
   cout << "Everything looks good. End of all tests." << endl;
   return 0;

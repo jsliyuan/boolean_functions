@@ -17,6 +17,12 @@ HomogenousBfGenerator: generates all homogenous Boolean functions of degree r
 Permutation: permutation table of the binary input x.
 
 ## How to test
+Before commit, please run 
+
+$ bash all_tests.sh
+
+to make sure all tests pass.
+
 ### BooleanFun class
 yuanli$ g++ -o test.out test_boolean_fun.cpp boolean_fun.cpp affine_trans.cpp
 
