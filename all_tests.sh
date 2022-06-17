@@ -11,8 +11,6 @@ echo "test AffineTrans class"
 g++ -o test.out test_affine_trans.cpp affine_trans.cpp
 ./test.out
 
-#TODO: add a test for Permutation
-
 echo "test UpperDiagGenerator class"
 g++ -o test.out test_upper_diag_generator.cpp upper_diag_generator.cpp affine_trans.cpp
 ./test.out
