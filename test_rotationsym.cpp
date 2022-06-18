@@ -14,7 +14,16 @@ int main() {
   assert(r.get_n() == 9);
   cout << "Everything looks good. End of all tests." << endl;
   cout<<r.get_orbits_number()<<endl;
+  
   cout << "Everything looks good. End of all tests." << endl;
+  vector<vector<int> > binv;
+  binv=r.get_all_orbits();
+  for(vector<vector<int> >::iterator it=binv.begin();it!=binv.end();it++) {
+    for(vector<int>::iterator itt=(*it).begin();itt!=(*it).end();itt++) {
+      cout<<*itt<<" ";
+    }
+    cout<<endl;
+  }
 
   vector<int> bin;
   bin=r.get_orbit(3);
@@ -25,7 +34,7 @@ int main() {
   cout<<endl;
 
   vector<int> bin1;
-  bin1=r.get_orbit_order(3);
+  bin1=r.get_full_orbit(3);
   cout<<"The ith orbit is ";
   for(int i=0;i<9;i++) {
     cout<< bin1[i] <<" ";
@@ -67,7 +76,7 @@ int main() {
   cout << "Everything looks good. End of all tests." << endl;
 
   vector<int> bin4;
-  bin4=r1.get_orbit_order(175);
+  bin4=r1.get_full_orbit(175);
   cout<<"The ith orbit of is ";
   for(int i=0;i<11;i++) {
     cout<< bin4[i] <<" ";
@@ -75,3 +84,4 @@ int main() {
   cout<<endl;
   return 0;
 }
+
