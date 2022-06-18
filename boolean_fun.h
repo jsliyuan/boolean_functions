@@ -2,7 +2,7 @@
 #define BOOLEAN_FUN_H
 
 #include "affine_trans.h"
-#include "rotationsym.h"
+#include "rotation_sym.h"
 #include "permutation.h"
 
 #include <cstdarg>
@@ -76,10 +76,8 @@ class BooleanFun {
     // Returns false if x or v is out of range.
     bool set_truth_table(int x, int v);
 
-    // Set the truth_table[orbit[i]] to v[i], where
-    // orbit[i] is in [0, 2^n-1], and v is in [0,2^orbit.size()-1].
-    // orbit.size() is in [1,n];
-    // Returns false if orbit.size() or v is out of range.
+    // orbit is a list of points, where each is in [0, 2^n-1], v is 0 or 1
+    // we set the truth table value for all points (in the orbit) to constant v.
     bool set_truth_table_orbit(std::vector<int> orbit, int v);
   
     // After setting the truth table, call this function.
