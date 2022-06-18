@@ -4,7 +4,7 @@
 #include <assert.h>
 #include <vector>
 
-#include "rotationsym.h"
+#include "rotation_sym.h"
 #include "permutation.h"
 
 using namespace std;
