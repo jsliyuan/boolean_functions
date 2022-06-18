@@ -1,17 +1,15 @@
-#ifndef ROTATIONSYM_H
-#define ROTATIONSYM_H
+#ifndef ROTATION_SYM_H
+#define ROTATION_SYM_H
 
 #include <string>
 #include <unordered_set>
 #include <vector>
 #include "permutation.h"
 using namespace std;
-// Affine transformation Ax + b: GF(2)^n -> GF(2)^n,
-// where A is an n*n matrix, and b is an n*1 array.
+
 class RotationSym {
   public:
-    // Constructor with parameter (dimension).
-    // Create an all-zero affine transformation.
+    
     RotationSym(int n);
 
     // Copy constructor.
@@ -44,7 +42,6 @@ class RotationSym {
     std::vector< std::vector<int> > get_all_orbits();
     
   private:
-    // dimension
     int n;
     
     void copy_data(const RotationSym& G);
