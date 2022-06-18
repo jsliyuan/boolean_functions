@@ -44,7 +44,6 @@ RotationSym::RotationSym(int n) {
       number =number- num1*(pow(2,t));
       bin.push_back(num1);
     }
-    // check the result 
     /*for (int z =0; z<n; z++) {
       cout<<bin[z]<<" ";
     }
@@ -64,7 +63,6 @@ RotationSym::RotationSym(int n) {
     
     // if the orbit of x has not been found
     if(flag==0) {
-      //cout<<",,,,,,"<<endl;
       count++;
       int value=0;
       vector<int> bin1;
@@ -91,7 +89,6 @@ RotationSym::RotationSym(int n) {
         for(int p=0;p<n;p++) {
           value=value+(store[p]<<(n-1-p));
         }
-        //cout<<"value is: "<<value<<endl;
 
         vector <int>::iterator itt;
         itt=find(bin1.begin(),bin1.end(),value);
@@ -102,13 +99,11 @@ RotationSym::RotationSym(int n) {
         value=0;
       }
       orbits.push_back(bin1);
-      //cout<<" "<<bin1.size()<<" ";
     }
   }
-  //cout<<"the number of orbits is "<<count<<endl; 
   
   // initialize random seed
-  //srand(time(NULL));
+  srand(time(NULL));
 }
 
 // copy all data from g to this.
