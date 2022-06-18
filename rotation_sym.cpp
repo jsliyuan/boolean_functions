@@ -1,4 +1,4 @@
-#include "rotationsym.h"
+#include "rotation_sym.h"
 #include "permutation.h"
 
 #include <cstring>
