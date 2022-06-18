@@ -38,6 +38,11 @@ $ g++ -o test.out test_permutation.cpp permutation.cpp
 
 $ ./test.out
 
+### Rotationsym class
+$g++ -o test.out test_rotationsym.cpp rotationsym.cpp permutation.cpp
+
+$./test.out
+
 ### UpperDiagGenerator class
 yuanli$ g++ -o test.out test_upper_diag_generator.cpp upper_diag_generator.cpp affine_trans.cpp
 
