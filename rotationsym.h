@@ -32,12 +32,12 @@ class RotationSym {
 
     int get_orbits_number() const;
 
-    // i is between [1,2^n]
-    // return the orbit of i
-    std::vector<int> get_orbit(int i);
+    // x is between [1,2^n]
+    // return the orbit of x
+    std::vector<int> get_orbit(int x);
 
     // return the ith orbit  
-    std::vector<int> get_orbit_order(int i) const;
+    std::vector<int> get_full_orbit(int i) const;
 
     int get_n() const;
     
