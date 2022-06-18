@@ -134,6 +134,28 @@ bool BooleanFun::set_truth_table(int x, int v) {
   return true;
 }
 
+bool BooleanFun::set_truth_table_orbit(std::vector<int> orbit, int v) {
+  if (orbit.size() < 1 || orbit.size() > n) {
+    return false;
+  }
+  if (v < 0 || v > (1<<orbit.size())) {
+    return false;
+  }
+  vector<int> bin;
+  int number=v;
+  int num1;
+
+  for(int t=orbit.size()-1; t>-1; t--) {
+    num1= (number>>t);
+    number =number- num1*(pow(2,t));
+    bin.push_back(num1);
+  }
+  for (int t =0; t<orbit.size(); t++) {
+    truth_table[orbit[t]]=bin[t];
+  }
+  return true;
+}
+
 // After setting the truth table, call this function.
 // The degree and ANF will be computed then.
 void BooleanFun::set_truth_table_done() {
@@ -194,6 +216,13 @@ bool BooleanFun::set_truth_table_hex(string str) {
 void BooleanFun::set_truth_table_random() {
   for (int i = 0; i < (1<<n); i ++) {
     this->truth_table[i] = rand() % 2;
+  }
+  set_truth_table_done();
+}
+
+void BooleanFun::set_random_sym( vector<vector<int> > orbit) {
+  for(vector<vector<int> >::iterator it=orbit.begin();it!=orbit.end();it++) {
+    set_truth_table_orbit((*it), rand()% (1<<(*it).size()));
   }
   set_truth_table_done();
 }
