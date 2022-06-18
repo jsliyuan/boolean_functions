@@ -13,23 +13,39 @@ int main() {
   RotationSym r1(3);
   assert(r1.get_n() ==3);
   assert(r1.get_orbits_number()==4);
-  int binv1[]= {3,6,5};
-  vector<int> binv=r1.get_full_orbit(2) ;
-  for (int i=0;i<binv.size();i++) {
-    assert(binv1[i]==binv[i]);
+  int binv_0[]= {0};
+  int binv_1[]= {1,2,4};
+  int binv_2[]= {3,6,5};
+  int binv_3[]= {7};
+  vector<int> binv0=r1.get_full_orbit(0) ;
+  vector<int> binv1=r1.get_full_orbit(1) ;
+  vector<int> binv2=r1.get_full_orbit(2) ;
+  vector<int> binv3=r1.get_full_orbit(3) ;
+  for (int i=0;i<binv0.size();i++) {
+    assert(binv_0[i]==binv0[i]);
+  }
+  for (int i=0;i<binv1.size();i++) {
+    assert(binv_1[i]==binv1[i]);
+  }
+  for (int i=0;i<binv2.size();i++) {
+    assert(binv_2[i]==binv2[i]);
+  }
+  for (int i=0;i<binv3.size();i++) {
+    assert(binv_3[i]==binv3[i]);
   }
 
   RotationSym r(9);
   assert(r.get_n() == 9);
   assert(r.get_orbits_number()==60);
-  /*vector<vector<int> > binv;
+  vector<vector<int> > binv;
   binv=r.get_all_orbits();
+  cout<< "All orbits of a RotationSym class in 9 variable is "<<endl;
   for(vector<vector<int> >::iterator it=binv.begin();it!=binv.end();it++) {
     for(vector<int>::iterator itt=(*it).begin();itt!=(*it).end();itt++) {
       cout<<*itt<<" ";
     }
     cout<<endl;
-  }*/
+  }
   int bin[]= {3,6,12,24,48,96,192,384,257};
   vector<int> bin1=r.get_orbit(3) ;
   for (int i=0;i<bin1.size();i++) {
@@ -71,4 +87,5 @@ int main() {
   cout<< "Everything looks good. End of all tests." << endl;
   return 0;
 }
+
 
