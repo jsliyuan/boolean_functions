@@ -74,6 +74,12 @@ class BooleanFun {
     // Returns false if x or v is out of range.
     bool set_truth_table(int x, int v);
 
+    // Set the truth_table[orbit[i]] to v[i], where
+    // orbit[i] is in [0, 2^n-1], and v is in [0,2^orbit.size()-1].
+    // orbit.size() is in [1,n];
+    // Returns false if orbit.size() or v is out of range.
+    bool set_truth_table_orbit(std::vector<int> orbit, int v);
+  
     // After setting the truth table, call this function.
     // The degree and ANF will be computed then.
     void set_truth_table_done();
@@ -89,6 +95,11 @@ class BooleanFun {
     // at random.
     void set_truth_table_random();
 
+    // Sets the truth table of all orbits at random, i.e.,
+    // For every orbits[i][j] in [0, 2^n-1], set f(orbits[i][j]) = 0 / 1 uniformly
+    // at random.
+    void set_random_sym( std::vector<std::vector<int> > orbit);
+  
     // Destructor
     ~BooleanFun();
 
