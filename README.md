@@ -17,7 +17,7 @@ HomogenousBfGenerator: generates all homogenous Boolean functions of degree r
 Permutation: permutation table of the binary input x.
 
 ## How to test
-Before commit, please run 
+Before committing, please run 
 
 $ bash all_tests.sh
 
