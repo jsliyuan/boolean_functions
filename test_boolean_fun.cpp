@@ -3,6 +3,8 @@
 #include <set>
 
 #include "boolean_fun.h"
+#include "rotationsym.h"
+#include "permutation.h"
 
 using namespace std;
 
@@ -406,6 +408,12 @@ int main() {
   cout<<sub1_f9e.get_anf()<<endl;
   cout<<sub1_f9e.nonlinearity()<<endl;
   cout << "End of test for sub_function() for f9e." << endl;
+  
+  BooleanFun rsym(9);
+  RotationSym r(9);
+  rsym.set_random_sym(r.get_all_orbits());
+  cout<< " The ANF of rsym is "<<rsym.get_anf()<<endl;
+  cout<< " The degree of rsym is "<<rsym.get_degree()<<endl;
   
   cout << "Everything looks good. End of all tests." << endl;
   return 0;
