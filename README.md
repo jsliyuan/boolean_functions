@@ -38,17 +38,17 @@ $ g++ -o test.out test_permutation.cpp permutation.cpp
 
 $ ./test.out
 
-### UpperDiagGenerator
+### UpperDiagGenerator class
 yuanli$ g++ -o test.out test_upper_diag_generator.cpp upper_diag_generator.cpp affine_trans.cpp
 
 yuanli$ ./test.out
 
-### NonsingularGenerator
+### NonsingularGenerator class
 yuanli$ g++ -o test.out test_nonsingular_generator.cpp nonsingular_generator.cpp affine_trans.cpp
 
 yuanli$ ./test.out
 
-### HomogenousBfGenerator
+### HomogenousBfGenerator class
 yuanli$ g++ -o test.out test_homogenous_bf_generator.cpp homogenous_bf_generator.cpp boolean_fun.cpp affine_trans.cpp
 
 yuanli$ ./test.out
