@@ -37,7 +37,7 @@ class RotationSym {
     // return the orbit of the position x
     std::vector<int> get_orbit(int x);
 
-    // return the ith orbit  
+    // return the i-1 th orbit  
     std::vector<int> get_full_orbit(int i) const;
 
     int get_n() const;
