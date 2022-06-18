@@ -1,5 +1,5 @@
 #include "boolean_fun.h"
-#include "rotationsym.h"
+#include "rotation_sym.h"
 #include "permutation.h"
 #include <memory.h>
 #include <time.h>
@@ -140,20 +140,12 @@ bool BooleanFun::set_truth_table_orbit(std::vector<int> orbit, int v) {
   if (orbit.size() < 1 || orbit.size() > n) {
     return false;
   }
-  if (v < 0 || v > (1<<orbit.size())) {
+  if (v < 0 || v > 1) {
     return false;
   }
-  vector<int> bin;
-  int number=v;
-  int num1;
-
-  for(int t=orbit.size()-1; t>-1; t--) {
-    num1= (number>>t);
-    number =number- num1*(pow(2,t));
-    bin.push_back(num1);
-  }
+  
   for (int t =0; t<orbit.size(); t++) {
-    truth_table[orbit[t]]=bin[t];
+    truth_table[orbit[t]]=v;
   }
   return true;
 }
@@ -224,7 +216,7 @@ void BooleanFun::set_truth_table_random() {
 
 void BooleanFun::set_random_sym( vector<vector<int> > orbit) {
   for(vector<vector<int> >::iterator it=orbit.begin();it!=orbit.end();it++) {
-    set_truth_table_orbit((*it), rand()% (1<<(*it).size()));
+    set_truth_table_orbit((*it), rand()% 2);
   }
   set_truth_table_done();
 }
