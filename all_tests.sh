@@ -26,3 +26,7 @@ g++ -o test.out test_homogenous_bf_generator.cpp homogenous_bf_generator.cpp boo
 echo "test Permutation class"
 g++ -o test.out test_permutation.cpp permutation.cpp
 ./test.out
+
+echo "test Rotationsym class"
+g++ -o test.out test_rotationsym.cpp rotationsym.cpp permutation.cpp
+./test.out
