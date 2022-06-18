@@ -1,4 +1,6 @@
 #include "boolean_fun.h"
+#include "rotationsym.h"
+#include "permutation.h"
 #include <memory.h>
 #include <time.h>
 #include <iostream>
