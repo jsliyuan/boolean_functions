@@ -28,5 +28,5 @@ g++ -o test.out test_permutation.cpp permutation.cpp
 ./test.out
 
 echo "test Rotationsym class"
-g++ -o test.out test_rotationsym.cpp rotationsym.cpp permutation.cpp
+g++ -o test.out test_rotation_sym.cpp rotation_sym.cpp permutation.cpp
 ./test.out
