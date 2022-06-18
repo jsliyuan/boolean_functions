@@ -16,6 +16,8 @@ HomogenousBfGenerator: generates all homogenous Boolean functions of degree r
 
 Permutation: permutation table of the binary input x.
 
+Rotation_sym: rotation symmetric class of n-variable Boolean functions
+
 ## How to test
 Before committing, please run 
 
@@ -38,8 +40,8 @@ $ g++ -o test.out test_permutation.cpp permutation.cpp
 
 $ ./test.out
 
-### Rotationsym class
-$g++ -o test.out test_rotationsym.cpp rotationsym.cpp permutation.cpp
+### Rotation_sym class
+$g++ -o test.out test_rotation_sym.cpp rotation_sym.cpp permutation.cpp
 
 $./test.out
 
