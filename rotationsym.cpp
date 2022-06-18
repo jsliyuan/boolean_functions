@@ -105,7 +105,7 @@ RotationSym::RotationSym(int n) {
       //cout<<" "<<bin1.size()<<" ";
     }
   }
-  cout<<"the number of orbits is "<<count<<endl; 
+  //cout<<"the number of orbits is "<<count<<endl; 
   
   // initialize random seed
   //srand(time(NULL));
