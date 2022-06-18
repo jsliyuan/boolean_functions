@@ -44,11 +44,6 @@ RotationSym::RotationSym(int n) {
       number =number- num1*(pow(2,t));
       bin.push_back(num1);
     }
-    // check the result 
-    /*for (int z =0; z<n; z++) {
-      cout<<bin[z]<<" ";
-    }
-    cout<<endl;*/
 
     vector <int>::iterator iter1;
     int flag=0;
@@ -64,16 +59,13 @@ RotationSym::RotationSym(int n) {
     
     // if the orbit of x has not been found
     if(flag==0) {
-      //cout<<",,,,,,"<<endl;
       count++;
       int value=0;
       vector<int> bin1;
       
       for (vector<Permutation>:: iterator iter=perms.begin();iter!=perms.end();iter++) {
         const int* term=(*iter).get_perm();
-        
-        //cout<<(*iter).get_str()<<endl;
-
+       
         // permutation of x
         int* store;
         store=new int[n];
@@ -81,31 +73,22 @@ RotationSym::RotationSym(int n) {
           int pos=term[j]-1;
           store[j]=bin[pos];
         }
-        
-        /*for (int m=0;m<n;m++) {
-          cout<<store[m]<<" ";
-        }
-        cout<<endl;*/
 
         //binary to decimal
         for(int p=0;p<n;p++) {
           value=value+(store[p]<<(n-1-p));
         }
-        //cout<<"value is: "<<value<<endl;
 
         vector <int>::iterator itt;
         itt=find(bin1.begin(),bin1.end(),value);
         if (itt == bin1.end()) {
-          // vector b is the orbit of i
           bin1.push_back(value);
         }
         value=0;
       }
       orbits.push_back(bin1);
-      //cout<<" "<<bin1.size()<<" ";
     }
   }
-  //cout<<"the number of orbits is "<<count<<endl; 
   
   //initialize random seed
   srand(time(NULL));
@@ -149,10 +132,6 @@ std::vector<int> RotationSym::get_orbit(int x) {
     number=number-num*(pow(2,t));
     cin.push_back(num);
   }
-  /*for (int t =0; t<n; t++) {
-    cout<<cin[t]<<" ";
-  }
-  cout<<endl;*/
 
   for (vector<Permutation>:: iterator iter= this->perms.begin();iter!=this->perms.end();iter++) {
     const int* term=(*iter).get_perm();
