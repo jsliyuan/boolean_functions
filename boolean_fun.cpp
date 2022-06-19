@@ -1,4 +1,6 @@
 #include "boolean_fun.h"
+#include "rotation_sym.h"
+#include "permutation.h"
 #include <memory.h>
 #include <time.h>
 #include <iostream>
@@ -134,6 +136,21 @@ bool BooleanFun::set_truth_table(int x, int v) {
   return true;
 }
 
+bool BooleanFun::set_truth_table_orbit(std::vector<int> orbit, int v) {
+  if (v < 0 || v > 1) {
+    return false;
+  }
+  for (int t =0; t<orbit.size(); t++) { 
+    if (orbit[t] < 0 || orbit[t] >= (1<<n)) {
+      cout<<" ERROR:point "<< t <<" in orbit is out of range"<<endl;
+    }
+    else {
+      truth_table[orbit[t]]=v;
+    }
+  }
+  return true;
+}
+
 // After setting the truth table, call this function.
 // The degree and ANF will be computed then.
 void BooleanFun::set_truth_table_done() {
@@ -194,6 +211,13 @@ bool BooleanFun::set_truth_table_hex(string str) {
 void BooleanFun::set_truth_table_random() {
   for (int i = 0; i < (1<<n); i ++) {
     this->truth_table[i] = rand() % 2;
+  }
+  set_truth_table_done();
+}
+
+void BooleanFun::set_random_sym( vector<vector<int> > orbit) {
+  for(vector<vector<int> >::iterator it=orbit.begin();it!=orbit.end();it++) {
+    set_truth_table_orbit((*it), rand()% 2);
   }
   set_truth_table_done();
 }

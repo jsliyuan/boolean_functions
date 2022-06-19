@@ -3,6 +3,8 @@
 #include <set>
 
 #include "boolean_fun.h"
+#include "rotation_sym.h"
+#include "permutation.h"
 
 using namespace std;
 
@@ -406,6 +408,48 @@ int main() {
   cout<<sub1_f9e.get_anf()<<endl;
   cout<<sub1_f9e.nonlinearity()<<endl;
   cout << "End of test for sub_function() for f9e." << endl;
+  
+  BooleanFun rsym(3);
+  RotationSym r(3);
+  rsym.set_random_sym(r.get_all_orbits());
+  cout<< " The ANF of rsym is "<<rsym.get_anf()<<endl;
+  cout<< " The degree of rsym is "<<rsym.get_degree()<<endl;
+  
+  BooleanFun rsym1(4);
+  RotationSym r_4(4);
+  rsym1.set_random_sym(r_4.get_all_orbits());
+  cout<< "The ANF of rsym1 is "<<rsym1.get_anf()<<endl;
+  cout<< "The degree of rsym1 is "<<rsym1.get_degree()<<endl;
+  
+  BooleanFun rsym2(4,"0");
+  RotationSym r_4_1(4);
+  assert(rsym2.get_anf()=="0");
+  rsym2.set_truth_table_orbit(r_4_1.get_full_orbit(0), 1);
+  rsym2.set_truth_table_done();
+  assert(rsym2.get_anf()=="1+x4+x3+x3x4+x2+x2x4+x2x3+x2x3x4+x1+x1x4+x1x3+x1x3x4+x1x2+x1x2x4+x1x2x3+x1x2x3x4");
+  assert(rsym2.get_degree()==4);
+  rsym2.set_truth_table_orbit(r_4_1.get_full_orbit(2), 1);
+  rsym2.set_truth_table_done();
+  assert(rsym2.get_anf()=="1+x4+x3+x2+x2x4+x2x3x4+x1+x1x3+x1x3x4+x1x2x4+x1x2x3+x1x2x3x4");
+  assert(rsym2.get_degree()==4);
+  rsym2.set_truth_table_orbit(r_4_1.get_full_orbit(1), 1);
+  rsym2.set_truth_table_done();
+  assert(rsym2.get_anf()=="1+x2x4+x1x3+x1x2x3x4");
+  assert(rsym2.get_degree()==4);
+  rsym2.set_truth_table_orbit(r_4_1.get_full_orbit(2), 0);
+  rsym2.set_truth_table_done();
+  rsym2.set_truth_table_orbit(r_4_1.get_full_orbit(0), 0);
+  rsym2.set_truth_table_done();
+  rsym2.set_truth_table_orbit(r_4_1.get_full_orbit(1), 0);
+  rsym2.set_truth_table_done();
+  assert(rsym2.get_anf()=="0");
+  assert(rsym2.get_degree()==0);
+  
+  vector<int> din{3,5,6,9,10,12};
+  rsym2.set_truth_table_orbit(din, 1);
+  rsym2.set_truth_table_done();
+  assert(rsym2.get_anf()=="x3x4+x2x4+x2x3+x2x3x4+x1x4+x1x3+x1x3x4+x1x2+x1x2x4+x1x2x3");
+  assert(rsym2.get_degree()==3);
   
   cout << "Everything looks good. End of all tests." << endl;
   return 0;
