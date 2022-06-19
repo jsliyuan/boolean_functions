@@ -1,7 +1,7 @@
 #include <iostream>
 #include <time.h>
 
-#include "boolean_fun.h"
+#include "../boolean_fun.h"
 
 using namespace std;
 
