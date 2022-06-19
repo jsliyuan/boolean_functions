@@ -29,6 +29,7 @@ RotationSym::RotationSym(int n) {
       num++;
     }
     perms.push_back(*p);
+    //cout<< p.get_str()<<endl;
   }
 
   int count=0;
@@ -64,7 +65,7 @@ RotationSym::RotationSym(int n) {
       
       for (vector<Permutation>:: iterator iter=perms.begin();iter!=perms.end();iter++) {
         const int* term=(*iter).get_perm();
-        
+       
         // permutation of x
         int* store;
         store=new int[n];
@@ -81,7 +82,6 @@ RotationSym::RotationSym(int n) {
         vector <int>::iterator itt;
         itt=find(bin1.begin(),bin1.end(),value);
         if (itt == bin1.end()) {
-          // vector bin1 is the orbit of x
           bin1.push_back(value);
         }
         value=0;
@@ -90,7 +90,7 @@ RotationSym::RotationSym(int n) {
     }
   }
   
-  // initialize random seed
+  //initialize random seed
   srand(time(NULL));
 }
 
@@ -152,7 +152,7 @@ std::vector<int> RotationSym::get_orbit(int x) {
     vector <int>::iterator itt;
     itt=find(din.begin(),din.end(),value);
     if (itt == din.end()) {
-      // vector din is the orbit of x
+      // vector d is the orbit of i
       din.push_back(value);
     }
     value=0;
