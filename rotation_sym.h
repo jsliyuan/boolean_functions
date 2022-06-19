@@ -1,5 +1,5 @@
-#ifndef ROTATIONSYM_H
-#define ROTATIONSYM_H
+#ifndef ROTATION_SYM_H
+#define ROTATION_SYM_H
 
 #include <string>
 #include <unordered_set>
