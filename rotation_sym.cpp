@@ -29,7 +29,6 @@ RotationSym::RotationSym(int n) {
       num++;
     }
     perms.push_back(*p);
-    //cout<< p.get_str()<<endl;
   }
 
   int count=0;
@@ -44,10 +43,6 @@ RotationSym::RotationSym(int n) {
       number =number- num1*(pow(2,t));
       bin.push_back(num1);
     }
-    /*for (int z =0; z<n; z++) {
-      cout<<bin[z]<<" ";
-    }
-    cout<<endl;*/
 
     vector <int>::iterator iter1;
     int flag=0;
@@ -77,11 +72,6 @@ RotationSym::RotationSym(int n) {
           int pos=term[j]-1;
           store[j]=bin[pos];
         }
-        
-        /*for (int m=0;m<n;m++) {
-          cout<<store[m]<<" ";
-        }
-        cout<<endl;*/
 
         //binary to decimal
         for(int p=0;p<n;p++) {
@@ -142,10 +132,6 @@ std::vector<int> RotationSym::get_orbit(int x) {
     number=number-num*(pow(2,t));
     cin.push_back(num);
   }
-  /*for (int t =0; t<n; t++) {
-    cout<<cin[t]<<" ";
-  }
-  cout<<endl;*/
 
   for (vector<Permutation>:: iterator iter= this->perms.begin();iter!=this->perms.end();iter++) {
     const int* term=(*iter).get_perm();
