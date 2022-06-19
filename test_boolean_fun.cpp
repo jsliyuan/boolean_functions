@@ -415,6 +415,12 @@ int main() {
   cout<< " The ANF of rsym is "<<rsym.get_anf()<<endl;
   cout<< " The degree of rsym is "<<rsym.get_degree()<<endl;
   
+  BooleanFun rsym1(4);
+  RotationSym r_4(4);
+  rsym1.set_random_sym(r_4.get_all_orbits());
+  cout<< "The ANF of rsym1 is "<<rsym1.get_anf()<<endl;
+  cout<< "The degree of rsym1 is "<<rsym1.get_degree()<<endl;
+  
   BooleanFun rsym2(4,"0");
   RotationSym r_4_1(4);
   assert(rsym2.get_anf()=="0");
