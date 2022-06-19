@@ -417,32 +417,33 @@ int main() {
   
   BooleanFun rsym2(4,"0");
   RotationSym r_4_1(4);
-  cout<< "The ANF of rsym2 is "<<rsym2.get_anf()<<endl;
-  rsym2.set_truth_table_orbit(r_4_1.get_full_orbit(1), 1);
+  assert(rsym2.get_anf()=="0");
+  rsym2.set_truth_table_orbit(r_4_1.get_full_orbit(0), 1);
   rsym2.set_truth_table_done();
-  cout<< "The ANF of rsym2 is "<<rsym2.get_anf()<<endl;
-  cout<< "The degree of rsym2 is "<<rsym2.get_degree()<<endl;
+  assert(rsym2.get_anf()=="1+x4+x3+x3x4+x2+x2x4+x2x3+x2x3x4+x1+x1x4+x1x3+x1x3x4+x1x2+x1x2x4+x1x2x3+x1x2x3x4");
+  assert(rsym2.get_degree()==4);
   rsym2.set_truth_table_orbit(r_4_1.get_full_orbit(2), 1);
   rsym2.set_truth_table_done();
-  cout<< "The ANF of rsym2 is "<<rsym2.get_anf()<<endl;
-  cout<< "The degree of rsym2 is "<<rsym2.get_degree()<<endl;
-  rsym2.set_truth_table_orbit(r_4_1.get_full_orbit(1), 0);
+  assert(rsym2.get_anf()=="1+x4+x3+x2+x2x4+x2x3x4+x1+x1x3+x1x3x4+x1x2x4+x1x2x3+x1x2x3x4");
+  assert(rsym2.get_degree()==4);
+  rsym2.set_truth_table_orbit(r_4_1.get_full_orbit(1), 1);
   rsym2.set_truth_table_done();
-  cout<< "The ANF of rsym2 is "<<rsym2.get_anf()<<endl;
-  cout<< "The degree of rsym2 is "<<rsym2.get_degree()<<endl;
+  assert(rsym2.get_anf()=="1+x2x4+x1x3+x1x2x3x4");
+  assert(rsym2.get_degree()==4);
   rsym2.set_truth_table_orbit(r_4_1.get_full_orbit(2), 0);
   rsym2.set_truth_table_done();
   rsym2.set_truth_table_orbit(r_4_1.get_full_orbit(0), 0);
   rsym2.set_truth_table_done();
-  cout<< "The ANF of rsym2 is "<<rsym2.get_anf()<<endl;
-  cout<< "The degree of rsym2 is "<<rsym2.get_degree()<<endl;
+  rsym2.set_truth_table_orbit(r_4_1.get_full_orbit(1), 0);
+  rsym2.set_truth_table_done();
+  assert(rsym2.get_anf()=="0");
+  assert(rsym2.get_degree()==0);
   
-  int arry[6]={3,5,6,9,10,12};
-  vector<int> din(arry,arry+6);
+  vector<int> din{3,5,6,9,10,12};
   rsym2.set_truth_table_orbit(din, 1);
   rsym2.set_truth_table_done();
-  cout<< "The ANF of rsym2 is "<<rsym2.get_anf()<<endl;
-  cout<< "The degree of rsym2 is "<<rsym2.get_degree()<<endl;
+  assert(rsym2.get_anf()=="x3x4+x2x4+x2x3+x2x3x4+x1x4+x1x3+x1x3x4+x1x2+x1x2x4+x1x2x3");
+  assert(rsym2.get_degree()==3);
   
   cout << "Everything looks good. End of all tests." << endl;
   return 0;
