@@ -144,8 +144,11 @@ bool BooleanFun::set_truth_table_orbit(std::vector<int> orbit, int v) {
     if (orbit[t] < 0 || orbit[t] >= (1<<n)) {
       cout<<" ERROR:point "<< t <<" in orbit is out of range"<<endl;
     }
-    truth_table[orbit[t]]=v;
+    else {
+      truth_table[orbit[t]]=v;
+    }
   }
+  return true;
 }
 
 // After setting the truth table, call this function.
