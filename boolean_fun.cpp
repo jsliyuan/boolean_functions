@@ -702,3 +702,16 @@ int BooleanFun::nonlinearity(int r) const {
   return nonlinearity(r, (1<<n));
 }
 
+// Returns the truth table, which is an array of length 2^n.
+// Read-only.
+const int* BooleanFun::get_truth_table_ptr() {
+  return truth_table;
+}
+
+// Returns the anf, which is an array of length 2^n.
+// Read-only.
+const int* BooleanFun::get_anf_ptr() {
+  return anf;
+}
+
+

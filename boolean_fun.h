@@ -169,16 +169,13 @@ class BooleanFun {
     // Returns the rth-order nonlinearity, where r >= 1.
     int nonlinearity(int r) const;
 
-    // BE CAREFUL!
-    // truth table of this Boolean function, of length 2^n
-    // value of f(x_1, x_2, ..., x_n) is truth_table[d(x)],
-    // where d(x) := x_1*2^{n-1}+x_2*2^{n-2}+...+x_n.
-    int* truth_table;
+    // Returns the truth table, which is an array of length 2^n.
+    // Read-only.
+    const int* get_truth_table_ptr();
 
-    // BE CAREFUL!
-    // algebraic normal form
-    // ANF[d(e)] is the coefficient of x1^{e1}x2^{e2}...xn^{en}.
-    int* anf;
+    // Returns the anf, which is an array of length 2^n.
+    // Read-only.
+    const int* get_anf_ptr();
 
   private:
     // number of variables
@@ -186,6 +183,15 @@ class BooleanFun {
 
     // algebraic degree
     int degree;
+
+    // truth table of this Boolean function, of length 2^n
+    // value of f(x_1, x_2, ..., x_n) is truth_table[d(x)],
+    // where d(x) := x_1*2^{n-1}+x_2*2^{n-2}+...+x_n.
+    int* truth_table;
+
+    // algebraic normal form
+    // ANF[d(e)] is the coefficient of x1^{e1}x2^{e2}...xn^{en}.
+    int* anf;
 
     // Compute truth table from anf.
     void anf_to_truth_table();
