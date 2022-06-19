@@ -415,11 +415,22 @@ int main() {
   cout<< " The ANF of rsym is "<<rsym.get_anf()<<endl;
   cout<< " The degree of rsym is "<<rsym.get_degree()<<endl;
   
-  BooleanFun rsym1(4);
-  RotationSym r_4(4);
-  rsym1.set_random_sym(r_4.get_all_orbits());
-  cout<< " The ANF of rsym1 is "<<rsym1.get_anf()<<endl;
-  cout<< " The degree of rsym1 is "<<rsym1.get_degree()<<endl;
+  BooleanFun rsym2(4,"0");
+  RotationSym r_4_1(4);
+  cout<< "The ANF of rsym2 is "<<rsym2.get_anf()<<endl;
+  rsym2.set_truth_table_orbit(r_4_1.get_full_orbit(1), 1);
+  rsym2.set_truth_table_done();
+  cout<< "The ANF of rsym2 is "<<rsym2.get_anf()<<endl;
+  cout<< "The degree of rsym2 is "<<rsym2.get_degree()<<endl;
+  rsym2.set_truth_table_orbit(r_4_1.get_full_orbit(2), 1);
+  rsym2.set_truth_table_done();
+  cout<< "The ANF of rsym2 is "<<rsym2.get_anf()<<endl;
+  cout<< "The degree of rsym2 is "<<rsym2.get_degree()<<endl;
+  rsym2.set_truth_table_orbit(r_4_1.get_full_orbit(1), 0);
+  rsym2.set_truth_table_done();
+  cout<< "The ANF of rsym2 is "<<rsym2.get_anf()<<endl;
+  cout<< "The degree of rsym2 is "<<rsym2.get_degree()<<endl;
+  
   cout << "Everything looks good. End of all tests." << endl;
   return 0;
 }
