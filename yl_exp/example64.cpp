@@ -1,5 +1,5 @@
-#include "boolean_fun.h"
-#include "upper_diag_generator.h"
+#include "../boolean_fun.h"
+#include "../upper_diag_generator.h"
 
 #include <iostream>
 #include <string>

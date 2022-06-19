@@ -60,11 +60,6 @@ yuanli$ g++ -o test.out test_homogenous_bf_generator.cpp homogenous_bf_generator
 
 yuanli$ ./test.out
 
-### example64.cpp
-yuanli$ g++ -o example64.out example64.cpp boolean_fun.cpp affine_trans.cpp upper_diag_generator.cpp
-
-yuanli$ ./example64.out
-
 ### example_nonsingular.cpp
 yuanli$ g++ -o example_nonsingular.out example_nonsingular.cpp affine_trans.cpp nonsingular_generator.cpp boolean_fun.cpp
 

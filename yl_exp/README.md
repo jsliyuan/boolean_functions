@@ -1,5 +1,9 @@
 ## How to test
 
+### example64.cpp
+yuanli$ g++ -o example_nonsingular.out ../example_nonsingular.cpp ../affine_trans.cpp ../nonsingular_generator.cpp ../boolean_fun.cpp
+yuanli$ ./example64.out
+
 ### cr19_ub_random.cpp
 Starting with a random 9-variable Boolean function. At each step, modifying one point to see if nl1 increases. Stop until we hit a local maximal.
 
