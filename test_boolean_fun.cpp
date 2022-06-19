@@ -430,6 +430,19 @@ int main() {
   rsym2.set_truth_table_done();
   cout<< "The ANF of rsym2 is "<<rsym2.get_anf()<<endl;
   cout<< "The degree of rsym2 is "<<rsym2.get_degree()<<endl;
+  rsym2.set_truth_table_orbit(r_4_1.get_full_orbit(2), 0);
+  rsym2.set_truth_table_done();
+  rsym2.set_truth_table_orbit(r_4_1.get_full_orbit(0), 0);
+  rsym2.set_truth_table_done();
+  cout<< "The ANF of rsym2 is "<<rsym2.get_anf()<<endl;
+  cout<< "The degree of rsym2 is "<<rsym2.get_degree()<<endl;
+  
+  int arry[6]={3,5,6,9,10,12};
+  vector<int> din(arry,arry+6);
+  rsym2.set_truth_table_orbit(din, 1);
+  rsym2.set_truth_table_done();
+  cout<< "The ANF of rsym2 is "<<rsym2.get_anf()<<endl;
+  cout<< "The degree of rsym2 is "<<rsym2.get_degree()<<endl;
   
   cout << "Everything looks good. End of all tests." << endl;
   return 0;
