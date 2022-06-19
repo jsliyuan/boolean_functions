@@ -10,7 +10,7 @@
 using namespace std;
 
 int main() {
- RotationSym r1(3);
+  RotationSym r1(3);
   assert(r1.get_n() ==3);
   assert(r1.get_orbits_number()==4);
   vector<vector<int> > binv{{0},{1,2,4},{3,6,5},{7}};
