@@ -5,19 +5,16 @@
 #include <unordered_set>
 #include <vector>
 #include "permutation.h"
-
 using namespace std;
 
 class RotationSym {
   public:
-    // Initialize Rotationsym
-    // generate all permutations of rotation symmetric class and orbits
+    
     RotationSym(int n);
 
     // Copy constructor.
     // Performs a deep copy.
     RotationSym(const RotationSym& RS);
-  
     // Destructor.
     ~RotationSym();
 
@@ -34,7 +31,7 @@ class RotationSym {
     int get_orbits_number() const;
 
     // x is between [1,2^n]
-    // return the orbit of the position x
+    // return the orbit of x
     std::vector<int> get_orbit(int x);
 
     // return the i-1 th orbit  
@@ -45,15 +42,12 @@ class RotationSym {
     std::vector< std::vector<int> > get_all_orbits();
     
   private:
-    // number of variables
     int n;
     
     void copy_data(const RotationSym& G);
-    
-    //store permutations
+
     std::vector<Permutation> perms;
 
-    //store all orbits 
     std::vector<vector<int> > orbits;
 };
 
