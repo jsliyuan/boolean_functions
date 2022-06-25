@@ -59,16 +59,7 @@ int main() {
       anf=ANF_of_fun[minPosition];
       int flag=0;
       if(store.find(anf) != store.end()) {
-        //int delete_pos=0;
-        //vector<int>::iterator itt;
-        //for (vector<string>:: iterator iter= ANF_of_fun.begin();iter!=ANF_of_fun.end();iter++) {
-          //if(*iter == anf) {
-            //ANF_of_fun.erase(iter);
-            //iter--;
-            //itt=walsh_of_fun.begin()+delete_pos;
         walsh_of_fun[minPosition]=4294967295;
-          //delete_pos++; 
-        //}
         flag=1;
         num_same++;
       }
