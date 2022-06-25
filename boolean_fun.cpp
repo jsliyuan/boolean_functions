@@ -1,10 +1,13 @@
 #include "boolean_fun.h"
-#include "rotation_sym.h"
+#include "rotationsym.h"
 #include "permutation.h"
+
 #include <memory.h>
 #include <time.h>
 #include <iostream>
 #include <vector>
+#include <algorithm>
+#include <math.h>
 
 using namespace std;
 
@@ -112,6 +115,34 @@ string BooleanFun::get_coe_list() const {
   return result;
 }
 
+string BooleanFun::get_truth_table_hex() const {
+  string result = "";
+  for(int count=0;count<(1<<n);count+=4) {
+    int i=count;
+    int num;
+    num=truth_table[i]*8+truth_table[i+1]*4+truth_table[i+2]*2+truth_table[i+3]*1;
+    switch (num) {
+      case 0: result.append("0");break;
+      case 1: result.append("1");break;
+      case 2: result.append("2");break;
+      case 3: result.append("3");break;
+      case 4: result.append("4");break;
+      case 5: result.append("5");break;
+      case 6: result.append("6");break;
+      case 7: result.append("7");break;
+      case 8: result.append("8");break;
+      case 9: result.append("9");break;
+      case 10: result.append("A");break;
+      case 11: result.append("B");break;
+      case 12: result.append("C");break;
+      case 13: result.append("D");break;
+      case 14: result.append("E");break;
+      case 15: result.append("F");break;
+    }
+  }
+  return result;
+}
+
 // Returns anf[d], where d is in [0, 2^n-1].
 int BooleanFun::get_anf_coe(int d) const {
   if (d < 0 || d >= (1<<n)) {
@@ -144,7 +175,7 @@ bool BooleanFun::set_truth_table_orbit(std::vector<int> orbit, int v) {
     if (orbit[t] < 0 || orbit[t] >= (1<<n)) {
       cout<<" ERROR:point "<< t <<" in orbit is out of range"<<endl;
     }
-    else {
+     else {
       truth_table[orbit[t]]=v;
     }
   }
@@ -158,17 +189,15 @@ void BooleanFun::set_truth_table_done() {
   this->compute_degree();
 }
 
-// Convert hexadecimal string to binary string, and 
-// set the truth_table[x] to v, where
+// Set the truth_table[x] to v, where
 // x is in [0, 2^n-1], and v is 0 or 1.
 // Returns false if x or v is out of range.
 bool BooleanFun::set_truth_table_hex(string str) {
-  string sReturn;
+  string sReturn="";
   unsigned int length=str.length();
   for(int i=0;i<length;i++)
   {
-    switch (str[i])
-    {
+    switch (str[i]) {
       case '0': sReturn.append("0000");break;
       case '1': sReturn.append("0001");break;
       case '2': sReturn.append("0010");break;
@@ -204,6 +233,7 @@ bool BooleanFun::set_truth_table_hex(string str) {
   }
   return true;
 }
+
 
 // Sets the truth table at random, i.e.,
 // For every x in [0, 2^n-1], set f(x) = 0 / 1 uniformly
@@ -665,7 +695,37 @@ int BooleanFun::nonlinearity() const {
       max = abs(tt[i]);
     }
   }
- return (1<<(n-1)) - (max >> 1);
+
+  return (1<<(n-1)) - (max >> 1);
+}
+
+int BooleanFun::cost() const {
+  int buf[(1<<n)];
+  int tt[(1<<n)];
+
+  for (int m=0;m< (1<<n);m++) {
+    if(truth_table[m] == 1) {
+      tt[m]=-1;
+    } else {
+      tt[m]=1;
+    }
+  }
+  register int i, j, k;
+  for (i = 0; i < n; ++i) {
+    for (j = 0; j < 1<<(n-1); ++j) {
+      k = j << 1;
+      buf[j] = tt[k] + tt[k + 1];
+      buf[j + (1<<(n-1))] = tt[k] - tt[k + 1];
+    }
+    memcpy(tt, buf,  (1<<n)*sizeof(int));
+  }
+
+  int value=0;
+  for (i = 0; i < 1<<(n); ++i) {
+    value=value+ (abs(tt[i])*abs(tt[i])-512)*(abs(tt[i])*abs(tt[i])-512);
+  }
+
+  return value;
 }
 
 // Returns the rth-order nonlinearity.
@@ -725,4 +785,3 @@ int BooleanFun::nonlinearity(int r, int upper_bound) const {
 int BooleanFun::nonlinearity(int r) const {
   return nonlinearity(r, (1<<n));
 }
-
