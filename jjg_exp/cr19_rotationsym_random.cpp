@@ -7,7 +7,7 @@
 
 #include "boolean_fun.h"
 #include "permutation.h"
-#include "rotation_sym.h"
+#include "rotationsym.h"
 
 using namespace std;
 
@@ -15,15 +15,15 @@ int main() {
   BooleanFun f(9);
   RotationSym f1(9);
   // Initialize f at random
-  f.set_random_sym(f1.get_all_orbits());
   set<string> store; 
+  for (int run=0; run< 10; run++) {
+  f.set_random_sym(f1.get_all_orbits());
   
   // Local search from f
-  for(int round=0; round<1000; round++) {
-    vector<string> ANF_of_fun;
-    vector<unsigned int> walsh_of_fun; 
+  for(int round=0; round<100000; round++) {
+    vector<BooleanFun> ANF_of_fun;
+    vector<int> walsh_of_fun; 
     for (int count=0; count < 60;count++) {
-      int f_cost=0 ;
       vector<int> bin;
       bin=f1.get_full_orbit(count);
 
@@ -33,6 +33,7 @@ int main() {
       int* term;
       term=f_son.truth_table;
 
+      //int pos=rand()%(bin.size());
       if(term[bin[0]]==1){
         f_son.set_truth_table_orbit(bin,0);
         f_son.set_truth_table_done();
@@ -42,11 +43,8 @@ int main() {
         f_son.set_truth_table_done();
       }
       
-      ANF_of_fun.push_back(f_son.get_truth_table_hex());
-      for (int j=0; j< (1<<9); j++) {
-        f_cost = f_cost + (f_son.walsh_transform(j)*f_son.walsh_transform(j)-512)*(f_son.walsh_transform(j)*f_son.walsh_transform(j)-512);
-      }
-      walsh_of_fun.push_back(f_cost);
+      ANF_of_fun.push_back(f_son);
+      walsh_of_fun.push_back(f_son.cost());
     }
     auto minValue = min_element(walsh_of_fun.begin(),walsh_of_fun.end());
     int minPosition = minValue - walsh_of_fun.begin();
@@ -54,10 +52,10 @@ int main() {
     int num_same=0;
     while(process) {
       string anf;
-      anf=ANF_of_fun[minPosition];
+      anf=ANF_of_fun[minPosition].get_truth_table_hex();
       int flag=0;
       if(store.find(anf) != store.end()) {
-        walsh_of_fun[minPosition]=4294967295;
+        walsh_of_fun[minPosition]=2147483645;
         flag=1;
         num_same++;
       }
@@ -70,14 +68,14 @@ int main() {
       }  
     }
     if(num_same<60) {
-      store.insert(ANF_of_fun[minPosition]);
-      f.set_truth_table_hex(ANF_of_fun[minPosition]);
-      f.set_truth_table_done();
+      store.insert(ANF_of_fun[minPosition].get_truth_table_hex());
+      f=ANF_of_fun[minPosition];
     }
     else {
       cout<<"round is "<<round<<endl;
       break;
     }
+  }
   }
   vector<int> value_nonlinearity;
   for (const string& anf1 : store) {
@@ -93,8 +91,7 @@ int main() {
   for(int j=1; j<=maxpos;j++) {
     iter1++;
   }
-  string anf_max= *iter1;
-  cout<<anf_max<<endl;
+  cout<<*iter1<<endl;
   cout<<*Max_nonlinearity<<endl;
   return 0;
 }
