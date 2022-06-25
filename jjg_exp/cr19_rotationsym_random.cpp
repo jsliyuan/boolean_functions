@@ -34,7 +34,6 @@ int main() {
       int* term;
       term=f_son.truth_table;
 
-      //int pos=rand()%(bin.size());
       if(term[bin[0]]==1){
         f_son.set_truth_table_orbit(bin,0);
         f_son.set_truth_table_done();
