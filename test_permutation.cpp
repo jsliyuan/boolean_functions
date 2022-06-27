@@ -60,6 +60,18 @@ int main() {
   assert(p_9.var_num()==9);
   assert(p_9==p_same);
 
+  Permutation p3_identity(3);
+  assert(p3_identity.cycles().size() == 3);
+  assert(p3_identity.cycles().at(0) == 1);
+  assert(p3_identity.cycles().at(1) == 1);
+  assert(p3_identity.cycles().at(2) == 1);
+
+  Permutation p9_6_3(9);
+  p9_6_3.set("9,8,4,1,2,7,3,5,6");
+  assert(p9_6_3.cycles().size() == 2);
+  assert(p9_6_3.cycles().at(0) == 6);
+  assert(p9_6_3.cycles().at(1) == 3);
+
   cout << "Everything looks good. End of all tests." << endl;
   return 0;
 }

@@ -129,3 +129,26 @@ Permutation::~Permutation()
   delete perm;
 }
 
+// Decompose the permutation into cycles.
+// Returns the length of each cycle, as a vector.
+std::vector<int> Permutation::cycles() const {
+  bool visisted[n];
+  memset(visisted, 0, n * sizeof(bool));
+  vector<int> result;
+
+  for (int i = 0; i < n; i ++) {
+    if (visisted[i] == false) {
+      int idx = perm[i] - 1;
+      int len = 0;
+      while (!visisted[idx]) {
+        visisted[idx] = true;
+        idx = perm[idx] - 1;
+        len ++;
+      }
+      result.push_back(len);
+    }
+  }
+  return result;
+}
+
+

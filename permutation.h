@@ -3,6 +3,7 @@
 
 #include <string>
 #include <unordered_set>
+#include <vector>
 
 // Permutation class
 class Permutation {
@@ -52,6 +53,10 @@ class Permutation {
     
     // this = this * perm
     void right_mult(const Permutation& perm1);
+
+    // Decompose the permutation into cycles.
+    // Returns the length of each cycle, as a vector.
+    std::vector<int> cycles() const;
 
   private:
     int n;
