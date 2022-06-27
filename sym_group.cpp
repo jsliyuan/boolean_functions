@@ -1,4 +1,4 @@
-#include "SymGroup.h"
+#include "sym_group.h"
 #include "permutation.h"
 
 #include <cstring>
@@ -60,30 +60,25 @@ void SymGroup::generate_all() {
   for (const Permutation& perm: this->generators) {
     this->elements.push_back(perm);
   }
-  vector<Permutation> middle;
-  middle=this->elements;
-  while(middle.size()!=0) {
-    vector<Permutation> middle1;
-    for(const Permutation& perm1 : middle) {
-      for(const Permutation& perm2 : this->elements) {
-        Permutation *term= new Permutation(n);
-        *term=perm1;
-        (*term).left_mult(perm2);
-        int flag=0;
-        for(const Permutation& perm3: this->elements) {
-          if(perm3==*term) {
-            flag=1;
-            break;
-          }
-        }
-        if(flag==0) {
-          this->elements.push_back(*term);
-          middle1.push_back(*term);
-        } 
-      }  
-    }
-    middle=middle1;
-  }
+  vector<Permutation> queue;
+  queue=this->elements;
+  int head=0,tail=queue.size()-1;
+  while(head<=tail) {
+    Permutation cur(n);
+    cur=queue[head];
+    for(const Permutation& perm1 : this->elements) {
+      Permutation new_element(n);
+      new_element=cur;
+      new_element.left_mult(perm1);
+      vector<Permutation>::iterator iter=find(this->elements.begin(),this->elements.end(),new_element);
+      if(iter==this->elements.end()) {
+        this->elements.push_back(new_element);
+        queue.push_back(new_element);
+        tail++;
+      }
+    } 
+    head++;
+  }  
 }
 
 void SymGroup::compute_orbits() {
