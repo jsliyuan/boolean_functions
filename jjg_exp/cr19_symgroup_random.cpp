@@ -7,7 +7,7 @@
 
 #include "boolean_fun.h"
 #include "permutation.h"
-#include "SymGroup.h"
+#include "sym_group.h"
 
 using namespace std;
 
