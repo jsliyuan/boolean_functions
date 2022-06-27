@@ -1,5 +1,6 @@
+# Experiment Result
 
-###cr19_rotationsym_random.cpp
+##cr19_rotationsym_random.cpp
 $ g++ -o test.out cr19_rotationsym_random.cpp boolean_fun.cpp affine_trans.cpp permutation.cpp rotationsym.cpp
 $ ./test.out
 
@@ -7,7 +8,7 @@ search space: all rotation symmetric class of 9-variable Boolean functions.  Rep
 search result:  nonlinearity is 241
 130A5089674581D62D7E7463C456E62C08F37EFD2F61391EA164732DB83C4CF150C1BB1E3EE9AEA20DEF39561AD346ADC95669203B5E4DA39E905EB164E5AB16
 
-###cr19_symgroup_random.cpp
+##cr19_symgroup_random.cpp
 $ g++ -o test.out cr19_symgroup_random.cpp boolean_fun.cpp affine_trans.cpp permutation.cpp sym_group.cpp
 $ ./test.out
 
