@@ -5,9 +5,11 @@
  
  $ ./test.out
 
-### search space: all rotation symmetric class of 9-variable Boolean functions.  Representative permutation: (1,6,7,4,8,2,5,3,0). Number of orbits: 60.
+### Search space: all rotation symmetric class of 9-variable Boolean functions.  
 
-### search result:  nonlinearity is 241
+Representative permutation: (1,6,7,4,8,2,5,3,0). Number of orbits: 60.
+
+### Search result:  nonlinearity is 241
 
 130A5089674581D62D7E7463C456E62C08F37EFD2F61391EA164732DB83C4CF150C1BB1E3EE9AEA20DEF39561AD346ADC95669203B5E4DA39E905EB164E5AB16
 
@@ -16,9 +18,11 @@ $ g++ -o test.out cr19_symgroup_random.cpp boolean_fun.cpp affine_trans.cpp perm
 
 $ ./test.out
 
-### search space: 3—DSBF .  Representative permutation: (0,2,1,4,5,6,7,8,3).   Number of orbits: 104. 
+### Search space: 3—DSBF .  
 
-### search result:  
+Representative permutation: (0,2,1,4,5,6,7,8,3).   Number of orbits: 104. 
+
+### Search result:  
 
 1. nonlinearity is 242
 
