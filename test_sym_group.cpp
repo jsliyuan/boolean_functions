@@ -4,7 +4,7 @@
 #include <assert.h>
 #include <vector>
 
-#include "SymGroup.h"
+#include "sym_group.h"
 #include "permutation.h"
 
 using namespace std;
