@@ -1,5 +1,5 @@
-#ifndef SYMGROUP_H
-#define SYMGROUP_H
+#ifndef SYM_GROUP_H
+#define SYM_GROUP_H
 
 #include <string>
 #include <unordered_set>
