@@ -57,28 +57,31 @@ SymGroup& SymGroup::operator=(const SymGroup& SG) {
 }
 
 void SymGroup::generate_all() {
-  for (const Permutation& perm: this->generators) {
-    this->elements.push_back(perm);
+  for (vector<Permutation>::iterator it= this->generators.begin();it!=this->generators.end();it++) {
+    elements.push_back(*it);
   }
   vector<Permutation> queue;
   queue=this->elements;
-  int head=0,tail=queue.size()-1;
+  int head=0,tail=queue.size()-1; 
   while(head<=tail) {
-    Permutation cur(n);
-    cur=queue[head];
-    for(const Permutation& perm1 : this->elements) {
-      Permutation new_element(n);
-      new_element=cur;
-      new_element.left_mult(perm1);
-      vector<Permutation>::iterator iter=find(this->elements.begin(),this->elements.end(),new_element);
+    Permutation *cur=new Permutation(n);
+    *cur=queue.at(head);
+    vector<Permutation> term;
+    term=this->elements;
+    for( vector<Permutation>::iterator it= term.begin();it!=term.end();it++) {
+      Permutation *new_element=new Permutation(n);
+      *new_element=*cur;
+      (*new_element).left_mult(*it);
+      vector<Permutation>::iterator iter;
+      iter=find(this->elements.begin(),this->elements.end(),*new_element);
       if(iter==this->elements.end()) {
-        this->elements.push_back(new_element);
-        queue.push_back(new_element);
+        this->elements.push_back(*new_element);
+        queue.push_back(*new_element);
         tail++;
       }
     } 
     head++;
-  }  
+  } 
 }
 
 void SymGroup::compute_orbits() {
