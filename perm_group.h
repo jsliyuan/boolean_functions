@@ -28,10 +28,6 @@ class SymGroup {
     //  return this->get_str() == p.get_str();
     }*/
 
-   
-    void set_generator(Permutation perm) {
-        generators.push_back(perm);
-    }
     // Can be called multiple times.
     void add_generator(Permutation perm1) {
       this->generators.push_back(perm1);
