@@ -6,7 +6,7 @@
 #include <utility>
 
 #include "boolean_fun.h"
-#include "rotationsym.h"
+#include "rotation_sym.h"
 #include "permutation.h"
 
 using namespace std;
