@@ -3,6 +3,7 @@
 #include <set>
 #include <assert.h>
 #include <vector>
+#include <cassert>
 
 #include "rotation_sym.h"
 #include "permutation.h"

@@ -1,8 +1,9 @@
 #include <iostream>
 #include <time.h>
 #include <set>
-#include <assert.h>
 #include <vector>
+#include <assert.h>
+#include <cassert>
 
 #include "perm_group.h"
 #include "permutation.h"

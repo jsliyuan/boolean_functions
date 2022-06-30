@@ -1,6 +1,8 @@
 #include "homogenous_bf_generator.h"
 
 #include <iostream>
+#include <assert.h>
+#include <cassert>
 
 using namespace std;
 

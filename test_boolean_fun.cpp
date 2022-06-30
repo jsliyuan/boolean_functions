@@ -2,6 +2,7 @@
 #include <time.h>
 #include <set>
 #include <assert.h>
+#include <cassert>
 
 #include "boolean_fun.h"
 #include "rotation_sym.h"
