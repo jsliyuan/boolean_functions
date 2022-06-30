@@ -8,17 +8,17 @@
 #include "permutation.h"
 using namespace std;
 
-class SymGroup {
+class PermGroup {
   public:
     
-    SymGroup(int n);
+    PermGroup(int n);
 
-    SymGroup(const SymGroup& SG);
+    PermGroup(const PermGroup& PG);
     // Destructor.
-    ~SymGroup();
+    ~PermGroup();
 
     // Assignment operator
-    SymGroup& operator=(const SymGroup& SG);
+    PermGroup& operator=(const PermGroup& PG);
     
     //TODO(jjg): implement== operator when needed
     /*bool operator == (const SymGroup &SG) const {
@@ -64,7 +64,7 @@ class SymGroup {
     // dimension
     int n;
     
-    void copy_data(const SymGroup& SG);
+    void copy_data(const PermGroup& PG);
 
     vector<Permutation> generators;
 
