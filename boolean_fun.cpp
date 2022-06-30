@@ -121,6 +121,34 @@ int BooleanFun::get_anf_coe(int d) const {
   return anf[d];
 }
 
+string BooleanFun::get_truth_table_hex() const {
+  string result = "";
+  for(int count=0;count<(1<<n);count+=4) {
+    int i=count;
+    int num;
+    num=truth_table[i]*8+truth_table[i+1]*4+truth_table[i+2]*2+truth_table[i+3]*1;
+    switch (num) {
+      case 0: result.append("0");break;
+      case 1: result.append("1");break;
+      case 2: result.append("2");break;
+      case 3: result.append("3");break;
+      case 4: result.append("4");break;
+      case 5: result.append("5");break;
+      case 6: result.append("6");break;
+      case 7: result.append("7");break;
+      case 8: result.append("8");break;
+      case 9: result.append("9");break;
+      case 10: result.append("A");break;
+      case 11: result.append("B");break;
+      case 12: result.append("C");break;
+      case 13: result.append("D");break;
+      case 14: result.append("E");break;
+      case 15: result.append("F");break;
+    }
+  }
+  return result;
+}
+
 // Set the truth_table[x] to v, where
 // x is in [0, 2^n-1], and v is 0 or 1.
 // Returns false if x or v is out of range.
