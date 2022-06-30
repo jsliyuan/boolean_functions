@@ -127,6 +127,8 @@ class BooleanFun {
     // The order preserves.
     std::string get_coe_list() const;
 
+    std::string get_truth_table_hex() const;
+  
     // Returns anf[d], where d is in [0, 2^n-1].
     // Returns -1 if d is out of range.
     int get_anf_coe(int d) const;
