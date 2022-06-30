@@ -14,15 +14,15 @@ using namespace std;
 
 int main() {
   BooleanFun f(9);
-  SymGroup SG(9);
+  PermGroup PG(9);
   Permutation perm(9);
   perm.set("1,3,2,5,6,7,8,9,4");
-  SG.set_generator(perm);
-  SG.compute_orbits();
+  PG.set_generator(perm);
+  PG.compute_orbits();
   // Initialize f at random
 
   for (int run=0; run< 20; run++) {
-  f.set_random_sym(SG.get_all_orbits());
+  f.set_random_sym(PG.get_all_orbits());
   
   set<pair<int, BooleanFun> > store; 
   set<pair<int, BooleanFun> > visited; 
