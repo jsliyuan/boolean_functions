@@ -1,6 +1,7 @@
 #include <iostream>
 #include <time.h>
 #include <set>
+#include <assert.h>
 
 #include "boolean_fun.h"
 #include "rotation_sym.h"
