@@ -14,7 +14,7 @@ int main() {
   Permutation perm(9);
   perm.set("9,8,4,1,2,7,3,5,6");
   assert(PG.get_n() ==9);
-  PG.set_generator(perm);
+  PG.add_generator(perm);
   PG.compute_orbits();
   assert(PG.group_size()==6);
   assert(PG.get_orbits_number()==100);
@@ -28,7 +28,7 @@ int main() {
   Permutation perm1(9);
   perm1.set("5,7,8,3,9,2,6,4,1");
   assert(PG1.get_n() ==9);
-  PG1.set_generator(perm1);
+  PG1.add_generator(perm1);
   PG1.compute_orbits();
   assert(PG1.group_size()==3);
   assert(PG1.get_orbits_number()==176);
@@ -42,7 +42,7 @@ int main() {
   Permutation perm2(9);
   perm2.set("2,5,8,6,7,3,1,4,9");
   assert(PG2.get_n() ==9);
-  PG2.set_generator(perm2);
+  PG2.add_generator(perm2);
   PG2.compute_orbits();
   assert(PG2.group_size()==4);
   assert(PG2.get_orbits_number()==140);
@@ -57,7 +57,7 @@ int main() {
   Permutation perm3(9);
   perm3.set("1,3,2,5,6,7,8,9,4");
   assert(PG3.get_n() ==9);
-  PG3.set_generator(perm3);
+  PG3.add_generator(perm3);
   PG3.compute_orbits();
   assert(PG3.group_size()==6);
   assert(PG3.get_orbits_number()==104);
