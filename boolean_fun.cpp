@@ -661,6 +661,35 @@ int BooleanFun::inner_product(int x, int y) const {
   return sum;
 }
 
+int BooleanFun::cost() const {
+  int buf[(1<<n)];
+  int tt[(1<<n)];
+
+  for (int m=0;m< (1<<n);m++) {
+    if(truth_table[m] == 1) {
+      tt[m]=-1;
+    } else {
+      tt[m]=1;
+    }
+  }
+  register int i, j, k;
+  for (i = 0; i < n; ++i) {
+    for (j = 0; j < 1<<(n-1); ++j) {
+      k = j << 1;
+      buf[j] = tt[k] + tt[k + 1];
+      buf[j + (1<<(n-1))] = tt[k] - tt[k + 1];
+    }
+    memcpy(tt, buf,  (1<<n)*sizeof(int));
+  }
+
+  int value=0;
+  for (i = 0; i < 1<<(n); ++i) {
+    value=value+ (abs(tt[i])*abs(tt[i])-512)*(abs(tt[i])*abs(tt[i])-512);
+  }
+
+  return value;
+}
+
 // Returns the first-order nonlinearity, which is
 // 2^{n-1} - max_w |walsh_transform(w)| / 2.
 // Computed using FFT (Fast Fourier Transform)
