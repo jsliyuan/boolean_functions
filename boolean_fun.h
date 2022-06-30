@@ -175,6 +175,8 @@ class BooleanFun {
     // W(w) = sum_{x} (-1)^(f(x) + w*x)
     int walsh_transform(int w) const;
 
+    int cost() const;  
+  
     // Returns the first-order nonlinearity, which is
     // 2^{n-1} - max_w |walsh_transform(w)| / 2.
     int nonlinearity() const;
