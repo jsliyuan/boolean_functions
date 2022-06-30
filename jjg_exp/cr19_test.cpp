@@ -8,7 +8,7 @@
 
 #include "boolean_fun.h"
 #include "permutation.h"
-#include "SymGroup.h"
+#include "perm_group.h"
 
 using namespace std;
 
@@ -16,14 +16,11 @@ int main() {
   BooleanFun f(9);
   SymGroup SG(9);
   Permutation perm(9);
-  //Permutation perm1_1(9);
   perm.set("1,3,2,5,6,7,8,9,4");
-  //perm1_1.set("9,8,4,1,2,7,3,5,6");
   SG.set_generator(perm);
-  //SG.add_generator(perm1_1);
   SG.compute_orbits();
   // Initialize f at random
-  //cout<<SG.get_orbits_number() <<endl;
+
   for (int run=0; run< 20; run++) {
   f.set_random_sym(SG.get_all_orbits());
   
