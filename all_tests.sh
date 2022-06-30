@@ -34,3 +34,16 @@ g++ -o test.out test_rotation_sym.cpp rotation_sym.cpp permutation.cpp
 echo "test PermGroup class"
 g++ -o test.out test_perm_group.cpp perm_group.cpp permutation.cpp
 ./test.out
+
+echo "Make sure experiments compile successfully"
+
+g++ -o example_nonsingular.out example_nonsingular.cpp affine_trans.cpp nonsingular_generator.cpp boolean_fun.cpp
+
+g++ -o example.out example_orbit.cpp boolean_fun.cpp affine_trans.cpp
+
+g++ -o bfs.out bfs_orbit.cpp boolean_fun.cpp affine_trans.cpp
+
+g++ -o ffn.out ffn_distribution.cpp boolean_fun.cpp homogenous_bf_generator.cpp affine_trans.cpp
+
+g++ -o verification.out verification.cpp boolean_fun.cpp homogenous_bf_generator.cpp affine_trans.cpp
+
