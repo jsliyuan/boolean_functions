@@ -22,7 +22,7 @@ class BooleanFun {
       if (this->n < g.var_num()) {
         return true;
       }
-      return this->get_anf() < g.get_anf();
+      return this->get_truth_table_hex() < g.get_truth_table_hex();
     }
 
     // Reload = opeartor
@@ -30,7 +30,7 @@ class BooleanFun {
       if (this->n != g.var_num()) {
         return false;
       }
-      return this->get_anf() == g.get_anf();
+      return this->get_truth_table_hex() == g.get_truth_table_hex();
     }
 
     // Assignment operator
