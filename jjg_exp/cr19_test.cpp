@@ -34,7 +34,7 @@ int main() {
   for(int round=0; round<100000; round++) {
     for (int count=0; count < 104;count++) {
       vector<int> bin;
-      bin=SG.get_full_orbit(count);
+      bin=PG.get_full_orbit(count);
 
       BooleanFun f_son(9);
       f_son=f;
