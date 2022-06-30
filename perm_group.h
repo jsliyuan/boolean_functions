@@ -1,5 +1,5 @@
-#ifndef PER_GROUP_H
-#define PER_GROUP_H
+#ifndef PERM_GROUP_H
+#define PERM_GROUP_H
 
 #include <string>
 #include <unordered_set>
