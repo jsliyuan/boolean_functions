@@ -1,4 +1,4 @@
-#include "per_group.h"
+#include "perm_group.h"
 #include "permutation.h"
 
 #include <cstring>
