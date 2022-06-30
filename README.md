@@ -45,6 +45,11 @@ $g++ -o test.out test_rotation_sym.cpp rotation_sym.cpp permutation.cpp
 
 $./test.out
 
+### sym_group class
+$g++ -o test.out test_sym_group.cpp sym_group.cpp permutation.cpp
+
+$./test.out
+
 ### UpperDiagGenerator class
 yuanli$ g++ -o test.out test_upper_diag_generator.cpp upper_diag_generator.cpp affine_trans.cpp
 
