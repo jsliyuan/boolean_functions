@@ -14,7 +14,7 @@
 
 using namespace std;
 
-SymGroup::SymGroup(int n) {
+PermGroup::PermGroup(int n) {
   this->n = n;
   this->generators.clear();
   this->elements.clear();
@@ -30,34 +30,34 @@ SymGroup::SymGroup(int n) {
 }
 
 // copy all data from g to this.
-void SymGroup::copy_data(const SymGroup& SG) {
-  this->n = SG.get_n();
+void PermGroup::copy_data(const PermGroup& PG) {
+  this->n = PG.get_n();
   this->generators.clear();
   this->elements.clear();
   this->orbits.clear();
-  for (const Permutation &it: SG.generators) {
+  for (const Permutation &it: PG.generators) {
     this->generators.push_back(it);
   }
-  for (const Permutation &itt: SG.elements) {
+  for (const Permutation &itt: PG.elements) {
     this->elements.push_back(itt);
   }
-  for (const vector<int> &iter: SG.orbits) {
+  for (const vector<int> &iter: PG.orbits) {
     this->orbits.push_back(iter);
   }
 }
 
 // Copy constructor.
-SymGroup::SymGroup(const SymGroup& SG) {
-  copy_data(SG);
+PermGroup::PermGroup(const PermGroup& PG) {
+  copy_data(PG);
 }
 
 // Assignment operator
-SymGroup& SymGroup::operator=(const SymGroup& SG) {
-  copy_data(SG);
+PermGroup& PermGroup::operator=(const PermGroup& PG) {
+  copy_data(PG);
   return *this;
 }
 
-void SymGroup::generate_all() {
+void PermGroup::generate_all() {
   for (vector<Permutation>::iterator it= this->generators.begin();it!=this->generators.end();it++) {
     elements.push_back(*it);
   }
@@ -85,7 +85,7 @@ void SymGroup::generate_all() {
   }  
 }
 
-void SymGroup::compute_orbits() {
+void PermGroup::compute_orbits() {
   generate_all();
   int count=0;
   for (int x=0;x<(1<<n);x++) {
@@ -146,7 +146,7 @@ void SymGroup::compute_orbits() {
 }
 
 // Returns the orbit of x .
-std::vector<int> SymGroup::get_orbit(int x) {
+std::vector<int> PermGroup::get_orbit(int x) {
   vector<int> cin;
   vector<int> din;
   int num;
@@ -185,23 +185,23 @@ std::vector<int> SymGroup::get_orbit(int x) {
   return din;
 }
 
-std::vector<int> SymGroup::get_full_orbit(int i) const {
+std::vector<int> PermGroup::get_full_orbit(int i) const {
   return this->orbits.at(i);
 }
 
-std::vector< std::vector<int> > SymGroup::get_all_orbits() {
+std::vector< std::vector<int> > PermGroup::get_all_orbits() {
   return this->orbits;
 }
 
-int SymGroup::get_orbits_number() const {
+int PermGroup::get_orbits_number() const {
   return this->orbits.size();
 }
 
-int SymGroup::get_n() const {
+int PermGroup::get_n() const {
   return this->n;
 }
 
-SymGroup::~SymGroup()
+PermGroup::~PermGroup()
 {
   this->generators.clear();
   this->elements.clear();
