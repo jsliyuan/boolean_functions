@@ -447,7 +447,15 @@ int main() {
   assert(rsym2.get_anf()=="0");
   assert(rsym2.get_degree()==0);
   
-  vector<int> din{3,5,6,9,10,12};
+  // TODO(yl): g++ version does not support {} initialization
+  // vector<int> din{3,5,6,9,10,12};
+  vector <int> din;
+  din.push_back(3);
+  din.push_back(5);
+  din.push_back(6);
+  din.push_back(9);
+  din.push_back(10);
+  din.push_back(12);
   rsym2.set_truth_table_orbit(din, 1);
   rsym2.set_truth_table_done();
   assert(rsym2.get_anf()=="x3x4+x2x4+x2x3+x2x3x4+x1x4+x1x3+x1x3x4+x1x2+x1x2x4+x1x2x3");

@@ -4,7 +4,7 @@ echo "Running all tests"
 
 
 echo "test BooleanFun class"
-g++ -o test.out test_boolean_fun.cpp boolean_fun.cpp affine_trans.cpp
+g++ -o test.out test_boolean_fun.cpp boolean_fun.cpp affine_trans.cpp rotation_sym.cpp permutation.cpp
 ./test.out
 
 echo "test AffineTrans class"

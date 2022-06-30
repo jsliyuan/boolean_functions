@@ -26,7 +26,7 @@ $ bash all_tests.sh
 to make sure all tests pass.
 
 ### BooleanFun class
-yuanli$ g++ -o test.out test_boolean_fun.cpp boolean_fun.cpp affine_trans.cpp
+yuanli$ g++ -o test.out test_boolean_fun.cpp boolean_fun.cpp affine_trans.cpp rotation_sym.cpp permutation.cpp
 
 yuanli$ ./test.out
 
