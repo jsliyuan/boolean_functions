@@ -31,6 +31,6 @@ echo "test Rotationsym class"
 g++ -o test.out test_rotation_sym.cpp rotation_sym.cpp permutation.cpp
 ./test.out
 
-echo "test SymGroup class"
-g++ -o test.out test_sym_group.cpp sym_group.cpp permutation.cpp
+echo "test PermGroup class"
+g++ -o test.out test_perm_group.cpp perm_group.cpp permutation.cpp
 ./test.out
