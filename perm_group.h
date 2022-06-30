@@ -1,5 +1,5 @@
-#ifndef SYM_GROUP_H
-#define SYM_GROUP_H
+#ifndef PER_GROUP_H
+#define PER_GROUP_H
 
 #include <string>
 #include <unordered_set>
@@ -20,12 +20,13 @@ class SymGroup {
     // Assignment operator
     SymGroup& operator=(const SymGroup& SG);
     
-    bool operator == (const SymGroup &SG) const {
+    //TODO(jjg): implement== operator when needed
+    /*bool operator == (const SymGroup &SG) const {
       if (this->n != this->n) {
         return false;
       }
     //  return this->get_str() == p.get_str();
-    }
+    }*/
 
    
     void set_generator(Permutation perm) {
