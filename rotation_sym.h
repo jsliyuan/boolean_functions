@@ -22,10 +22,11 @@ class RotationSym {
     RotationSym& operator=(const RotationSym& RS);
     
     bool operator == (const RotationSym &RS) const {
-      if (this->n != this->n) {
+      if (this->n != RS.n) {
         return false;
       }
-    //  return this->get_str() == p.get_str();
+      // TODO: add comparision logic
+      return true;
     }
 
     int get_orbits_number() const;
