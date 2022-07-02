@@ -2,8 +2,6 @@
 #define BOOLEAN_FUN_H
 
 #include "affine_trans.h"
-#include "rotation_sym.h"
-#include "permutation.h"
 
 #include <cstdarg>
 #include <string>
