@@ -30,6 +30,12 @@ yuanli$ g++ -o test.out test_boolean_fun.cpp boolean_fun.cpp affine_trans.cpp ro
 
 yuanli$ ./test.out
 
+Performance test - test nonlinearity()
+
+yuanli$ g++ -o test.out test_boolean_fun_nonlinearity_perf.cpp boolean_fun.cpp affine_trans.cpp
+
+yuanli# ./test.out
+
 ### AffineTrans class
 yuanli$ g++ -o test.out test_affine_trans.cpp affine_trans.cpp 
 
