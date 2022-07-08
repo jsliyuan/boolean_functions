@@ -12,6 +12,7 @@ BooleanFun::BooleanFun(int n) {
   this->n = n;
   truth_table = new int[1<<n];
   anf = new int[1<<n];
+  tmp = new int[1<<n];
   for (int i = 0; i < (1<<n); i ++) {
     truth_table[i] = 0;
     anf[i] = 0;
@@ -30,6 +31,7 @@ BooleanFun::BooleanFun(int n, string anf_str) {
   this->n = n;
   truth_table = new int[1<<n];
   anf = new int[1<<n];
+  tmp = new int[1<<n];
   for (int i = 0; i < (1<<n); i ++) {
     truth_table[i] = 0;
     anf[i] = 0;
@@ -51,6 +53,7 @@ void BooleanFun::copy_data(const BooleanFun& g) {
   this->degree = g.get_degree();
   anf = new int[1<<n];
   truth_table = new int[1<<n];
+  tmp = new int[1<<n];
 
   memcpy(this->anf, g.anf, (1<<n)*sizeof(int));
   memcpy(this->truth_table, g.truth_table, (1<<n)*sizeof(int));
@@ -345,6 +348,8 @@ void BooleanFun::set_anf_coe_done() {
 // the result into dest[2^n].
 // dest[x] = XOR_{y <= x bitwise} source[y]
 void BooleanFun::mobius_inversion(int* dest, int* source) {
+  /*
+  // Slow approach - time complexity O(2^{2n})
   // Initialize
   for (int i = 0; i < (1<<n); i ++) {
     dest[i] = 0;
@@ -360,6 +365,22 @@ void BooleanFun::mobius_inversion(int* dest, int* source) {
         dest[i] = (dest[i] + source[j]) % 2;
       }
     }
+  }
+  */
+
+  /* Fast approach - time complexity O(n2^n) */
+  memcpy(tmp, source, (1<<n)*sizeof(int));
+
+  for (int i = 0; i < n; i ++) {
+    int mi = (1<<i);
+    for (int k = 0; k < (1<<n); k ++) {
+      if ((k & mi) != 0) {
+        dest[k] = tmp[k^mi] ^ tmp[k];
+      } else {
+        dest[k] = tmp[k];
+      }
+    }
+    memcpy(tmp, dest, (1<<n)*sizeof(int));
   }
 }
 
@@ -456,6 +477,7 @@ BooleanFun::~BooleanFun()
 {
   delete truth_table;
   delete anf;
+  delete tmp;
 }
 
 // Returns the number of variables.

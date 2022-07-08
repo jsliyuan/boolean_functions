@@ -206,6 +206,10 @@ class BooleanFun {
     // ANF[d(e)] is the coefficient of x1^{e1}x2^{e2}...xn^{en}.
     int* anf;
 
+    // int array of length 2^n
+    // for temp use
+    int* tmp;
+
     // Compute truth table from anf.
     void anf_to_truth_table();
 
