@@ -5,6 +5,7 @@
 
 #include <cstdarg>
 #include <string>
+#include <vector>
 
 class BooleanFun {
   public:
@@ -104,6 +105,22 @@ class BooleanFun {
     // Returns the subfunction in n-1 variables by setting
     // x_n to constant c, where c is 0 or 1.
     BooleanFun sub_function(int c) const;
+  
+    // compute f_s(x)=f(x,s);
+    BooleanFun restriction(int m, int s) const ;
+
+    // Returns the dirivative in direction h, denoted by D_h(f),
+    // defined as f(x) + f(x+h).
+    // h is in [0, 2^n-1].
+    BooleanFun derivative(int h) const;
+
+    // Returns the fourth power of Gowers norm U2, which is exactly
+    // sum_x ^f(x)^4.
+    double Gowers_norm_u2() const;
+
+    // Returns the 8th power of Gowers norm U3, which is
+    // exp_h Gowers_norm_u2(D_h(f)).
+    double Gowers_norm_u3() const;
 
     // Evaluate boolean function at a given point by giving {0,1}^n.
     // We must have num = n; otherwise returns -1.
@@ -125,6 +142,7 @@ class BooleanFun {
     // The order preserves.
     std::string get_coe_list() const;
 
+    // Returns the truth table in its hex format, string of length 2^n / 16.
     std::string get_truth_table_hex() const;
   
     // Returns anf[d], where d is in [0, 2^n-1].
@@ -173,6 +191,8 @@ class BooleanFun {
     // W(w) = sum_{x} (-1)^(f(x) + w*x)
     int walsh_transform(int w) const;
 
+    // Cost function used by Kavut and Yucel, who prove that
+    // CR(1, 9) >= 242.
     int cost() const;  
   
     // Returns the first-order nonlinearity, which is
@@ -189,6 +209,14 @@ class BooleanFun {
     // Returns the anf, which is an array of length 2^n.
     // Read-only.
     const int* get_anf_ptr();
+
+  protected:
+    // Returns the dirivative in direction h, denoted by D_h(f),
+    // Only the truth table is updated. 
+    // BE CAREFUL.
+    BooleanFun derivative_truth_table_only(int h) const;
+
+   
 
   private:
     // number of variables
@@ -207,8 +235,18 @@ class BooleanFun {
     int* anf;
 
     // int array of length 2^n
-    // for temp use
+    // for temp use, used Mobious transform (ANF <-> truth table conversion),
+    // and fast fourier transform
     int* tmp;
+  
+    int* fourier_transform;
+  
+    // Allocate memory for all pointers, including
+    // truth_table, anf, tmp, fourier_transform
+    void new_space(int n);
+
+    // Free all space for allocated memory
+    void free_space();
 
     // Compute truth table from anf.
     void anf_to_truth_table();
@@ -233,8 +271,10 @@ class BooleanFun {
     // dest[x] = sum_{y <= x bitwise} source[y]
     // The summation is over GF(2).
     void mobius_inversion(int* dest, int* source);
+  
+    void fast_fourier_transform(int* tt, int* Fourier_arry, int n) const;
 
-    // Returns the base-2 weight of an integer， i.e., returns the
+    // Returns the base-2 weight of an integer, i.e., returns the
     // number of one's in its binary representation.
     int weight(int x) const;
 
@@ -250,6 +290,7 @@ class BooleanFun {
 
     // Allocate memory and copy all data from g to this.
     void copy_data(const BooleanFun& g);
+
 };
 
 #endif

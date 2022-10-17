@@ -4,19 +4,15 @@
 #include <time.h>
 #include <iostream>
 #include <vector>
+#include <math.h>
+#include <algorithm>
 
 using namespace std;
 
 // BooleanFun constructor with parameter (number of variables)
 BooleanFun::BooleanFun(int n) {
   this->n = n;
-  truth_table = new int[1<<n];
-  anf = new int[1<<n];
-  tmp = new int[1<<n];
-  for (int i = 0; i < (1<<n); i ++) {
-    truth_table[i] = 0;
-    anf[i] = 0;
-  }
+  this->new_space(n);
   degree = 0;
 
   // initialize random seed
@@ -29,14 +25,7 @@ BooleanFun::BooleanFun(int n) {
 //   anf = "x1x2+x3+1"
 BooleanFun::BooleanFun(int n, string anf_str) {
   this->n = n;
-  truth_table = new int[1<<n];
-  anf = new int[1<<n];
-  tmp = new int[1<<n];
-  for (int i = 0; i < (1<<n); i ++) {
-    truth_table[i] = 0;
-    anf[i] = 0;
-  }
-
+  this->new_space(n);
   this->set_anf(anf_str);
 
   // Compute truth_table using anf
@@ -51,30 +40,52 @@ BooleanFun::BooleanFun(int n, string anf_str) {
 void BooleanFun::copy_data(const BooleanFun& g) {
   this->n = g.var_num();
   this->degree = g.get_degree();
-  anf = new int[1<<n];
-  truth_table = new int[1<<n];
-  tmp = new int[1<<n];
-
+  
   memcpy(this->anf, g.anf, (1<<n)*sizeof(int));
   memcpy(this->truth_table, g.truth_table, (1<<n)*sizeof(int));
+  memcpy(this->fourier_transform, g.fourier_transform, (1<<n)*sizeof(int));
 }
 
 // Copy constructor.
 BooleanFun::BooleanFun(const BooleanFun& g) {
+  new_space(g.var_num());
   copy_data(g);
 }
 
 // Assignment operator
 BooleanFun& BooleanFun::operator=(const BooleanFun& g) {
+  free_space();
+  new_space(g.var_num());
+  copy_data(g);
+  return *this;
+}
+
+// Allocate memory for all pointers, including
+// truth_table, anf, tmp, fourier_transform
+void BooleanFun::new_space(int n) {
+  truth_table = new int[1<<n];
+  anf = new int[1<<n];
+  tmp = new int[1<<n];
+  fourier_transform= new int [1<<n];
+  memset(truth_table, 0, (1<<n) * sizeof(int));
+  memset(anf, 0, (1<<n) * sizeof(int));
+  memset(tmp, 0, (1<<n) * sizeof(int));
+  memset(fourier_transform, 0, (1<<n) * sizeof(int));
+}
+
+void BooleanFun::free_space() {
   if (anf) {
     delete anf;
   }
   if (truth_table) {
     delete truth_table;
   }
-
-  copy_data(g);
-  return *this;
+  if (tmp) {
+    delete tmp;
+  }
+  if (fourier_transform) {
+    delete fourier_transform;
+  }
 }
 
 // Returns the algebraic normal form of the Boolean function.
@@ -121,6 +132,75 @@ int BooleanFun::get_anf_coe(int d) const {
   }
 
   return anf[d];
+}
+
+void BooleanFun::fast_fourier_transform(int* tt,int* Fourier_arry, int n) const{
+  for (int m=0 ; m< (1<<n); m++) {
+    if(tt[m] == 1) {
+      Fourier_arry[m]=-1;
+    } else {
+      Fourier_arry[m]=1;
+    }
+  }
+  int i, j, k;
+  for (i = 0; i < n; ++i) {
+    for (j = 0; j < 1<<(n-1); ++j) {
+      k = j << 1;
+      tmp[j] = Fourier_arry[k] + Fourier_arry[k + 1];
+      tmp[j + (1<<(n-1))] = Fourier_arry[k] - Fourier_arry[k + 1];
+    }
+    memcpy(Fourier_arry, tmp,  (1<<n)*sizeof(int));
+  }
+}
+
+// Returns the dirivative in direction h, denoted by D_h(f),
+// defined as f(x) + f(x+h).
+// h is in [0, 2^n-1].
+BooleanFun BooleanFun::derivative(int h) const {
+  BooleanFun f(n);
+  for (int i=0; i< (1<<n); i++) {
+    f.set_truth_table(i,(truth_table[i] ^ truth_table[i^h]));
+  }
+  f.set_truth_table_done();
+  return f;
+}
+
+// Returns the dirivative in direction h, denoted by D_h(f),
+// Only the truth table is updated. 
+// BE CAREFUL.
+BooleanFun BooleanFun::derivative_truth_table_only(int h) const {
+  BooleanFun f(n);
+  for (int i=0; i< (1<<n); i++) {
+    f.set_truth_table(i,(truth_table[i] ^ truth_table[i^h]));
+  }
+  return f;
+}
+
+// Returns the 8th power of Gowers norm U3, which is
+// exp_h Gowers_norm_u2(D_h(f)).
+double BooleanFun::Gowers_norm_u3() const {
+   double u3;
+   double result=0;
+   BooleanFun f(n);
+   for (int h=0 ; h< (1<<n); h++) {
+     // f = this->derivative(h);
+    f = this->derivative_truth_table_only(h);
+     result= f.Gowers_norm_u2() + result;
+   }
+   u3= ((double)result)/ (1<<n);
+   return u3;
+ }
+
+ // Returns the fourth power of Gowers norm U2, which is exactly
+ // sum_x ^f(x)^4.
+double BooleanFun::Gowers_norm_u2() const{
+  this->fast_fourier_transform(truth_table,fourier_transform, n);
+  double result=0;
+
+  for (int l=0; l<(1<<n); l++) {
+    result = pow( (((double)fourier_transform[l])/(1<<n)), 4) + result;
+  }
+  return result;
 }
 
 string BooleanFun::get_truth_table_hex() const {
@@ -348,26 +428,6 @@ void BooleanFun::set_anf_coe_done() {
 // the result into dest[2^n].
 // dest[x] = XOR_{y <= x bitwise} source[y]
 void BooleanFun::mobius_inversion(int* dest, int* source) {
-  /*
-  // Slow approach - time complexity O(2^{2n})
-  // Initialize
-  for (int i = 0; i < (1<<n); i ++) {
-    dest[i] = 0;
-  }
-
-  for (int j = 0; j < (1<<n); j ++) {
-    if (source[j] == 0)
-      continue;
-
-    for (int i = 0; i < (1<<n); i ++) {
-      // if j <= i bitwise, i.e., j | i = i
-      if ((j | i) == i) {
-        dest[i] = (dest[i] + source[j]) % 2;
-      }
-    }
-  }
-  */
-
   /* Fast approach - time complexity O(n2^n) */
   memcpy(tmp, source, (1<<n)*sizeof(int));
 
@@ -472,12 +532,20 @@ BooleanFun BooleanFun::sub_function(int c) const {
   return sub;
 }
 
+//s is in [0,2^{m}-1]
+BooleanFun BooleanFun:: restriction(int m, int s) const {
+  BooleanFun sub_f(n-m);
+  for(int i=0;i<(1<<(n-m));i++){
+    sub_f.truth_table[i]=truth_table[(i<<m) + s];
+  }
+  sub_f.set_truth_table_done();
+  return sub_f;
+}
+
 // BooleanFun destructor
 BooleanFun::~BooleanFun()
 {
-  delete truth_table;
-  delete anf;
-  delete tmp;
+  free_space();
 }
 
 // Returns the number of variables.
@@ -716,31 +784,11 @@ int BooleanFun::cost() const {
 // Computed using FFT (Fast Fourier Transform)
 // Time complexity is O(n2^n)
 int BooleanFun::nonlinearity() const {
-  // Fast Fourier Transform
-  int buf[(1<<n)];
-  int tt[(1<<n)];
-
-  for (int m=0;m< (1<<n);m++) {
-    if(truth_table[m] == 1) {
-      tt[m]=-1;
-    } else {
-      tt[m]=1;
-    }
-  }
-  register int i, j, k;
-  for (i = 0; i < n; ++i) {
-    for (j = 0; j < 1<<(n-1); ++j) {
-      k = j << 1;
-      buf[j] = tt[k] + tt[k + 1];
-      buf[j + (1<<(n-1))] = tt[k] - tt[k + 1];
-    }
-    memcpy(tt, buf,  (1<<n)*sizeof(int));
-  }
-
+ this->fast_fourier_transform(truth_table,fourier_transform,n);
   int max = 0;
-  for (i = 0; i < 1<<(n); ++i) {
-    if (abs(tt[i]) > max) {
-      max = abs(tt[i]);
+  for (int i = 0; i < 1<<(n); ++i) {
+    if (abs(fourier_transform[i]) > max) {
+      max = abs(fourier_transform[i]);
     }
   }
  return (1<<(n-1)) - (max >> 1);
@@ -815,5 +863,6 @@ const int* BooleanFun::get_truth_table_ptr() {
 const int* BooleanFun::get_anf_ptr() {
   return anf;
 }
+
 
 
