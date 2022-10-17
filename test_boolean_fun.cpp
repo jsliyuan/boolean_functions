@@ -344,11 +344,11 @@ int main() {
   assert(f9a.nonlinearity() == 242);
   BooleanFun sub0_f9a = f9a.sub_function(0);
   assert(sub0_f9a.var_num() == 8);
-  cout<<sub0_f9a.get_anf()<<endl;
-  cout<<sub0_f9a.nonlinearity()<<endl;
+  //cout<<sub0_f9a.get_anf()<<endl;
+  //cout<<sub0_f9a.nonlinearity()<<endl;
   BooleanFun sub1_f9a = f9a.sub_function(1);
-  cout<<sub1_f9a.get_anf()<<endl;
-  cout<<sub1_f9a.nonlinearity()<<endl;
+  //cout<<sub1_f9a.get_anf()<<endl;
+  //cout<<sub1_f9a.nonlinearity()<<endl;
   cout << "End of test for sub_function() for f9a." << endl;
   
   BooleanFun f9b(9);
@@ -374,11 +374,11 @@ int main() {
   assert(f9c.nonlinearity() == 242);
   BooleanFun sub0_f9c = f9c.sub_function(0);
   assert(sub0_f9c.var_num() == 8);
-  cout<<sub0_f9c.get_anf()<<endl;
-  cout<<sub0_f9c.nonlinearity()<<endl;
+  //cout<<sub0_f9c.get_anf()<<endl;
+  //cout<<sub0_f9c.nonlinearity()<<endl;
   BooleanFun sub1_f9c = f9c.sub_function(1);
-  cout<<sub1_f9c.get_anf()<<endl;
-  cout<<sub1_f9c.nonlinearity()<<endl;
+  //cout<<sub1_f9c.get_anf()<<endl;
+  //cout<<sub1_f9c.nonlinearity()<<endl;
   cout << "End of test for sub_function() for f9c." << endl;
   
   BooleanFun f9d(9);
@@ -389,11 +389,11 @@ int main() {
   assert(f9d.nonlinearity() == 242);
   BooleanFun sub0_f9d = f9d.sub_function(0);
   assert(sub0_f9d.var_num() == 8);
-  cout<<sub0_f9d.get_anf()<<endl;
-  cout<<sub0_f9d.nonlinearity()<<endl;
+  //cout<<sub0_f9d.get_anf()<<endl;
+  //cout<<sub0_f9d.nonlinearity()<<endl;
   BooleanFun sub1_f9d = f9d.sub_function(1);
-  cout<<sub1_f9d.get_anf()<<endl;
-  cout<<sub1_f9d.nonlinearity()<<endl;
+  //cout<<sub1_f9d.get_anf()<<endl;
+  //cout<<sub1_f9d.nonlinearity()<<endl;
   cout << "End of test for sub_function() for f9d." << endl;
 
   BooleanFun f9e(9);
@@ -404,11 +404,11 @@ int main() {
   assert(f9e.nonlinearity() == 242);
   BooleanFun sub0_f9e = f9e.sub_function(0);
   assert(sub0_f9e.var_num() == 8);
-  cout<<sub0_f9e.get_anf()<<endl;
-  cout<<sub0_f9e.nonlinearity()<<endl;
+  //cout<<sub0_f9e.get_anf()<<endl;
+  //cout<<sub0_f9e.nonlinearity()<<endl;
   BooleanFun sub1_f9e = f9e.sub_function(1);
-  cout<<sub1_f9e.get_anf()<<endl;
-  cout<<sub1_f9e.nonlinearity()<<endl;
+  //cout<<sub1_f9e.get_anf()<<endl;
+  //cout<<sub1_f9e.nonlinearity()<<endl;
   cout << "End of test for sub_function() for f9e." << endl;
   
   BooleanFun rsym(3);
