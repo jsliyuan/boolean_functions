@@ -27,7 +27,7 @@ int main() {
   f1.set_truth_table("402038323D911F29");
   f1.set_truth_table_done();
   // call second_order_nonlinearity_Fourquet_Tavernier() to compute second-order nonlinearity
-  cout<<"The third-order nonlinearity is "<<f1.second_order_nonlinearity_Fourquet_Tavernier()<<endl;
+  cout<<"The second-order nonlinearity is "<<f1.second_order_nonlinearity_Fourquet_Tavernier()<<endl;
   
   cout << "Everything looks good. End of all tests." << endl;
   return 0;
