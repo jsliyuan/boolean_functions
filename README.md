@@ -11,7 +11,9 @@ The library is broken into nine classes, which are BooleanFun, BooleanFunDecoder
 
 ## Usage of C++ boolean_functions Library
 
-Initially one must setup a Boolean function before you can begin using operations related to the Boolean function. Boolean functions are setup by intially defining the number of variables which means how many dimensions of this vector space, and also the Algebraic Normal Formal (ANF) or hexadecimal truth table the function will posses. The ANF or hexadecimal truth table that the Boolean function will posses should be string type. The Boolean function can be setup as follows:
+Initially one must setup a Boolean function before you can begin using operations related to the Boolean function. Boolean functions are setup by intially defining the number of variables which means how many dimensions of this vector space, and also the Algebraic Normal Formal (ANF) or hexadecimal truth table the function will posses. The ANF or hexadecimal truth table that the Boolean function will posses should be string type. 
+
+The Boolean function can be setup as follows:
 
 ****
  /* 
