@@ -83,23 +83,23 @@ cout << f.second_order_nonlinearity_Fourquet_Tavernier() ;
 ****
 
 ## Classes
-BooleanFun: Boolean function class
+- BooleanFun: Boolean function class
  
-BooleanFunDecoder: Inheritance of BooleanFun class, including Fourquet-Tavernier list decoding algorithm for second-order nonlinearity.
+- BooleanFunDecoder: Inheritance of BooleanFun class, including Fourquet-Tavernier list decoding algorithm for second-order nonlinearity.
 
-AffineTrans: affine transformation Ax + b
+- AffineTrans: affine transformation Ax + b
 
-UpperDiagGenerator: generates all affine transformation Ax one by one, where A is an upper diagonal matrix and the diagonal elements are all 1
+- UpperDiagGenerator: generates all affine transformation Ax one by one, where A is an upper diagonal matrix and the diagonal elements are all 1
 
-NonsingularGenerator: generates all nonsingular n-by-n matrices one by one.
+- NonsingularGenerator: generates all nonsingular n-by-n matrices one by one.
 
-HomogenousBfGenerator: generates all homogenous Boolean functions of degree r.
+- HomogenousBfGenerator: generates all homogenous Boolean functions of degree r.
 
-ReedMullerGenerator: generates all Reed-Muller codes of order r.
+- ReedMullerGenerator: generates all Reed-Muller codes of order r.
 
-Permutation: includes basic operations on generators of a permutation group.
+- Permutation: includes basic operations on generators of a permutation group.
 
-PermGroup: generate all orbits under a permutation group.
+- PermGroup: generate all orbits under a permutation group.
 
 
 ## How to test
