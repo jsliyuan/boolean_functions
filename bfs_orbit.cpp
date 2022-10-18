@@ -4,7 +4,7 @@
 #include <iostream>
 #include <set>
 #include <vector>
-
+#include <assert.h>
 using namespace std;
 
 int count_all_mod_rm36(string fni) {

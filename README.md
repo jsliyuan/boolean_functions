@@ -115,7 +115,7 @@ Performance test - test nonlinearity()
 
 $ g++ -o test.out test_boolean_fun_nonlinearity_perf.cpp boolean_fun.cpp affine_trans.cpp
 
-# ./test.out
+$ ./test.out
 
 ### AffineTrans class
 $ g++ -o test.out test_affine_trans.cpp affine_trans.cpp 
