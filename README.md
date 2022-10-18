@@ -103,6 +103,9 @@ cout << f.second_order_nonlinearity_Fourquet_Tavernier() ;
 
 - PermGroup: generate all orbits under a permutation group.
 
+## Examples
+In the "example" folder, there are some simple examples to calculate the nonlinearity and second-order linearity for Boolean functions.
+
 
 ## How to test
 Before committing, please run 
@@ -148,6 +151,8 @@ $ g++ -o test.out test_nonsingular_generator.cpp nonsingular_generator.cpp affin
 
 $ ./test.out
 
+### test nonlinearity for 9-variable Boolean functions
+$ g++ -o test.out test_nl_for_9v.cpp reed_muller_generator.cpp boolean_fun.c
 ### HomogenousBfGenerator class
 $ g++ -o test.out test_homogenous_bf_generator.cpp homogenous_bf_generator.cpp boolean_fun.cpp affine_trans.cpp
 

@@ -1,7 +1,7 @@
+## How to test the examples
 
-
-### test nonlinearity for 9-variable Boolean functions
-$ g++ -o test.out test_nl_for_9v.cpp reed_muller_generator.cpp boolean_fun.cpp boolean_fun_decoder.cpp affine_trans.cpp
+### test the nonlinearity for 9-variable Boolean functions
+$  g++ -o test.out test_nl_for_9v.cpp reed_muller_generator.cpp boolean_fun.cpp boolean_fun_decoder.cpp affine_trans.cpp
 
 $ ./test.out
 
