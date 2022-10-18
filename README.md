@@ -191,10 +191,4 @@ $g++ -o test.out test_FT_decoding.cpp reed_muller_generator.cpp homogenous_bf_ge
 
 $./test.out
 
-### test_FT_decoding.cpp
-Test list decoding for second-order nonlinearity. 
-
-$g++ -o test.out test_FT_decoding.cpp reed_muller_generator.cpp homogenous_bf_generator.cpp boolean_fun.cpp boolean_fun_decoder.cpp affine_trans.cpp
-
-$./test.out
 
