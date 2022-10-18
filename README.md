@@ -1,7 +1,7 @@
 # boolean_functions
 
 
-##Description
+## Description
 
 Boolean functions in n variables can be viewed as the functions from the n-dimensional vector space $\mathbb{F}_2^n$ over $\mathbb{F}_2$, to $\mathbb{F}_2$ itself, which plays important role in cryptography and error correcting codes. The Reed-Muller code of order $r$, denoted by RM(r,n), consists of all Boolean functions in n variables with algebraic degree bounded above by $k$. The r-order nonlinearity is one of the most important cryptographic properties about n-variable Boolean functions, which is also defined by the covering radius of RM(r,n).
 
@@ -9,7 +9,7 @@ The C++ boolean_functions Library, implements a specialised version of Boolean f
 
 The library is broken into nine classes, which are BooleanFun, BooleanFunDecoder, AffineTrans, UpperDiagGenerator, NonsingularGenerator, HomogenousBfGenerator, ReedMullerGenerator, Permutation and PermGroup. Basic operations such as addition, multiplication, fourier transform, changing ANF to truth table (or changing truth table to ANF) can occur over Boolean functions in BooleanFun and BooleanFunDecoder classes. 
 
-##Usage of C++ boolean_functions Library
+## Usage of C++ boolean_functions Library
 
 Initially one must setup a Boolean function before you can begin using operations related to the Boolean function. Boolean functions are setup by intially defining the number of variables which means how many dimensions of this vector space, and also the Algebraic Normal Formal (ANF) or hexadecimal truth table the function will posses. The ANF or hexadecimal truth table that the Boolean function will posses should be string type. The Boolean function can be setup as follows:
 
