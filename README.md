@@ -17,9 +17,9 @@ The Boolean function can be setup as follows:
 
 ****
  /* 
-   f=x1x2x3x4+x4
-   
+  
    A 4-variable Boolean function with ANF "x1x2x3x4+x4"
+   
  */
 
 BooleanFun f(4,''x1x2x3x4+x4");
