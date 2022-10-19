@@ -1,3 +1,13 @@
+/*  BooleanFun is class that can be used to set up a Boolean function.
+Basic operations such as addition, multiplication, fourier transform, 
+changing ANF to truth table (or changing truth table to ANF) 
+can occur over Boolean functions in this class.
+
+Moreover, calculating the r-order nonlinearity and Gower U2/U3 norm of 
+a Boolean function can be implemented in this class. Please note that it is slow 
+to compute higher order nonliearity (r>=3) of Boolean functions.
+*/
+
 #include "boolean_fun.h"
 
 #include <memory.h>
@@ -134,6 +144,8 @@ int BooleanFun::get_anf_coe(int d) const {
   return anf[d];
 }
 
+// Compute the fast_fourier_transform of truth table tt[1<<n], and writes
+// the results into Fourier_arry[1<<n].
 void BooleanFun::fast_fourier_transform(int* tt,int* Fourier_arry, int n) const{
   for (int m=0 ; m< (1<<n); m++) {
     if(tt[m] == 1) {
@@ -203,6 +215,7 @@ double BooleanFun::Gowers_norm_u2() const{
   return result;
 }
 
+// Returns the truth table in its hex format, string of length 2^n / 16.
 string BooleanFun::get_truth_table_hex() const {
   string result = "";
   for(int count=0;count<(1<<n);count+=4) {
@@ -246,6 +259,8 @@ bool BooleanFun::set_truth_table(int x, int v) {
   return true;
 }
 
+// orbit is a list of points, where each is in [0, 2^n-1], v is 0 or 1
+// we set the truth table value for all points (in the orbit) to constant v.
 bool BooleanFun::set_truth_table_orbit(std::vector<int> orbit, int v) {
   if (v < 0 || v > 1) {
     return false;
@@ -325,6 +340,9 @@ void BooleanFun::set_truth_table_random() {
   set_truth_table_done();
 }
 
+// Sets the truth table of all orbits at random, i.e.,
+// For every orbits[i][j] in [0, 2^n-1], set f(orbits[i][j]) = 0 / 1 uniformly
+// at random.
 void BooleanFun::set_random_sym( vector<vector<int> > orbit) {
   for(vector<vector<int> >::iterator it=orbit.begin();it!=orbit.end();it++) {
     set_truth_table_orbit((*it), rand()% 2);
@@ -418,6 +436,9 @@ bool BooleanFun::set_anf_coe(int d, int c) {
   return true;
 }
 
+// Call this function after setting all the coefficients
+// in the ANF.
+// The truth table and degree will be re-computed.
 void BooleanFun::set_anf_coe_done() {
   // Compute truth_table using anf
   anf_to_truth_table();
@@ -553,7 +574,7 @@ int BooleanFun::var_num() const {
   return n;
 }
 
-// Returns the base-2 weight of an integer， i.e., returns the
+// Returns the base-2 weight of an integer, i.e., returns the
 // number of one's in its binary representation.
 int BooleanFun::weight(int x) const {
   int sum = 0;
@@ -750,6 +771,8 @@ int BooleanFun::inner_product(int x, int y) const {
   return sum;
 }
 
+// Cost function used by Kavut and Yucel, who prove that
+// CR(1, 9) >= 242.
 int BooleanFun::cost() const {
   int buf[(1<<n)];
   int tt[(1<<n)];

@@ -1,3 +1,13 @@
+/*  BooleanFun is class that can be used to set up a Boolean function.
+Basic operations such as addition, multiplication, fourier transform, 
+changing ANF to truth table (or changing truth table to ANF) 
+can occur over Boolean functions in this class.
+
+Moreover, calculating the r-order nonlinearity and Gower U2/U3 norm of 
+a Boolean function can be implemented in this class. Please note that it is slow 
+to compute higher order nonliearity (r>=3) of Boolean functions.
+*/
+
 #ifndef BOOLEAN_FUN_H
 #define BOOLEAN_FUN_H
 
@@ -197,6 +207,8 @@ class BooleanFun {
   
     // Returns the first-order nonlinearity, which is
     // 2^{n-1} - max_w |walsh_transform(w)| / 2.
+    // Computed using FFT (Fast Fourier Transform)
+    // Time complexity is O(n2^n)
     int nonlinearity() const;
 
     // Returns the rth-order nonlinearity, where r >= 1.
@@ -215,9 +227,7 @@ class BooleanFun {
     // Only the truth table is updated. 
     // BE CAREFUL.
     BooleanFun derivative_truth_table_only(int h) const;
-
    
-
   private:
     // number of variables
     int n;
@@ -272,6 +282,8 @@ class BooleanFun {
     // The summation is over GF(2).
     void mobius_inversion(int* dest, int* source);
   
+    // Compute the fast_fourier_transform of truth table tt[1<<n], and writes
+    // the results into Fourier_arry[1<<n].
     void fast_fourier_transform(int* tt, int* Fourier_arry, int n) const;
 
     // Returns the base-2 weight of an integer, i.e., returns the

@@ -1,3 +1,17 @@
+/*  BooleanFunDecoder is an inheritance of BooleanFun class.
+We implement a more fast algorithm to calculate the second-order nonlinearity
+of Boolean function in n variables (n<=12), 
+denoted by second_order_nonlinearity_Fourquet_Tavernier. 
+The algorihtm is in the Fourquet-Tavernier paper.
+https://link.springer.com/content/pdf/10.1007/s10623-008-9184-8.pdf.
+
+Moreover, calculating the list of all codewords with degree at most 2 
+within (<=) Hamming distance d from the Boolean function can be implemented in
+the function, denoted by Fourquet_Tavernier_quadratic_list_decoding(d).
+For contrast, we also implement a brute force search method which is super slow
+and may only work for n<=5.
+*/
+
 #include "boolean_fun.h"
 #include "boolean_fun_decoder.h"
 #include "reed_muller_generator.h"
@@ -54,6 +68,8 @@ std::vector<BooleanFun> BooleanFunDecoder:: quadratic_list_decoding_brute_force(
   return term;
 }
 
+// Get the initial F_v as input
+// The algorihtm is in the Fourquet-Tavernier paper.
 int BooleanFunDecoder::initial_Fv(int* &F_v, int m, int v, BooleanFun q_v){
   for(int s=0; s<(1<<(m-v));s++){
     BooleanFun fs(m-v);
@@ -95,6 +111,8 @@ int BooleanFunDecoder::initial_Fv(int* &F_v, int m, int v, BooleanFun q_v){
   return 0;
 }
 
+// Compute M for all Q_v in [0, 2^(v-1))
+// The algorihtm is in the Fourquet-Tavernier paper.
 int BooleanFunDecoder::compute_M(int* F_vm1, int v, int m,int s, int Q_v){
   int max_value=0;
   for(int u=0; u<(1<<(v-1)); u++){
@@ -175,6 +193,7 @@ void BooleanFunDecoder::compute_M_fast(int* F_vm1, int v, int m, int s, int* M) 
   }
 }
 
+// Compute F_v from F_vm1 for all Q_v in [0, 2^(v-1))
 int BooleanFunDecoder::compute_Fv(int* &F_v, int* F_vm1, int Q_v,int m,int v){
   for (int s=0; s<(1<<(m-v));s++){
     for(int u=0; u<(1<<(v));u++){
@@ -186,6 +205,8 @@ int BooleanFunDecoder::compute_Fv(int* &F_v, int* F_vm1, int Q_v,int m,int v){
   return 0;
 }
 
+// For list decoding algoritm
+// The algorihtm is in the Fourquet-Tavernier paper.
 void BooleanFunDecoder::sums(std::vector<BooleanFun>& store,double eps, int v,int m, BooleanFun q_vm1, int* F_vm1){
   int M[(1<<(m-1))];
  
@@ -344,6 +365,8 @@ void BooleanFunDecoder::sums(std::vector<BooleanFun>& store,double eps, int v,in
   }
 }
 
+// For list decoding algoritm
+// The algorihtm is in the Fourquet-Tavernier paper.
 int BooleanFunDecoder::sums1(bool &flag,double eps, int v,int m, BooleanFun q_vm1, int* F_vm1){
   int M[(1<<(m-1))];
  
