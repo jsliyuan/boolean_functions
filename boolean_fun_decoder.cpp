@@ -1,8 +1,7 @@
 /*  BooleanFunDecoder is an inheritance of BooleanFun class.
 We implement a more fast algorithm to calculate the second-order nonlinearity
-of Boolean function in n variables (n<=12), 
-denoted by second_order_nonlinearity_Fourquet_Tavernier. 
-The algorihtm is in the Fourquet-Tavernier paper.
+of Boolean function in n variables (n<=12), according to Fourquet_Tavernier list decoding algorithm
+for second-order nonlinearity. The algorihtm is in the Fourquet-Tavernier paper.
 https://link.springer.com/content/pdf/10.1007/s10623-008-9184-8.pdf.
 
 Moreover, calculating the list of all codewords with degree at most 2 
