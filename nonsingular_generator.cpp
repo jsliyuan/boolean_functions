@@ -1,3 +1,7 @@
+/* NonsingularGenerator can generate all affine transformations Ax+b, where
+A is a nonsingular matrix, and b = 0.
+*/
+
 #include "nonsingular_generator.h"
 
 using namespace std;

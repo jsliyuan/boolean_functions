@@ -1,3 +1,8 @@
+/*
+Permutation class can implement basic operations, such as left multiplication and right multiplication,
+on the generators of some generalized rotation symmetric class.
+*/
+
 #ifndef PERMUTATION_H
 #define PERMUTATION_H
 

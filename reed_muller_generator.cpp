@@ -1,3 +1,7 @@
+/* 
+ReedMullerGener can generates all Boolean functions in n-variables with degree at most r.
+*/
+
 #include "reed_muller_generator.h"
 
 #include <iostream>

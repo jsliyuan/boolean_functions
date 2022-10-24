@@ -1,3 +1,7 @@
+/*
+AffineTrans can implement affine transform on Boolean functions.
+*/
+
 #ifndef AFFINE_TRANS_H
 #define AFFINE_TRANS_H
 

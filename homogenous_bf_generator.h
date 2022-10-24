@@ -1,3 +1,7 @@
+/*
+HomogenousBfGenerator can generate all homogeneous n-variable Boolean functions of degree r.
+*/
+
 #ifndef HOMOGENOUS_BF_GENERATOR_H
 #define HOMOGENOUS_BF_GENERATOR_H
 

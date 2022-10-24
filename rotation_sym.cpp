@@ -1,3 +1,7 @@
+/* 
+RotationSym can generates all elements in a rotation symmetry group.
+*/
+
 #include "rotation_sym.h"
 #include "permutation.h"
 

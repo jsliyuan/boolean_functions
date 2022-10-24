@@ -1,3 +1,7 @@
+/* 
+ReedMullerGener can generates all Boolean functions in n-variables with degree at most r.
+*/
+
 #ifndef REEDMULLER_GENERATOR_H
 #define REEDMULLER_GENERATOR_H
 
@@ -5,7 +9,7 @@
 
 #include <vector>
 
-// Generates all homogenous Boolean functions in n-variables
+// Generates all Boolean functions in n-variables with degree at most r
 // with degree r, where r and n are given in the constructor.
 // For convenience, the first is the zero Boolean function.
 class ReedMullerGenerator {

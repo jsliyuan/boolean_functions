@@ -1,3 +1,6 @@
+/* UpperDiagGenerator can generates all affine transformations Ax+b, where
+ A is a upper diagonal matrix, and b = 0.
+*/
 #ifndef UPPER_DIAG_GENERATOR_H
 #define UPPER_DIAG_GENERATOR_H
 

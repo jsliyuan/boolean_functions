@@ -1,3 +1,7 @@
+/*
+AffineTrans can implement affine transform on Boolean functions.
+*/
+
 #include "affine_trans.h"
 
 #include <cstring>

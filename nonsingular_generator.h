@@ -1,3 +1,7 @@
+/* NonsingularGenerator can generate all affine transformations Ax+b, where
+A is a nonsingular matrix, and b = 0.
+*/
+
 #ifndef NONSINGULAR_GENERATOR_H
 #define NONSINGULAR_GENERATOR_H
 

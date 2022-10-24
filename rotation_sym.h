@@ -1,3 +1,7 @@
+/* 
+RotationSym can generates all elements in a rotation symmetry group.
+*/
+
 #ifndef ROTATION_SYM_H
 #define ROTATION_SYM_H
 

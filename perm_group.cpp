@@ -1,3 +1,7 @@
+/*
+PermGroup class can generate all elements in the generalized rotation symmetric class given the generators. 
+*/
+
 #include "perm_group.h"
 #include "permutation.h"
 

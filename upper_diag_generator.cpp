@@ -1,3 +1,7 @@
+/* UpperDiagGenerator can generates all affine transformations Ax+b, where
+ A is a upper diagonal matrix, and b = 0.
+*/
+
 #include "upper_diag_generator.h"
 
 #include <iostream>

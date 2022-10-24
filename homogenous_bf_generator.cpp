@@ -1,3 +1,7 @@
+/*
+HomogenousBfGenerator can generate all homogeneous n-variable Boolean functions of degree r.
+*/
+
 #include "homogenous_bf_generator.h"
 
 #include <iostream>
