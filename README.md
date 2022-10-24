@@ -16,19 +16,11 @@ Initially one must setup a Boolean function before you can begin using operation
 * The Boolean function can be setup as follows:
 
 ****
->> /* 
-
->> A 4-variable Boolean function with ANF "x1x2x3x4+x4"
-
->> */
+>> /*  A 4-variable Boolean function with ANF "x1x2x3x4+x4" */
 
 >> BooleanFun f(4,''x1x2x3x4+x4");
 
- >> /* 
-
- >> A 4-variable Boolean function of which the  hexadecimal truth table is "ABCD" 
- 
- >>*/
+ >> /*  A 4-variable Boolean function of which the  hexadecimal truth table is "ABCD"  */
 
 >> BooleanFun f1(4) ;
 
@@ -48,21 +40,13 @@ Initially one must setup a Boolean function before you can begin using operation
 
 >> BooleanFun f3(4,"x1x2x4+x2");
 
->> /* 
+>> /*   addition: f1= f1+f2 = x1x2x3x4+x1x2+x3x4+x4   */
 
->> f1= f1+f2 = x1x2x3x4+x1x2+x3x4+x4; 
+>> f1.add(f2);     
 
->> */
+>> /*   multiplication: f2=f2*f3= x1x2x4+x1x2+x1x2x3x4+x2x3x4  */
 
->> f1.add(f2);     //addition
-
->> /* 
-
->> f2=f2*f3= x1x2x4+x1x2+x1x2x3x4+x2x3x4; 
-
->> */
-
->> f2.mult(f3);    //multiplication
+>> f2.mult(f3);   
 
 
 ****
