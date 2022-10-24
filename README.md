@@ -13,72 +13,72 @@ The library is broken into nine classes, which are BooleanFun, BooleanFunDecoder
 
 Initially one must setup a Boolean function before you can begin using operations related to the Boolean function. Boolean functions are setup by intially defining the number of variables which means how many dimensions of this vector space, and also the Algebraic Normal Formal (ANF) or hexadecimal truth table the function will posses. The ANF or hexadecimal truth table that the Boolean function will posses should be string type. 
 
-The Boolean function can be setup as follows:
+* The Boolean function can be setup as follows:
 
 ****
- /* 
-  A 4-variable Boolean function with ANF "x1x2x3x4+x4"
- */
+>> /* 
+  >>> A 4-variable Boolean function with ANF "x1x2x3x4+x4"
+>> */
 
-BooleanFun f(4,''x1x2x3x4+x4");
+>> BooleanFun f(4,''x1x2x3x4+x4");
 
- /* 
-   A 4-variable Boolean function of which the  hexadecimal truth table is "ABCD" 
- */
+ >> /* 
+ >>> A 4-variable Boolean function of which the  hexadecimal truth table is "ABCD" 
+ >>*/
 
-BooleanFun f1(4) ;
+>> BooleanFun f1(4) ;
 
-f1.set_truth_table_hex("ABCD");
+>> f1.set_truth_table_hex("ABCD");
 
-f1.set_truth_table_done;
-
-****
-
-Performing operations on Boolean functions are as follows:
+>> f1.set_truth_table_done;
 
 ****
 
-BooleanFun f1(4,''x1x2x3x4+x4");
-
-BooleanFun f2(4,"x1x2+x3x4");
-
-BooleanFun f3(4,"x1x2x4+x2");
-
-/* 
-f1= f1+f2 = x1x2x3x4+x1x2+x3x4+x4; 
-*/
-
-f1.add(f2);     //addition
-
-/* 
- f2=f2*f3= x1x2x4+x1x2+x1x2x3x4+x2x3x4; 
-*/
-
-f2.mult(f3);    //multiplication
-
+* Performing operations on Boolean functions are as follows:
 
 ****
 
+>> BooleanFun f1(4,''x1x2x3x4+x4");
 
-Calculating the first-order nonlinearity for Boolean function:
+>> BooleanFun f2(4,"x1x2+x3x4");
 
-****
+>> BooleanFun f3(4,"x1x2x4+x2");
 
-BooleanFun f(4, "x1x2x3x4");
+>> /* 
+>>> f1= f1+f2 = x1x2x3x4+x1x2+x3x4+x4; 
+>> */
 
-cout<< f.nonlinearity();
+>> f1.add(f2);     //addition
+
+>> /* 
+>>> f2=f2*f3= x1x2x4+x1x2+x1x2x3x4+x2x3x4; 
+>> */
+
+>> f2.mult(f3);    //multiplication
 
 
 ****
 
 
-Calculating the second-order nonlinearity for Boolean function using Fourquet-Tavernier list decoding algorithm:
+* Calculating the first-order nonlinearity for Boolean function:
 
 ****
 
-BooleanFunDecoder  f(4, "x1x2x3x4");
+>> BooleanFun f(4, "x1x2x3x4");
 
-cout << f.second_order_nonlinearity_Fourquet_Tavernier() ;
+>> cout<< f.nonlinearity();
+
+
+****
+
+
+* Calculating the second-order nonlinearity for Boolean function using Fourquet-Tavernier list decoding algorithm:
+
+****
+
+>> BooleanFunDecoder  f(4, "x1x2x3x4");
+
+>> cout << f.second_order_nonlinearity_Fourquet_Tavernier() ;
 
 ****
 
