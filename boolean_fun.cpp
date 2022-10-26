@@ -53,6 +53,7 @@ void BooleanFun::copy_data(const BooleanFun& g) {
   
   memcpy(this->anf, g.anf, (1<<n)*sizeof(int));
   memcpy(this->truth_table, g.truth_table, (1<<n)*sizeof(int));
+  memcpy(this->un, g.un, (1<<n)*sizeof(int));
   memcpy(this->fourier_transform, g.fourier_transform, (1<<n)*sizeof(int));
 }
 
@@ -76,10 +77,12 @@ void BooleanFun::new_space(int n) {
   truth_table = new int[1<<n];
   anf = new int[1<<n];
   tmp = new int[1<<n];
+  un = new int[1 << n];
   fourier_transform= new int [1<<n];
   memset(truth_table, 0, (1<<n) * sizeof(int));
   memset(anf, 0, (1<<n) * sizeof(int));
   memset(tmp, 0, (1<<n) * sizeof(int));
+  memset(un, 0, (1<<n) * sizeof(int));
   memset(fourier_transform, 0, (1<<n) * sizeof(int));
 }
 

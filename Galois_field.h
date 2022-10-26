@@ -1,7 +1,22 @@
-
-#include <vector>
+#ifndef GALOIS_FIELD_H
+#define GALOIS_FIELD_H
 
 using namespace std;
+
+// itob converts int to binary array,
+// which is arranged from low level.
+void itob(int x, int* p, int n);
+
+// btoi converts binary array to int.
+int btoi(int* b, int n);
+
+void div(int* va, int la, int* vb, int lb);
+
+// IsDivisible decides that whether g can be divided by f in Field F_2.
+bool isDivisible(int a, int b, int n);
+
+int gcd(int x, int y);
+
 
 class Field{
 public:
@@ -32,3 +47,12 @@ public:
 	void Tr(int* un,int* truth);  //calculate the truth_table of tr_n(f),the univariate coefficients of f is un
 };
 
+// TruthToUn converts the truth table to uni-variate representation
+void TruthToUn(int* truth, int* un, Field* f);
+
+bool isBoolean(int* un, Field* f);
+
+// UnToTruth calculates the value in x of the boolean function with un as its uni-variate representation.
+void UnToTruth(int* un, int* truth, Field* f);
+
+#endif // !GALOIS_FIELD_H

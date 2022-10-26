@@ -12,7 +12,7 @@ to compute higher order nonliearity (r>=3) of Boolean functions.
 #define BOOLEAN_FUN_H
 
 #include "affine_trans.h"
-#include "Galois_field.cpp"
+#include "Galois_field.h"
 
 #include <cstdarg>
 #include <string>

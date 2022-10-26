@@ -1,22 +1,24 @@
-#include"boolean_fun.cpp"
+#include"boolean_fun.h"
+#include "Galois_field.h"
 #include <assert.h>
 #include <iostream>
+#include <math.h>
 
 using namespace std;
 
 int main() {
     // Test truth_table_to_univariate,univariate_to_truth_table
     int n = 10;
-    int test_amount = 0;
+    int test_amount = 10;
     Field tf(n);
 	BooleanFun g(n);
     for (int k = 0; k < test_amount; k++) {
         g.set_truth_table_random();
+        
         string pre = g.get_truth_table_hex();
-        g.truth_table_to_univariate(&tf);
-        //print(un,f.m+1);
+        g.truth_table_to_univariate(&tf); 
         assert(g.is_univariate_boolean(&tf) == true);
-        for (int i = 0; i < 1 << n; i++) {
+        for (int i = 0; i < (1 << n); i++) {
             g.set_truth_table(i, 0);
         }
         g.univariate_to_truth_table(&tf);

@@ -1,39 +1,47 @@
-#include<iostream>
-#include"Galois_field.cpp"
+#include"Galois_field.h"
+
+#include <iostream>
+#include <stdio.h>
 #include <assert.h>
 #include <unordered_set>
 
 using namespace std;
+
+void print(int* v, int n) {
+    for (int i = 0; i < n; i++) {
+        cout << v[i] << "  ";
+    }
+    cout << endl;
+}
 
 int main(){
   srand((int)time(NULL));
   int n=10;
   Field tf(n);
   int* te=new int[n];
-
+  
   //Test btoi,itob
-  assert(pow2(6)==64);
   itob(10,te,n);
   assert(btoi(te,n)==10);
   itob(0,te,n);
   assert(btoi(te,n)==0);
   itob(1,te,n);
   assert(btoi(te,n)==1);
-  
+
   //Test add
   assert(tf.add(3,3)==0);
   assert(tf.add(5,2)==7);
   assert(tf.add(1,3)==2);
   assert(tf.add(8,3)==11);
   
-  
   //Test Irrpoly
+  
   for (int i=2;i<=10;i++){
-    Field f(i);
+    Field f(i); 
     printf("%d : %d  ;  ",i,f.irrp);
     print(f.irrpb,i+1);
   }
-  
+
   //Test selfMul,mul
   assert(tf.mul(0,10)==0);
   assert(tf.mul(1,10)==10);
@@ -61,7 +69,7 @@ int main(){
     }
     assert(s.size()==f.m);
   }
-
+  
   // Test TruthToUn,UnToTruth
   int* truth=new int[1<<n];
   int* un=new int[1<<n];
@@ -89,7 +97,7 @@ int main(){
     k=tf.tr(rand()%(tf.m+1));
     assert(k==0||k==1);
   }
-
+  
   //GC
   delete te;
 }
