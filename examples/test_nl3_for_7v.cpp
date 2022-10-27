@@ -23,7 +23,7 @@ int main() {
 
   BooleanFunDecoder f(7);
   // You can replace the string here with whatever the ANF of 7-variable function which you want to test.
-  f.set_anf("x1x2x3x4 + x1x4x6x7 + x2x3x6x7 + x3x4x5x7");
+  f.set_anf("x1x2x3x4+x1x4x6x7+x2x3x6x7+x3x4x5x7");
   // call nonlinearity(r) to compute r-order nonlinearity
   cout<<"The third-order nonlinearity of f is "<<f.nonlinearity(3)<<endl;
 
@@ -36,7 +36,7 @@ int main() {
 
   BooleanFunDecoder f1(7);
   // You can replace the string here with whatever the hexadecimal truth table of 7-variable function which you want to test.
-  f1.set_anf(x1x2x4x5 + x1x2x3x6 + x1x3x4x7 + x2x3x5x7 +x2x4x5x7 + x2x4x6x7);
+  f1.set_anf("x1x2x4x5+x1x2x3x6 + x1x3x4x7 + x2x3x5x7 +x2x4x5x7 + x2x4x6x7");
   // call second_order_nonlinearity_Fourquet_Tavernier() to compute second-order nonlinearity
   cout<<"The third-order nonlinearity f1 is "<<f1.nonlinearity(3)<<endl;
   
