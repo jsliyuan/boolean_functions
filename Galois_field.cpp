@@ -1,31 +1,11 @@
 #include"Galois_field.h"
-#include <stdio.h>
+
 #include <math.h>
 #include <time.h>
 #include <cstring>
 #include <iostream>
 
 using namespace std;
-
-void print(int* v,int n){
-  for (int i=0;i<n;i++){
-    cout<<v[i]<<"  ";
-  }
-  cout<<endl;
-}
-
-// 2^k
-int pow2(int k){
-	int t=2,res=1;
-	while(k>0){
-		if ((k & 1) == 1) {
-			res*=t;
-		}
-		t*=t;
-		k>>=1;
-	}
-	return res;
-}
 
 // itob converts int to binary array,
 // which is arranged from low level.
@@ -87,7 +67,7 @@ bool isDivisible(int a,int b,int n){
 
 // IrrPoly calculates an irreducible polynomial in GF(2) with degree n.
 void Field::IrrPoly() {
-	int lim=pow2(n/2+1);
+	int lim=1<<(n/2+1);
 	for (int p = m + 1; p < (m+1)*2; p++) {
 		//p corresponds to a polynomial with degree n
 		if (p%2 == 0) {
@@ -231,7 +211,7 @@ int* Field:: mulGroup() {
 
 Field::Field(int n){
 	this->n=n;
-	this->m=pow2(n)-1;
+	this->m=(1<<n)-1;
 	irrpb=new int[n+1];
 	IrrPoly();
 	Pri();
@@ -294,6 +274,7 @@ void UnToTruth(int* un,int* truth,Field* f) {
 	}
 }
 
+
 int Field::tr(int x){
 	int res=0,t=x;
 	for(int i=0;i<n;i++){
@@ -350,4 +331,6 @@ void Field::Tr(int* un,int *truth){
 // 		truth[x]=btoi(res);
 // 	}
 // }
+
+
 
