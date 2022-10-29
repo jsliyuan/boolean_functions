@@ -893,7 +893,7 @@ const int* BooleanFun::get_anf_ptr() {
 // Converts the truth table to uni-variate representation
 void BooleanFun::truth_table_to_univariate(Field* f) {
     int m = f->m;
-    int* mg = f->mulGroup();
+    int* mg = f->mg;
     un[m] = 0;
     for (int i = 0; i < m; i++) {
         int t = 0;
@@ -917,7 +917,6 @@ void BooleanFun::truth_table_to_univariate(Field* f) {
         un[0] %= 2;
         un[m] = 1;
     }
-    delete mg;
 }
 
 // Decides if the vector boolean function with un as its univariate coefficients is boolean
@@ -927,7 +926,7 @@ bool BooleanFun::is_univariate_boolean(Field* f) {
     if (un[m] != 0 && un[m] != 1) { return false; }
     for (int i = 1; i < m; i++) {
         int j = (2 * i) % m;
-        if (un[j] != f->mul(un[i], un[i])) {
+        if (un[j] != f->mulTab[un[i]][un[i]]) {
             return false;
         }
     }
@@ -941,19 +940,20 @@ void BooleanFun::univariate_to_truth_table(Field* f) {
     for (int x = 1; x < m + 1; x++) {  //current variable
         int t = 1;
         for (int j = 0; j <= m; j++) {
-            truth_table[x] = f->add(truth_table[x], f->mul(t, un[j]));
-            t = f->mul(x, t); //x^j
+            truth_table[x] = f->add(truth_table[x], f->mulTab[t][un[j]]);
+            t = f->mulTab[x][t]; //x^j
         }
     }
 }
 
-// str is an univariate representation.
+// str is an univariate representation of vector boolean function.
 // For example:
-// "1+x^1+x^3+x^7" => un[0]=un[1]=un[3]=un[7]=1.
-void BooleanFun::set_univariate(const string& str) {
+// str="x^3+x^7" corresponds to the boolean function tr(x^3+x^7).
+void BooleanFun::set_trace_univariate(const string& str,Field* f) {
     for (int i = 0; i < 1 << n; i++) {
         un[i] = 0;
     }
+    //the univariate representation of the str
     int state = 0;  //记录当前状态. 0:一个项开始; 1:遇到x,准备遍历指数; 
     int cur_coe = 0;  //记录系数
     int cur_index = 0;  //记录项的指数
@@ -968,6 +968,9 @@ void BooleanFun::set_univariate(const string& str) {
         }
         else if (c == 'x') {
             state = 1;
+            if (cur_coe == 0) {
+                cur_coe = 1;
+            }
         }
         else if (c == '+') {
             state = 0;
@@ -976,6 +979,20 @@ void BooleanFun::set_univariate(const string& str) {
         }
     }
     un[cur_index] = cur_coe;
+
+    //trace
+   /* memcpy(tmp, un, (1 << n) * sizeof(int));
+    for (int i = 0; i < 1 << n; i++) {
+        un[i] = 0;
+    }*/
+    
+    //un is incorrect...
+    univariate_to_truth_table(f);
+    for (int i = 0; i < 1 << n;i++) {
+        truth_table[i] = f->tr(truth_table[i]);
+    }
+    //f->Tr(un, truth_table);
+    truth_table_to_anf();
 }
 
 // Returns the un.

@@ -120,9 +120,9 @@ int Field:: selfMul(int a,int k){
 	int res=1,t=a;
 	while (k > 0) {
 		if ((k & 1) == 1) {
-			res = mul(res, t);
+			res = mulTab[res][t];
 		}
-		t = mul(t, t);
+		t = mulTab[t][t];
 		k >>= 1;
 	}
 	return res;
@@ -171,7 +171,7 @@ void Field:: Pri() {
 		while (cur!=1) {
 			visited[cur] = 1;
 			//fmt.Printf("a的%d次:%d\n", i-1, cur)
-			cur = mul(cur,a);
+			cur = mulTab[cur][a];
 			i++;
 		}
 		if (i == m) {
@@ -191,36 +191,52 @@ void Field:: Pri() {
 
 		// 利用a和b找下一个a
 		int g = gcd(i, j);
-		a = mul(selfMul(a,g),b); //a=a^g*b
+		a = mulTab[selfMul(a, g)][b]; //a=a^g*b
 		if (i*j/gcd(i, j) == m) {
 			break;
 		}
 	}
+	delete visited;
 	al = a;
 }
 
-// MulGroup returns the multiple group of F2^n in form of [1,al,al^2...,al^(2^n-2)]
-int* Field:: mulGroup() {
-	int* mg=new int[m];
+// MulGroup inits the multiple group of F2^n in form of [1,al,al^2...,al^(2^n-2)]
+void Field:: mulGroup() {
 	mg[0] = 1;
 	for (int i = 1; i < m; i++) {
-		mg[i]=mul(al,mg[i-1]);
+		mg[i] = mulTab[al][mg[i - 1]];
 	}
-	return mg;
 }
 
-Field::Field(int n){
-	this->n=n;
-	this->m=(1<<n)-1;
-	irrpb=new int[n+1];
+//init the Field
+Field::Field(int n) {
+	this->n = n;
+	this->m = (1 << n) - 1;
+	irrpb = new int[n + 1];
+	mg = new int[m];
 	IrrPoly();
+	mulTab = new int* [1 << n];
+	for (int i = 0; i < 1 << n; i++) {
+		mulTab[i] = new int[1 << n];
+	}
+
+	//calculate the mulTable
+	for (int i = 0; i < 1 << n; i++) {
+		mulTab[i][i] = mul(i, i);
+		for (int j = i + 1; j < 1 << n; j++) {
+			mulTab[j][i] = mulTab[i][j] = mul(i, j);
+		}
+	}
+	//init the primitive root al
 	Pri();
+	//calculate the mulGroup
+	mulGroup();
 }
 
 // TruthToUn converts the truth table to uni-variate representation
 void TruthToUn(int* truth,int* un,Field* f) {
 	int n=f->n,m=f->m;
-	int* mg=f->mulGroup();
+	int* mg=f->mg;
 	un[m]=0;
 	for (int i = 0; i < m; i++) {
 		int t=0;
@@ -244,7 +260,6 @@ void TruthToUn(int* truth,int* un,Field* f) {
 		un[0] %= 2;
 		un[m] = 1;
 	}
-	delete mg;
 }
 
 // 
@@ -254,7 +269,7 @@ bool isBoolean(int* un,Field* f){
 	if(un[m]!=0&&un[m]!=1){return false;}
 	for (int i=1;i<m;i++){
 		int j=(2*i)%m;
-		if (un[j]!=f->mul(un[i],un[i])){
+		if (un[j]!=f->mulTab[un[i]][un[i]]) {
 			return false;
 		}
 	}
@@ -268,8 +283,8 @@ void UnToTruth(int* un,int* truth,Field* f) {
 	for (int x=1;x<m+1;x++){  //当前参数
 		int t=1;
 		for (int j= 0; j <= m; j++) {
-			truth[x] = f->add(truth[x], f->mul(t,un[j]));
-			t = f->mul(x, t); //x^j
+			truth[x] = f->add(truth[x], f->mulTab[t][un[j]]);
+			t = f->mulTab[x][t]; //x^j
 		}
 	}
 }
@@ -279,7 +294,7 @@ int Field::tr(int x){
 	int res=0,t=x;
 	for(int i=0;i<n;i++){
 		res=add(res,t);
-		t=mul(t,t);
+		t=mulTab[t][t];
 	}
 	return res;
 }

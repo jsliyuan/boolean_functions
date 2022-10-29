@@ -33,14 +33,6 @@ int main(){
   assert(tf.add(5,2)==7);
   assert(tf.add(1,3)==2);
   assert(tf.add(8,3)==11);
-  
-  //Test Irrpoly
-  
-  for (int i=2;i<=10;i++){
-    Field f(i); 
-    printf("%d : %d  ;  ",i,f.irrp);
-    print(f.irrpb,i+1);
-  }
 
   //Test selfMul,mul
   assert(tf.mul(0,10)==0);
@@ -51,9 +43,11 @@ int main(){
     assert(tf.m%tf.ord(i)==0);
   }
 
-  //Test Pri
-  for (int i=2;i<15;i++){
+  //Test Irrpoly,Pri
+  for (int i=2;i<=10;i++){
     Field f(i);
+    //printf("%d : %d  ;  ", i, f.irrp);
+    //print(f.irrpb, i + 1);
     //cout<<i<<": "<<f.al<<endl;
     assert(f.ord(f.al)==f.m);
   }
@@ -61,7 +55,7 @@ int main(){
   //Test mulGroup
   for (int i=2;i<11;i++){
     Field f(i);
-    int* mg=f.mulGroup();
+    int* mg=f.mg;
     unordered_set<int> s;
     for (int j=0;j<f.m;j++){
       assert(s.find(mg[j])==s.end());
@@ -82,7 +76,7 @@ int main(){
     TruthToUn(truth,un,&tf);
     //print(un,f.m+1);
     assert(isBoolean(un,&tf)==true);
-    UnToTruth(un,test_truth,&tf);
+    UnToTruth(un, test_truth, &tf); 
     for (int i=0;i<1<<n;i++){
     //cout<<truth[i]<<" "<<test_truth[i]<<endl;
         assert(truth[i]==test_truth[i]);

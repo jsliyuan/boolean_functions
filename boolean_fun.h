@@ -232,10 +232,10 @@ class BooleanFun {
     // Calculates the value in x of the boolean function with un as its univariate representation.
     void univariate_to_truth_table(Field* f);
 
-    // str is an univariate representation.
+    // str is an univariate representation of vector boolean function.
     // For example:
-    // "x^3+x^7" => un[3]=un[7]=1,un[i]=0,i!=3,7.
-    void set_univariate(const string& str);
+    // str="x^3+x^7" corresponds to the boolean function tr(x^3+x^7).
+    void set_trace_univariate(const string& str,Field *f);
 
     // Returns the un.
     // Read-only.

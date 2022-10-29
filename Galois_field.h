@@ -25,8 +25,10 @@ public:
 	int irrp;  //a irreducible polynomial of degree n
 	int* irrpb;  //binary representation of irrp
 	int al;  //primitive root
+	int* mg;  //[1,al,al^2,...,al^(2^n-2)]
+	int** mulTab;  //multiple table
 
-	Field(int n);
+	Field(int n);  //init the Field
 
 	void IrrPoly();  //calculate the irreducible polynomial
 
@@ -40,7 +42,7 @@ public:
 
 	void Pri();  //calculate the primitive root
 
-	int* mulGroup();  //return [1,al,al^2,...,al^(2^n-2)]
+	void mulGroup();  // MulGroup inits the multiple group of F2^n in form of [1,al,al^2...,al^(2^n-2)]
 
 	int tr(int x);   //calculate the tr_n of x
 
