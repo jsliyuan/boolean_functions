@@ -39,7 +39,7 @@ int main(){
 		  }
 		  printf("%d ,U3=%f\n", i + 1, curU3);
 	  }
-	  outfile.open("some_un.txt");
+	  outfile.open("some_un.txt",ios:app);
 	  outfile <<g.get_truth_table_hex()<<endl;
 	  outfile << minU3 << endl;
 	  outfile.close();
