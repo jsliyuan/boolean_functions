@@ -18,7 +18,7 @@ int main(){
 
   ofstream outfile;
   
-  const int* t;
+  string tt;
   for (int j = 1; j < (1 << n)-1; j++) {
 	  cout << "x^i+x^(i+" << j << ")" << endl;
 	  for (int i = 0; i < (1 << n); i++) {
@@ -31,6 +31,7 @@ int main(){
 		  curU3 = g.Gowers_norm_u3();
 		  if (curU3 < minU3) {
 			  minU3 = curU3;
+			  tt=g.get_truth_table_hex();
 			  minRes.clear();
 			  minRes.push_back(1);
 		  }
@@ -40,9 +41,11 @@ int main(){
 		  printf("%d ,U3=%f\n", i + 1, curU3);
 	  }
 	  outfile.open("some_un.txt",ios::app);
-	  outfile <<g.get_truth_table_hex()<<endl;
+	  outfile << tt <<endl;
 	  outfile << minU3 << endl;
 	  outfile.close();
+
+	  minU3=1.00;
   }
   return 0;
 }
