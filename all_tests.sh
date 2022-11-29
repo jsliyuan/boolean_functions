@@ -7,6 +7,10 @@ echo "test BooleanFun class"
 g++ -o test.out test_boolean_fun.cpp Galois_field.cpp boolean_fun.cpp affine_trans.cpp rotation_sym.cpp permutation.cpp
 ./test.out
 
+echo "test BooleanFunDecoder class"
+g++ -o test.out test_boolean_fun_decoder.cpp reed_muller_generator.cpp homogenous_bf_generator.cpp boolean_fun.cpp boolean_fun_decoder.cpp affine_trans.cpp rotation_sym.cpp permutation.cpp
+./test.out
+
 echo "test AffineTrans class"
 g++ -o test.out test_affine_trans.cpp affine_trans.cpp
 ./test.out
