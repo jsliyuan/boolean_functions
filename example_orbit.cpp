@@ -1,3 +1,5 @@
+// You can use this program to produce all 6-variable Boolean functions affine equivalent to fn_i modulo RM(3,6)
+
 #include "boolean_fun.h"
 #include "affine_trans.h"
 

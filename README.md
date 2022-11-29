@@ -105,13 +105,13 @@ $ bash all_tests.sh
 to make sure all tests pass.
 
 ### BooleanFun class
-$ g++ -o test.out test_boolean_fun.cpp boolean_fun.cpp affine_trans.cpp rotation_sym.cpp permutation.cpp
+$ g++ -o test.out test_boolean_fun.cpp Galois_field.cpp boolean_fun.cpp affine_trans.cpp rotation_sym.cpp permutation.cpp
 
 $ ./test.out
 
 Performance test - test nonlinearity()
 
-$ g++ -o test.out test_boolean_fun_nonlinearity_perf.cpp boolean_fun.cpp affine_trans.cpp
+$ g++ -o test.out test_boolean_fun_nonlinearity_perf.cpp Galois_field.cpp boolean_fun.cpp affine_trans.cpp
 
 $ ./test.out
 
@@ -141,27 +141,26 @@ $ g++ -o test.out test_nonsingular_generator.cpp nonsingular_generator.cpp affin
 
 $ ./test.out
 
-### test nonlinearity for 9-variable Boolean functions
-$ g++ -o test.out test_nl_for_9v.cpp reed_muller_generator.cpp boolean_fun.c
+
 ### HomogenousBfGenerator class
-$ g++ -o test.out test_homogenous_bf_generator.cpp homogenous_bf_generator.cpp boolean_fun.cpp affine_trans.cpp
+$ g++ -o test.out test_homogenous_bf_generator.cpp Galois_field.cpp homogenous_bf_generator.cpp boolean_fun.cpp affine_trans.cpp
 
 $ ./test.out
 
 ### example_nonsingular.cpp
-$ g++ -o example_nonsingular.out example_nonsingular.cpp affine_trans.cpp nonsingular_generator.cpp boolean_fun.cpp
+$ g++ -o example_nonsingular.out example_nonsingular.cpp Galois_field.cpp affine_trans.cpp nonsingular_generator.cpp boolean_fun.cpp
 
 $ ./example_nonsingular.out
 
 ### example_orbit.cpp
-$ g++ -o example.out example_orbit.cpp boolean_fun.cpp affine_trans.cpp
+$ g++ -o example.out example_orbit.cpp Galois_field.cpp boolean_fun.cpp affine_trans.cpp
 
 $ ./example.out
 
 ### bfs_orbit.cpp
 Use BFS to find the full orbit of a given Boolean function under affine transformation.
 
-$ g++ -o bfs.out bfs_orbit.cpp boolean_fun.cpp affine_trans.cpp
+$ g++ -o bfs.out bfs_orbit.cpp Galois_field.cpp boolean_fun.cpp affine_trans.cpp
 
 $ ./bfs.out
 
@@ -170,21 +169,21 @@ Compute F_f(r) = {homo g : nl_2(f+g) = r}, and write the results into a file.
 
 The file is ~100MB, and it takes about one day to finish
 
-$ g++ -o ffn.out ffn_distribution.cpp boolean_fun.cpp homogenous_bf_generator.cpp affine_trans.cpp
+$ g++ -o ffn.out ffn_distribution.cpp Galois_field.cpp boolean_fun.cpp homogenous_bf_generator.cpp affine_trans.cpp
 
 $ ./ffn.out
 
 ### verification.cpp
 Verify that f6(Ax+b) + g || f10 must have nl3 < 21.
 
-$ g++ -o verification.out verification.cpp boolean_fun.cpp homogenous_bf_generator.cpp affine_trans.cpp
+$ g++ -o verification.out verification.cpp Galois_field.cpp boolean_fun.cpp homogenous_bf_generator.cpp affine_trans.cpp
 
 $ ./verification.out
 
 ### test_FT_decoding.cpp
 Test list decoding for second-order nonlinearity. 
 
-$g++ -o test.out test_FT_decoding.cpp reed_muller_generator.cpp homogenous_bf_generator.cpp boolean_fun.cpp boolean_fun_decoder.cpp affine_trans.cpp
+$g++ -o test.out test_FT_decoding.cpp Galois_field.cpp reed_muller_generator.cpp homogenous_bf_generator.cpp boolean_fun.cpp boolean_fun_decoder.cpp affine_trans.cpp
 
 $./test.out
 
