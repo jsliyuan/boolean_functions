@@ -111,6 +111,11 @@ $ g++ -o test.out test_boolean_fun.cpp Galois_field.cpp boolean_fun.cpp affine_t
 
 $ ./test.out
 
+### BooleanFunDecoder class
+$ g++ -o test.out test_boolean_fun_decoder.cpp reed_muller_generator.cpp homogenous_bf_generator.cpp boolean_fun.cpp boolean_fun_decoder.cpp affine_trans.cpp
+
+$ ./test.out
+
 Performance test - test nonlinearity()
 
 $ g++ -o test.out test_boolean_fun_nonlinearity_perf.cpp Galois_field.cpp boolean_fun.cpp affine_trans.cpp
