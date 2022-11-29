@@ -562,5 +562,16 @@ int BooleanFunDecoder::second_order_nonlinearity_Fourquet_Tavernier(){
   return min;
 }
 
+// Once find codewords with degree at most 2 within (<=) Hamming distance d,
+// then quit
+bool BooleanFunDecoder::nl2_at_most(int m) {
+  if(this->list_decoding_quit(m)==1){
+    return false;
+  }
+  else {
+    return true;
+  }
+}
+
 
 

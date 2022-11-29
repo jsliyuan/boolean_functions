@@ -168,56 +168,6 @@ void BooleanFun::fast_fourier_transform(int* tt,int* Fourier_arry, int n) const{
   }
 }
 
-// Returns the dirivative in direction h, denoted by D_h(f),
-// defined as f(x) + f(x+h).
-// h is in [0, 2^n-1].
-BooleanFun BooleanFun::derivative(int h) const {
-  BooleanFun f(n);
-  for (int i=0; i< (1<<n); i++) {
-    f.set_truth_table(i,(truth_table[i] ^ truth_table[i^h]));
-  }
-  f.set_truth_table_done();
-  return f;
-}
-
-// Returns the dirivative in direction h, denoted by D_h(f),
-// Only the truth table is updated. 
-// BE CAREFUL.
-BooleanFun BooleanFun::derivative_truth_table_only(int h) const {
-  BooleanFun f(n);
-  for (int i=0; i< (1<<n); i++) {
-    f.set_truth_table(i,(truth_table[i] ^ truth_table[i^h]));
-  }
-  return f;
-}
-
-// Returns the 8th power of Gowers norm U3, which is
-// exp_h Gowers_norm_u2(D_h(f)).
-double BooleanFun::Gowers_norm_u3() const {
-   double u3;
-   double result=0;
-   BooleanFun f(n);
-   for (int h=0 ; h< (1<<n); h++) {
-     // f = this->derivative(h);
-    f = this->derivative_truth_table_only(h);
-     result= f.Gowers_norm_u2() + result;
-   }
-   u3= ((double)result)/ (1<<n);
-   return u3;
- }
-
- // Returns the fourth power of Gowers norm U2, which is exactly
- // sum_x ^f(x)^4.
-double BooleanFun::Gowers_norm_u2() const{
-  this->fast_fourier_transform(truth_table,fourier_transform, n);
-  double result=0;
-
-  for (int l=0; l<(1<<n); l++) {
-    result = pow( (((double)fourier_transform[l])/(1<<n)), 4) + result;
-  }
-  return result;
-}
-
 // Returns the truth table in its hex format, string of length 2^n / 16.
 string BooleanFun::get_truth_table_hex() const {
   string result = "";
@@ -992,7 +942,7 @@ void BooleanFun::set_trace_univariate(const string& str,Field* f) {
         truth_table[i] = f->tr(truth_table[i]);
     }
     //f->Tr(un, truth_table);
-    truth_table_to_anf();
+    //truth_table_to_anf();
 }
 
 // Returns the un.

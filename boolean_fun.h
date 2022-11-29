@@ -120,19 +120,6 @@ class BooleanFun {
     // compute f_s(x)=f(x,s);
     BooleanFun restriction(int m, int s) const ;
 
-    // Returns the dirivative in direction h, denoted by D_h(f),
-    // defined as f(x) + f(x+h).
-    // h is in [0, 2^n-1].
-    BooleanFun derivative(int h) const;
-
-    // Returns the fourth power of Gowers norm U2, which is exactly
-    // sum_x ^f(x)^4.
-    double Gowers_norm_u2() const;
-
-    // Returns the 8th power of Gowers norm U3, which is
-    // exp_h Gowers_norm_u2(D_h(f)).
-    double Gowers_norm_u3() const;
-
     // Evaluate boolean function at a given point by giving {0,1}^n.
     // We must have num = n; otherwise returns -1.
     int value(int num, ...) const;
@@ -240,12 +227,6 @@ class BooleanFun {
     // Returns the un.
     // Read-only.
     const int* get_un_ptr();
-
-  protected:
-    // Returns the dirivative in direction h, denoted by D_h(f),
-    // Only the truth table is updated. 
-    // BE CAREFUL.
-    BooleanFun derivative_truth_table_only(int h) const;
    
   private:
     // number of variables

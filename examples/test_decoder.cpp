@@ -42,10 +42,16 @@ int main() {
   
   BooleanFunDecoder f1(10);
   // You can replace the string here with whatever the hexadecimal truth table of 10-variable function which you want to test.
-  f1.set_truth_table_hex("C020293008973E0100A2B77E0EC803142330AB0AAE5D7CE902E8C0B1201D27512B1C2F01B89E239998D955D77CD2D8B7123BF883F3108C24381126C7297F5437089C07E10AFE2034BCB2A5C9280D85B5B4B1C6B54557C64F6FC3F408C5A39F4F04392E8CCE91811DCD2D1723B3C01B730DA02515197BF07F18955FCF45731F7F");
+  f1.set_truth_table_hex("179C5C4979C0655F95C2E2013E68A336303C0E7B93254F0DD2BB1C25C85ED9995595E3B99D7691C373B8A6DD22D0717AF9CC01912EA6718FADF85F1067B78195B5AF47A5EAAC2821557A67EBC772E071D197C2640AC8CFF6A7E4DC055CFA986A8ED2B53D5EE97D67FA792C2AAAD9B79135DCB452008942B40708118CCC837507");
   f1.set_truth_table_done();
   // call second_order_nonlinearity_Fourquet_Tavernier() to compute second-order nonlinearity
-  cout<<"The second-order nonlinearity of f1 is "<<f1.second_order_nonlinearity_Fourquet_Tavernier()<<endl;
+  if(f1.nl2_at_most(400)==true){
+    cout<<"nl2<=400"<<endl;
+  }
+  else{
+    cout<<"excellent!"<<endl;
+  }
+  //cout<<"The second-order nonlinearity of f1 is "<<f1.second_order_nonlinearity_Fourquet_Tavernier()<<endl;
   
   
   cout << "Everything looks good. End of all tests." << endl;

@@ -35,6 +35,9 @@ class BooleanFunDecoder : public BooleanFun {
     // Compute the second order nonlinearity using Fourquet-Tavernier list decoding algorithm.
     int second_order_nonlinearity_Fourquet_Tavernier();
 
+    // whether the nl2 of f can achieve m or not
+    bool nl2_at_most(int m);
+
   private:
 
     // Get the initial F_v as input
