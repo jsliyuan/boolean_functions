@@ -10,6 +10,7 @@
 
 #include "../boolean_fun.h"
 #include "../boolean_fun_decoder.h"
+#include "../Galois_field.h"
 
 using namespace std;
 
@@ -24,9 +25,13 @@ int main() {
   
   // It takes about 20 minutes.
 
-  /*BooleanFunDecoder f(10);
-  // You can replace the string here with whatever the ANF of 10-variable function which you want to test.
-  f.set_anf("x9+x8+x7+x7x9+x7x9x10+x7x8+x7x8x10+x7x8x9+x6+x6x9x10+x6x7+x6x7x9+x5+x5x9x10+x5x8+x5x7x10+x5x6x10+x5x6x8+x4+x4x9+x4x8+x4x8x10+x4x8x9+x4x7+x4x7x10+x4x7x9+x4x7x8+x4x6+x4x6x10+x4x6x8+x4x6x7+x4x5+x4x5x8+x3+x3x8+x3x8x9+x3x7x10+x3x7x9+x3x7x8+x3x6+x3x6x9+x3x6x8+x3x6x7+x3x5+x3x5x10+x3x5x9+x3x5x8+x3x5x6+x3x4x6+x3x4x5+x2+x2x8x10+x2x8x9+x2x7+x2x7x10+x2x7x9+x2x7x8+x2x6x7+x2x5+x2x5x9+x2x5x6+x2x4+x2x4x8+x2x3x9+x2x3x8+x2x3x6+x2x3x5+x2x3x4+x1+x1x10+x1x9+x1x9x10+x1x8x10+x1x7+x1x7x10+x1x7x9+x1x6x9+x1x5+x1x5x9+x1x5x8+x1x5x7+x1x4+x1x4x10+x1x4x9+x1x4x8+x1x4x7+x1x4x6+x1x4x5+x1x3x10+x1x3x9+x1x3x5+x1x3x4+x1x2x8+x1x2x7+x1x2x4");
+  BooleanFunDecoder f(10);
+  Field field(10);
+  // You can replace the string here with whatever the univariate of 10-variable function which you want to test.
+  /*string str="x^7";
+  f.set_trace_univariate(str,&field);
+  //f.set_anf("x9+x8+x7+x7x9+x7x9x10+x7x8+x7x8x10+x7x8x9+x6+x6x9x10+x6x7+x6x7x9+x5+x5x9x10+x5x8+x5x7x10+x5x6x10+x5x6x8+x4+x4x9+x4x8+x4x8x10+x4x8x9+x4x7+x4x7x10+x4x7x9+x4x7x8+x4x6+x4x6x10+x4x6x8+x4x6x7+x4x5+x4x5x8+x3+x3x8+x3x8x9+x3x7x10+x3x7x9+x3x7x8+x3x6+x3x6x9+x3x6x8+x3x6x7+x3x5+x3x5x10+x3x5x9+x3x5x8+x3x5x6+x3x4x6+x3x4x5+x2+x2x8x10+x2x8x9+x2x7+x2x7x10+x2x7x9+x2x7x8+x2x6x7+x2x5+x2x5x9+x2x5x6+x2x4+x2x4x8+x2x3x9+x2x3x8+x2x3x6+x2x3x5+x2x3x4+x1+x1x10+x1x9+x1x9x10+x1x8x10+x1x7+x1x7x10+x1x7x9+x1x6x9+x1x5+x1x5x9+x1x5x8+x1x5x7+x1x4+x1x4x10+x1x4x9+x1x4x8+x1x4x7+x1x4x6+x1x4x5+x1x3x10+x1x3x9+x1x3x5+x1x3x4+x1x2x8+x1x2x7+x1x2x4");
+  
   // call second_order_nonlinearity_Fourquet_Tavernier() to compute second-order nonlinearity
   cout<<"The second-order nonlinearity of f is "<<f.second_order_nonlinearity_Fourquet_Tavernier()<<endl;*/
 
@@ -42,8 +47,8 @@ int main() {
   
   BooleanFunDecoder f1(10);
   // You can replace the string here with whatever the hexadecimal truth table of 10-variable function which you want to test.
-  f1.set_truth_table_hex("C020293008973E0100A2B77E0EC803142330AB0AAE5D7CE902E8C0B1201D27512B1C2F01B89E239998D955D77CD2D8B7123BF883F3108C24381126C7297F5437089C07E10AFE2034BCB2A5C9280D85B5B4B1C6B54557C64F6FC3F408C5A39F4F04392E8CCE91811DCD2D1723B3C01B730DA02515197BF07F18955FCF45731F7F");
-  f1.set_truth_table_done();
+  string str1="x^35";
+  f1.set_trace_univariate(str1,&field);
   // call second_order_nonlinearity_Fourquet_Tavernier() to compute second-order nonlinearity
   cout<<"The second-order nonlinearity of f1 is "<<f1.second_order_nonlinearity_Fourquet_Tavernier()<<endl;
   

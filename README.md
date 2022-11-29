@@ -93,6 +93,8 @@ Initially one must setup a Boolean function before you can begin using operation
 
 - PermGroup: generate all orbits under a permutation group.
 
+- Field:  This class supports Galois field arithemtic operations, including addition, multiplication, division, and power.
+
 ## Examples
 In the "example" folder, there are some simple examples to calculate the nonlinearity and second-order linearity for Boolean functions.
 
@@ -112,6 +114,12 @@ $ ./test.out
 Performance test - test nonlinearity()
 
 $ g++ -o test.out test_boolean_fun_nonlinearity_perf.cpp Galois_field.cpp boolean_fun.cpp affine_trans.cpp
+
+$ ./test.out
+
+Test for transforming univariate of a function to its truth table or transforming truth table to its univariate.
+
+$ g++ -o test.out test_un_boolean.cpp Galois_field.cpp boolean_fun.cpp affine_trans.cpp
 
 $ ./test.out
 
@@ -149,6 +157,11 @@ $ ./test.out
 
 ### ReedMullerGenerator class
 $ g++ -o test.out test_reed_muller_generator.cpp Galois_field.cpp reed_muller_generator.cpp boolean_fun.cpp affine_trans.cpp
+
+$ ./test.out
+
+### Galois_field class
+$ g++ -o test.out test_Galois_field.cpp Galois_field.cpp 
 
 $ ./test.out
 

@@ -1,4 +1,4 @@
-#include"boolean_fun.h"
+#include "boolean_fun.h"
 #include "Galois_field.h"
 #include <assert.h>
 #include <iostream>
@@ -28,7 +28,6 @@ int main() {
             //cout<< pre[i]<<" "<< cur[i]<<endl;
             assert(pre[i]==cur[i]);
         }
-        //printf("第%d个例子已通过!\n", k + 1);
     }
 
     // Test set_univariate
@@ -52,10 +51,6 @@ int main() {
     for (int i = 0; i < (1 << n); i++) {
         string str = "x^" + to_string(i)+"+x^"+to_string((2*i)%(1<<n));
         g.set_trace_univariate(str, &tf);
-       /* for (int j = 0; j < 1 << n; j++) {
-            assert(g.value_dec(j) == 0 || g.value_dec(j) == 1);
-        }
-        printf("第%d个例子已通过!\n", i+ 1);*/
     }
     end = clock();
     double t = double(end - start) / CLOCKS_PER_SEC;

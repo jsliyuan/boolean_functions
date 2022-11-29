@@ -27,30 +27,32 @@ int main(){
   assert(btoi(te,n)==0);
   itob(1,te,n);
   assert(btoi(te,n)==1);
+  cout<<"End of test for int to binary & int to binary "<<endl;
 
   //Test add
   assert(tf.add(3,3)==0);
   assert(tf.add(5,2)==7);
   assert(tf.add(1,3)==2);
   assert(tf.add(8,3)==11);
+  cout<<"End of test for addition "<<endl;
 
   //Test selfMul,mul
   assert(tf.mul(0,10)==0);
   assert(tf.mul(1,10)==10);
-  
+  cout<<"End of test for multiplication "<<endl;
+
   //Test ord
   for (int i=1;i<=tf.m;i++){
     assert(tf.m%tf.ord(i)==0);
   }
+  cout<<"End of test for order"<<endl;
 
   //Test Irrpoly,Pri
   for (int i=2;i<=10;i++){
     Field f(i);
-    //printf("%d : %d  ;  ", i, f.irrp);
-    //print(f.irrpb, i + 1);
-    //cout<<i<<": "<<f.al<<endl;
     assert(f.ord(f.al)==f.m);
   }
+  cout<<"End of test for irreducible polynomial in GF(2) with degree n "<<endl;
 
   //Test mulGroup
   for (int i=2;i<11;i++){
@@ -63,7 +65,8 @@ int main(){
     }
     assert(s.size()==f.m);
   }
-  
+  cout<<"End of test for multiple group of F2^n "<<endl;
+
   // Test TruthToUn,UnToTruth
   int* truth=new int[1<<n];
   int* un=new int[1<<n];
@@ -81,9 +84,9 @@ int main(){
     //cout<<truth[i]<<" "<<test_truth[i]<<endl;
         assert(truth[i]==test_truth[i]);
     }
-    printf("第%d个例子已通过!\n", k+1);
   }
   delete truth;delete un;delete test_truth;
+  cout<<"End of test for TruthToUn and UnToTruth"<<endl;
 
   //Test tr
   int k;
@@ -94,4 +97,7 @@ int main(){
   
   //GC
   delete te;
+
+  cout<<"End of test. Everything looks good."<<endl;
+  return 0;
 }
