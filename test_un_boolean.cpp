@@ -29,6 +29,7 @@ int main() {
             assert(pre[i]==cur[i]);
         }
     }
+    cout<<"End of test for truth_table_to_univariate and univariate_to_truth_table."<<endl;
 
     // Test set_univariate
     string un_str = "1+x^4+x^8";
@@ -44,8 +45,10 @@ int main() {
     assert(un[1] == 89);
     assert(un[10] == 98);
     assert(un[987] == 999);
+    cout<<"End of test for set_univariate."<<endl;
 
     //Performance test of set_trace_univariate
+    cout << "test of set_trace_univariate... " << endl;
     clock_t start, end;
     start = clock();
     for (int i = 0; i < (1 << n); i++) {
@@ -56,4 +59,7 @@ int main() {
     double t = double(end - start) / CLOCKS_PER_SEC;
     cout << "total time = " << t << endl;
     cout << "average time =" <<t/(1<<n) << endl;
+
+    cout<<"End of test. Everything looks good."<<endl;
+    return 0;
 }
