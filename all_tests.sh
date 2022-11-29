@@ -8,7 +8,7 @@ g++ -o test.out test_boolean_fun.cpp Galois_field.cpp boolean_fun.cpp affine_tra
 ./test.out
 
 echo "test BooleanFunDecoder class"
-g++ -o test.out test_boolean_fun_decoder.cpp reed_muller_generator.cpp homogenous_bf_generator.cpp boolean_fun.cpp boolean_fun_decoder.cpp affine_trans.cpp rotation_sym.cpp permutation.cpp
+g++ -o test.out test_boolean_fun_decoder.cpp Galois_field.cpp reed_muller_generator.cpp homogenous_bf_generator.cpp boolean_fun.cpp boolean_fun_decoder.cpp affine_trans.cpp rotation_sym.cpp permutation.cpp
 ./test.out
 
 echo "test AffineTrans class"
