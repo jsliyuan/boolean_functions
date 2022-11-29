@@ -147,6 +147,11 @@ $ g++ -o test.out test_homogenous_bf_generator.cpp Galois_field.cpp homogenous_b
 
 $ ./test.out
 
+### ReedMullerGenerator class
+$ g++ -o test.out test_reed_muller_generator.cpp Galois_field.cpp reed_muller_generator.cpp boolean_fun.cpp affine_trans.cpp
+
+$ ./test.out
+
 ### example_nonsingular.cpp
 $ g++ -o example_nonsingular.out example_nonsingular.cpp Galois_field.cpp affine_trans.cpp nonsingular_generator.cpp boolean_fun.cpp
 
