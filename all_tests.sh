@@ -35,6 +35,15 @@ echo "test PermGroup class"
 g++ -o test.out test_perm_group.cpp perm_group.cpp permutation.cpp
 ./test.out
 
+echo "test ReedMullerGenerator class"
+g++ -o test.out test_reed_muller_generator.cpp Galois_field.cpp reed_muller_generator.cpp boolean_fun.cpp affine_trans.cpp
+./test.out
+
+echo "Galois_field class"
+g++ -o test.out test_Galois_field.cpp Galois_field.cpp 
+./test.out
+
+
 echo "Make sure experiments compile successfully"
 
 g++ -o example_nonsingular.out example_nonsingular.cpp Galois_field.cpp affine_trans.cpp nonsingular_generator.cpp boolean_fun.cpp
