@@ -486,44 +486,6 @@ int main() {
   assert(rsym2.get_anf()=="x3x4+x2x4+x2x3+x2x3x4+x1x4+x1x3+x1x3x4+x1x2+x1x2x4+x1x2x3");
   assert(rsym2.get_degree()==3);
 
-  BooleanFunDecoder f8_rand(8);
-  f8_rand.set_truth_table_random();
-  cout << "Generate a random 8-variable Boolean function" << endl;
-  cout << f8_rand.get_truth_table_hex() << endl;
-  cout << "Gowers norm u3 is " << f8_rand.Gowers_norm_u3() << endl;
-  cout << "End of test for Gowers norm u3 of a random 8-variable Boolean function" << endl;
-  
-  BooleanFunDecoder f9_7(9);
-  f9_7.set_truth_table_hex("E9BF9F2C857E25F98568CB9BCCB8AD8DD74612AAD98DF0C56514AA56E5917B42F57F1C2268D106F37E8BC5D8E28483396430F033D3CA1ED4EBB38D8EC56308ED");
-  f9_7.set_truth_table_done();
-  assert(f9_7.get_degree()==7);
-  assert(f9_7.nonlinearity()==242);
-  BooleanFun sub0_f9_7 = f9_7.sub_function(0);
-  BooleanFun sub1_f9_7 = f9_7.sub_function(1);
-  sub0_f9_7.add(sub1_f9_7);
-  int num=10000000*sub0_f9_7.Gowers_norm_u3();
-  double num1=(double)num/10000000;
-  assert(num1==0.0316267);
-
-  BooleanFunDecoder f8(8);
-  f8.set_truth_table_hex("1041F22E9EAA8704B157D8E90D61B34118787D93834C9BBD91C2EA7746FC5EA1");
-  //f13.set_truth_table_done();
-  int num2=10000000*f8.Gowers_norm_u3();
-  double num3=(double)num2/10000000;
-  assert(num3==0.0269603);
-
-  BooleanFunDecoder f_const(6,"1");
-  assert(float_equals(f_const.Gowers_norm_u2(),1.00));
-  assert(float_equals(f_const.Gowers_norm_u3(),1.00));
-
-  BooleanFunDecoder f_affine(7);
-  f_affine.set_anf("x1+x2+x3+x6+x7+1");
-  assert(float_equals(f_affine.Gowers_norm_u2(),1.00));
-  assert(float_equals(f_affine.Gowers_norm_u3(),1.00));
-
-  BooleanFunDecoder f_quard1(5,"x1x5+x2x3+x4x5+x2x5+x3x4");
-  assert(float_equals(f_quard1.Gowers_norm_u3(),1.00));
-
 
   BooleanFunDecoder f1(3,"x1x2x3");
   assert(f1.second_order_nonlinearity_Fourquet_Tavernier()==1);
