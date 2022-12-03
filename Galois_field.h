@@ -27,8 +27,11 @@ public:
 	int al;  //primitive root
 	int* mg;  //[1,al,al^2,...,al^(2^n-2)]
 	int** mulTab;  //multiple table
+	int** addTab;  //addition table
 
 	Field(int n);  //init the Field
+
+	~Field();
 
 	void IrrPoly();  //calculate the irreducible polynomial
 

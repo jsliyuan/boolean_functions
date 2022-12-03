@@ -99,6 +99,9 @@ void BooleanFun::free_space() {
   if (fourier_transform) {
     delete fourier_transform;
   }
+  if (un) {
+      delete[] un;
+  }
 }
 
 // Returns the algebraic normal form of the Boolean function.
@@ -841,9 +844,9 @@ const int* BooleanFun::get_anf_ptr() {
 }
 
 // Converts the truth table to uni-variate representation
-void BooleanFun::truth_table_to_univariate(Field* f) {
-    int m = f->m;
-    int* mg = f->mg;
+void BooleanFun::truth_table_to_univariate(Field& f) {
+    int m = f.m;
+    int* mg = f.mg;
     un[m] = 0;
     for (int i = 0; i < m; i++) {
         int t = 0;
@@ -853,7 +856,7 @@ void BooleanFun::truth_table_to_univariate(Field* f) {
                 if (p < 0) {
                     p += m;
                 }
-                t = f->add(t, mg[p]);
+                t = f.addTab[t][mg[p]];
             }
         }
         un[i] = t;
@@ -870,13 +873,13 @@ void BooleanFun::truth_table_to_univariate(Field* f) {
 }
 
 // Decides if the vector boolean function with un as its univariate coefficients is boolean
-bool BooleanFun::is_univariate_boolean(Field* f) {
-    int m = f->m;
+bool BooleanFun::is_univariate_boolean(Field& f) {
+    int m = f.m;
     if (un[0] != 0 && un[0] != 1) { return false; }
     if (un[m] != 0 && un[m] != 1) { return false; }
     for (int i = 1; i < m; i++) {
         int j = (2 * i) % m;
-        if (un[j] != f->mulTab[un[i]][un[i]]) {
+        if (un[j] != f.mulTab[un[i]][un[i]]) {
             return false;
         }
     }
@@ -884,14 +887,14 @@ bool BooleanFun::is_univariate_boolean(Field* f) {
 }
 
 // Calculates the value in x of the boolean function with un as its uni-variate representation.
-void BooleanFun::univariate_to_truth_table(Field* f) {
-    int m = f->m;
+void BooleanFun::univariate_to_truth_table(Field& f) {
+    int m = f.m;
     truth_table[0] = un[0];
     for (int x = 1; x < m + 1; x++) {  //current variable
         int t = 1;
         for (int j = 0; j <= m; j++) {
-            truth_table[x] = f->add(truth_table[x], f->mulTab[t][un[j]]);
-            t = f->mulTab[x][t]; //x^j
+            truth_table[x] = f.addTab[truth_table[x]][f.mulTab[t][un[j]]];
+            t = f.mulTab[x][t]; //x^j
         }
     }
 }
@@ -899,7 +902,7 @@ void BooleanFun::univariate_to_truth_table(Field* f) {
 // str is an univariate representation of vector boolean function.
 // For example:
 // str="x^3+x^7" corresponds to the boolean function tr(x^3+x^7).
-void BooleanFun::set_trace_univariate(const string& str,Field* f) {
+void BooleanFun::set_trace_univariate(const string& str,Field& f) {
     for (int i = 0; i < 1 << n; i++) {
         un[i] = 0;
     }
@@ -939,7 +942,7 @@ void BooleanFun::set_trace_univariate(const string& str,Field* f) {
     //un is incorrect...
     univariate_to_truth_table(f);
     for (int i = 0; i < 1 << n;i++) {
-        truth_table[i] = f->tr(truth_table[i]);
+        truth_table[i] = f.tr(truth_table[i]);
     }
     //f->Tr(un, truth_table);
     //truth_table_to_anf();

@@ -211,18 +211,18 @@ class BooleanFun {
     const int* get_anf_ptr();
 
     // Converts the truth table to univariate representation.
-    void truth_table_to_univariate(Field* f);
+    void truth_table_to_univariate(Field& f);
 
     // Decides if the vector boolean function with un as its univariate coefficients is boolean.
-    bool is_univariate_boolean(Field* f);
+    bool is_univariate_boolean(Field& f);
 
     // Calculates the value in x of the boolean function with un as its univariate representation.
-    void univariate_to_truth_table(Field* f);
+    void univariate_to_truth_table(Field& f);
 
     // str is an univariate representation of vector boolean function.
     // For example:
     // str="x^3+x^7" corresponds to the boolean function tr(x^3+x^7).
-    void set_trace_univariate(const string& str,Field *f);
+    void set_trace_univariate(const string& str,Field& f);
 
     // Returns the un.
     // Read-only.
