@@ -88,16 +88,16 @@ void BooleanFun::new_space(int n) {
 
 void BooleanFun::free_space() {
   if (anf) {
-    delete anf;
+    delete[] anf;
   }
   if (truth_table) {
-    delete truth_table;
+    delete[] truth_table;
   }
   if (tmp) {
-    delete tmp;
+    delete[] tmp;
   }
   if (fourier_transform) {
-    delete fourier_transform;
+    delete[] fourier_transform;
   }
   if (un) {
       delete[] un;
