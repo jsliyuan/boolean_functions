@@ -61,7 +61,7 @@ bool isDivisible(int a,int b,int n){
 	itob(a,va,n+1);itob(b,vb,n);
 	div(va,n+1,vb,n);
 	bool res=(btoi(va,n)==0);
-	delete va;delete vb;
+	delete[] va;delete[] vb;
 	return res;
 }
 
@@ -107,7 +107,7 @@ int Field:: mul(int a,int b)  {
 	}
 	div(res,2*n-1,irrpb,n+1);
 	int t=btoi(res,n);
-	delete va;delete vb;delete res;
+	delete[] va;delete[] vb;delete[] res;
 	return t;
 }
 
@@ -216,21 +216,36 @@ Field::Field(int n) {
 	mg = new int[m];
 	IrrPoly();
 	mulTab = new int* [1 << n];
+	addTab = new int* [1 << n];
 	for (int i = 0; i < 1 << n; i++) {
 		mulTab[i] = new int[1 << n];
+		addTab[i] = new int[1 << n];
 	}
 
-	//calculate the mulTable
+	//calculate the mulTable,addTab
 	for (int i = 0; i < 1 << n; i++) {
 		mulTab[i][i] = mul(i, i);
+		addTab[i][i] = 0;
 		for (int j = i + 1; j < 1 << n; j++) {
 			mulTab[j][i] = mulTab[i][j] = mul(i, j);
+			addTab[j][i] = addTab[i][j] = add(i, j);
 		}
 	}
 	//init the primitive root al
 	Pri();
 	//calculate the mulGroup
 	mulGroup();
+}
+
+Field::~Field() {
+	delete[] irrpb;
+	delete[] mg;
+	for (int i = 0; i < 1 << n; i++) {
+		delete[] mulTab[i];
+		delete[] addTab[i];
+	}
+	delete[] mulTab;
+	delete[] addTab;
 }
 
 // TruthToUn converts the truth table to uni-variate representation
@@ -246,7 +261,7 @@ void TruthToUn(int* truth,int* un,Field* f) {
 				if (p < 0) {
 					p += m;
 				}
-				t = f->add(t, mg[p]);
+				t = f->addTab[t][mg[p]];
 			}
 		}
 		un[i] = t;
@@ -293,7 +308,7 @@ void UnToTruth(int* un,int* truth,Field* f) {
 int Field::tr(int x){
 	int res=0,t=x;
 	for(int i=0;i<n;i++){
-		res=add(res,t);
+		res=addTab[res][t];
 		t=mulTab[t][t];
 	}
 	return res;

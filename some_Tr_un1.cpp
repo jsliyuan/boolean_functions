@@ -23,12 +23,12 @@ int main(){
 	  cout << "x^i+x^(i+" << j << ")" << endl;
 	  for (int i = 0; i < (1 << n); i++) {
 		  string str = "x^" + to_string(i) + "+x^" + to_string((i + j) % (1 << n));
-		  g.set_trace_univariate(str, &f);
+		  g.set_trace_univariate(str, f);
 		  //t = g.get_truth_table_ptr();
 		  //for (int k = 0; k < 1 << n; k++) {
 			 // assert(t[0] == 0 || t[0] == 1);
 		  //}
-		  curU3 = g.Gowers_norm_u3();
+		  //curU3 = g.Gowers_norm_u3();
 		  if (curU3 < minU3) {
 			  minU3 = curU3;
 			  tt=g.get_truth_table_hex();
