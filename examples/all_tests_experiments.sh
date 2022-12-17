@@ -28,7 +28,4 @@ echo "test nl2 for 10v"
 g++ -o test.out test_nl2_for_10v.cpp ../Galois_field.cpp ../reed_muller_generator.cpp ../homogenous_bf_generator.cpp ../boolean_fun.cpp ../boolean_fun_decoder.cpp ../affine_trans.cpp 
 ./test.out
 
-echo "test nl3 for 7v"
-g++ -o test.out test_nl3_for_7v.cpp ../Galois_field.cpp ../reed_muller_generator.cpp ../homogenous_bf_generator.cpp ../boolean_fun.cpp ../boolean_fun_decoder.cpp ../affine_trans.cpp 
-./test.out
 
