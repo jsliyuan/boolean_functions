@@ -30,8 +30,3 @@ $  g++ -o test.out test_nl2_for_10v.cpp ../Galois_field.cpp ../reed_muller_gener
 
 $ ./test.out
 
-### test third-order nonlinearity for 7-variable Boolean functions
-$  g++ -o test.out test_nl3_for_7v.cpp ../Galois_field.cpp ../reed_muller_generator.cpp ../boolean_fun.cpp ../boolean_fun_decoder.cpp ../affine_trans.cpp
-
-$ ./test.out
-

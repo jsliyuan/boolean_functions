@@ -48,7 +48,7 @@ int main() {
   BooleanFunDecoder f1(10);
   // You can replace the string here with whatever the hexadecimal truth table of 10-variable function which you want to test.
   string str1="x^35";
-  f1.set_trace_univariate(str1,&field);
+  f1.set_trace_univariate(str1,field);
   // call second_order_nonlinearity_Fourquet_Tavernier() to compute second-order nonlinearity
   cout<<"The second-order nonlinearity of f1 is "<<f1.second_order_nonlinearity_Fourquet_Tavernier()<<endl;
   
