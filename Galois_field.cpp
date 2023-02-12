@@ -7,82 +7,25 @@
 
 using namespace std;
 
-// itob converts int to binary array,
-// which is arranged from low level.
-void itob(int x,int* p,int n){
-	for (int i=0;i<n;i++){
-		if (x>0){
-			p[i]=x%2;
-			x/=2;
-		}else{
-			p[i]=0;
-		}
-	}
-}
-
-// btoi converts binary array to int.
-int btoi(int* b,int n){
-	int res=0,t=1;
-	for (int i=0;i<n;i++){
-		res+=b[i]*t;
-		t*=2;
-	}
-	return res;
-}
-
-// 计算va除以vb的余数
-// va,vb是低位开始
-// 结果记录在va上
-void div(int* va,int la,int* vb,int lb) {
-	int pa,pb;  //记录va，vb第一个不为0的位置
-	for (pa=la-1;pa>=0;pa--){
-		if (va[pa]!=0){break;}
-	}
-	for (pb=lb-1;pb>=0;pb--){
-		if (vb[pb]!=0){break;}
-	}
-	while(pa>=pb){
-		//printf("current pa:%d,pb:%d\n",pa,pb);
-		int p=-1;  //记录下一个不等于0的位置
-		for (int i=0;i<=pb;i++){
-			va[pa-i]^=vb[pb-i];
-			if (va[pa-i]==1&&p==-1){
-				p=pa-i;
-			}
-		}
-		pa=p!=-1?p:pa-pb-1;
-	}
-}
-
-// IsDivisible decides that whether g can be divided by f in Field F_2.
-bool isDivisible(int a,int b,int n){
-	int *va=new int[n+1];
-	int *vb=new int[n];
-	itob(a,va,n+1);itob(b,vb,n);
-	div(va,n+1,vb,n);
-	bool res=(btoi(va,n)==0);
-	delete[] va;delete[] vb;
-	return res;
-}
-
 // IrrPoly calculates an irreducible polynomial in GF(2) with degree n.
 void Field::IrrPoly() {
-	int lim=1<<(n/2+1);
-	for (int p = m + 1; p < (m+1)*2; p++) {
+	this->irrpb = new int[n + 1];
+	int lim = 1 << (n / 2 + 1);
+	for (int p = m + 1; p < (m + 1) * 2; p++) {
 		//p corresponds to a polynomial with degree n
-		if (p%2 == 0) {
+		if (p % 2 == 0) {
 			continue;
 		}
-		int i=2;
+		int i = 2;
 		for (; i < lim; i++) {
-			if (isDivisible(p,i,n)) {
+			if (isDivisible(p, i, n)) {
 				break;
 			}
 		}
-		if (i==lim){
-			this->irrp=p;
-			itob(p,irrpb,n+1);
-			return ;
+		if (i == lim) {
+			this->irrp = p;
+			itob(p, irrpb, n + 1);
+			return;
 		}
 	}
 }
@@ -94,6 +37,9 @@ int Field::add(int a,int b){
 
 // mul returns a*b in Field F2^n
 int Field:: mul(int a,int b)  {
+	if (a == 0 || b == 0) {
+		return 0;
+	}
 	int *va=new int[n];
 	int *vb=new int[n];
 	itob(a,va,n);itob(b,vb,n);
@@ -145,21 +91,13 @@ int Field:: ord(int a) {
 	return 1;
 }
 
-int gcd(int x,int y){
-	int tem;
-	while(y!=0){
-		tem=y;
-		x=y;y=tem%y;
-	}
-	return x;
-}
-
 // Pri returns the primitive root in F2^n
 void Field:: Pri() {
 	if (n == 1) {
 		al = 1;
 		return;
 	}
+	// ToDo 优化寻找本原元的算法
 	int a=2,b=0;                // F2^n里的元素a,b
 	int* visited=new int[m+1];  // 记录已经访问的元素
 	for(int i=0;i<=m;i++){visited[i]=0;}
@@ -196,33 +134,28 @@ void Field:: Pri() {
 			break;
 		}
 	}
-	delete visited;
+	delete[] visited;
 	al = a;
 }
 
 // MulGroup inits the multiple group of F2^n in form of [1,al,al^2...,al^(2^n-2)]
 void Field:: mulGroup() {
+	mg = new int[m];
 	mg[0] = 1;
 	for (int i = 1; i < m; i++) {
 		mg[i] = mulTab[al][mg[i - 1]];
 	}
 }
 
-//init the Field
-Field::Field(int n) {
-	this->n = n;
-	this->m = (1 << n) - 1;
-	irrpb = new int[n + 1];
-	mg = new int[m];
-	IrrPoly();
+void Field::initTab() {
 	mulTab = new int* [1 << n];
 	addTab = new int* [1 << n];
 	for (int i = 0; i < 1 << n; i++) {
 		mulTab[i] = new int[1 << n];
 		addTab[i] = new int[1 << n];
 	}
-
 	//calculate the mulTable,addTab
+	//cout << "need init table" << endl;
 	for (int i = 0; i < 1 << n; i++) {
 		mulTab[i][i] = mul(i, i);
 		addTab[i][i] = 0;
@@ -231,11 +164,37 @@ Field::Field(int n) {
 			addTab[j][i] = addTab[i][j] = add(i, j);
 		}
 	}
+}
+
+Field::Field(int n) {
+	this->n = n;
+	this->m = (1 << n) - 1;
+	IrrPoly();
+	cout << "IrrPoly ok" << endl;
+	initTab();
+	cout << "initTab ok" << endl;
 	//init the primitive root al
 	Pri();
+	cout << "Pri ok" << endl;
 	//calculate the mulGroup
 	mulGroup();
 }
+
+////init the Field without initialization.
+//Field::Field(int n,bool useTable=false) {
+//	this->n = n;
+//	this->m = (1 << n) - 1;
+//	this->useTable = useTable;
+//	IrrPoly();
+//	mulTab = new int* [1<<n];   // 为啥这个初始化长度不是这个会报错
+//	addTab = new int* [1<<n];
+//	for (int i = 0; i < 1<<n; i++) {
+//		mulTab[i] = NULL;
+//		addTab[i] = NULL;
+//	}
+//	Pri();
+//	mulGroup();
+//}
 
 Field::~Field() {
 	delete[] irrpb;

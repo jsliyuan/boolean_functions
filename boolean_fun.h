@@ -13,6 +13,7 @@ to compute higher order nonliearity (r>=3) of Boolean functions.
 
 #include "affine_trans.h"
 #include "Galois_field.h"
+#include "Galois_field_noninit.h"
 
 #include <cstdarg>
 #include <string>
@@ -212,17 +213,25 @@ class BooleanFun {
 
     // Converts the truth table to univariate representation.
     void truth_table_to_univariate(Field& f);
+    
+    void truth_table_to_univariate(Field_X& f);
 
     // Decides if the vector boolean function with un as its univariate coefficients is boolean.
     bool is_univariate_boolean(Field& f);
 
+    bool is_univariate_boolean(Field_X& f);
+
     // Calculates the value in x of the boolean function with un as its univariate representation.
     void univariate_to_truth_table(Field& f);
+
+    void univariate_to_truth_table(Field_X& f);
 
     // str is an univariate representation of vector boolean function.
     // For example:
     // str="x^3+x^7" corresponds to the boolean function tr(x^3+x^7).
     void set_trace_univariate(const string& str,Field& f);
+
+    void set_trace_univariate(const string& str,Field_X& f);
 
     // Returns the un.
     // Read-only.

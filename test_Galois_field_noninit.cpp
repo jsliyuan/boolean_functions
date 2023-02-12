@@ -1,4 +1,4 @@
-#include"Galois_field.h"
+#include"Galois_field_noninit.h"
 
 #include <iostream>
 #include <stdio.h>
@@ -18,8 +18,8 @@ void print(int* v, int n) {
 int main() {
  
   srand((int)time(NULL));
-  int n=10;
-  Field tf(n);
+  int n=15;
+  Field_X tf(n);
   int* te=new int[n];
 
   //Test btoi,itob
@@ -38,6 +38,16 @@ int main() {
   assert(tf.add(8,3)==11);
   cout<<"End of test for addition "<<endl;
 
+  //Test index_al
+  unordered_set<int> s;
+  int* ia = tf.index_al;
+  for (int i = 1; i <= tf.m; i++) {
+      assert(s.find(ia[i]) == s.end());
+      s.insert(ia[i]);
+  }
+  assert(s.size() == tf.m);
+  cout << "End of test of index_al" << endl;
+
   //Test selfMul,mul
   assert(tf.mul(0,10)==0);
   assert(tf.mul(1,10)==10);
@@ -46,20 +56,21 @@ int main() {
   //Test ord
   for (int i=1;i<=tf.m;i++){
     assert(tf.m%tf.ord(i)==0);
+    //cout << i << endl;
   }
   cout<<"End of test for order"<<endl;
 
   //Test Irrpoly,Pri
-  for (int i=2;i<=14;i++){
-    Field f(i);
+  for (int i=2;i<=10;i++){
+    Field_X f(i);
     assert(f.ord(f.al)==f.m);
-    cout << i<< " Pri true" << endl;
+    //cout << i<< " Pri true.al:"<<f.al << endl;
   }
   cout<<"End of test for irreducible polynomial in GF(2) with degree n "<<endl;
 
   //Test mulGroup
-  for (int i=2;i<=14;i++){
-    Field f(i);
+  for (int i=2;i<=10;i++){
+    Field_X f(i);
     int* mg=f.mg;
     unordered_set<int> s;
     for (int j=0;j<f.m;j++){

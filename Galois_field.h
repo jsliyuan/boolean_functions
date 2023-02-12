@@ -1,21 +1,22 @@
 #ifndef GALOIS_FIELD_H
 #define GALOIS_FIELD_H
 
-using namespace std;
+#include"Galois_field_util.h"
 
-// itob converts int to binary array,
-// which is arranged from low level.
-void itob(int x, int* p, int n);
 
-// btoi converts binary array to int.
-int btoi(int* b, int n);
-
-void div(int* va, int la, int* vb, int lb);
-
-// IsDivisible decides that whether g can be divided by f in Field F_2.
-bool isDivisible(int a, int b, int n);
-
-int gcd(int x, int y);
+//// itob converts int to binary array,
+//// which is arranged from low level.
+//void itob(int x, int* p, int n);
+//
+//// btoi converts binary array to int.
+//int btoi(int* b, int n);
+//
+//void div(int* va, int la, int* vb, int lb);
+//
+//// IsDivisible decides that whether g can be divided by f in Field F_2.
+//bool isDivisible(int a, int b, int n);
+//
+//int gcd(int x, int y);
 
 
 class Field{
@@ -28,10 +29,15 @@ public:
 	int* mg;  //[1,al,al^2,...,al^(2^n-2)]
 	int** mulTab;  //multiple table
 	int** addTab;  //addition table
+	//bool useTable;  //是否初始化表
 
-	Field(int n);  //init the Field
+	Field(int n);                //init the Tab
+
+	//Field(int n,bool useTable);  //init the Field without Tab(at least 13)
 
 	~Field();
+
+	void initTab();
 
 	void IrrPoly();  //calculate the irreducible polynomial
 
