@@ -76,7 +76,7 @@ Initially one must setup a Boolean function before you can begin using operation
 
 ## Classes
 - BooleanFun: Boolean function class
- 
+
 - BooleanFunDecoder: Inheritance of BooleanFun class, including Fourquet-Tavernier list decoding algorithm for second-order nonlinearity.
 
 - AffineTrans: affine transformation Ax + b
@@ -107,7 +107,7 @@ $ bash all_tests.sh
 to make sure all tests pass.
 
 ### BooleanFun class
-$ g++ -o test.out test_boolean_fun.cpp Galois_field.cpp boolean_fun.cpp affine_trans.cpp rotation_sym.cpp permutation.cpp
+$ g++ -o test.out test_boolean_fun.cpp Galois_field.cpp boolean_fun.cpp affine_trans.cpp rotation_sym.cpp permutation.cpp  Galois_field_util.cpp Galois_field_noninit.cpp
 
 $ ./test.out
 
@@ -166,7 +166,7 @@ $ g++ -o test.out test_reed_muller_generator.cpp Galois_field.cpp reed_muller_ge
 $ ./test.out
 
 ### Galois_field class
-$ g++ -o test.out test_Galois_field.cpp Galois_field.cpp 
+$ g++ -o test.out test_Galois_field.cpp Galois_field.cpp Galois_field_util.cpp
 
 $ ./test.out
 
@@ -209,5 +209,4 @@ Test list decoding for second-order nonlinearity.
 $g++ -o test.out test_FT_decoding.cpp Galois_field.cpp reed_muller_generator.cpp homogenous_bf_generator.cpp boolean_fun.cpp boolean_fun_decoder.cpp affine_trans.cpp
 
 $./test.out
-
 
