@@ -551,30 +551,39 @@ int Field_X::gcd(int x, int y) {
 	return x;
 }
 
+// return the size of field
 int Field_X::get_varnum() {
 	return this->n;
 }
 
+// return the order of multiple group
 int Field_X::get_order() {
 	return m;
 }
 
+// return a irreducible polynomial
 int Field_X::get_irrp() {
 	return irrp;
 }
 
+// return binary representation
 const int* Field_X::get_irrpb() {
 	return irrpb;
 }
 
+
+// return primitive root al
 int Field_X::get_root() {
 	return al;
 }
 
+// return [1,al,al^2,...,al^(2^n-2)]
 const int* Field_X::get_root_list() {
 	return mg;
 }
 
+// return index list
+// index_al[t]=k represents t=al^k
 const int* Field_X::get_index_al() {
 	return index_al;
 }
