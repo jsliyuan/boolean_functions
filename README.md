@@ -166,8 +166,7 @@ $ g++ -o test.out test_reed_muller_generator.cpp Galois_field.cpp reed_muller_ge
 $ ./test.out
 
 ### Galois_field class
-$ g++ -o test.out test_Galois_field.cpp Galois_field.cpp Galois_field_util.cpp
-
+$ g++ -o test.out test_Galois_field.cpp Galois_field.cpp
 $ ./test.out
 
 ### example_nonsingular.cpp
