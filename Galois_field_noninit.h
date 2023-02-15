@@ -55,18 +55,27 @@ public:
 	int gcd(int x, int y);
 
 	// get all private parameters
+	
+	// return the size of field
 	int get_varnum();
 
+	// return the order of multiple group
 	int get_order();
 
+	// return a irreducible polynomial
 	int get_irrp();
-
+	
+	// return binary representation
 	const int* get_irrpb();
 
+	// return primitive root al
 	int get_root();
 
+	// return [1,al,al^2,...,al^(2^n-2)]
 	const int* get_root_list();
 
+	// return index list
+	// index_al[t]=k represents t=al^k
 	const int* get_index_al();
 
 private:
@@ -76,7 +85,7 @@ private:
 	int* irrpb;  //binary representation of irrp
 	int al ;  //primitive root
 	int* mg;  //[1,al,al^2,...,al^(2^n-2)]
-	int* index_al; //记录一个元素是al的几次方;index_al[t]=k表示t=al^k
+	int* index_al; //index_al[t]=k represents t=al^k
 };
 
 
