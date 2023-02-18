@@ -164,6 +164,10 @@ int Field_X::add(int a, int b) {
 	return a ^ b;
 }
 
+int Field_X::sub(int a, int b) {
+	return a ^ b;
+}
+
 // mul returns a*b in Field F2^n.Only used in init Field_X.
 int Field_X::mul_init(int a, int b) {
 	if (a == 0 || b == 0) {
@@ -181,7 +185,7 @@ int Field_X::mul_init(int a, int b) {
 			res[i + j] %= 2;
 		}
 	}
-	this->div(res, 2 * (this->n) - 1, this->irrpb, (this->n) + 1);
+	this->module(res, 2 * (this->n) - 1, this->irrpb, (this->n) + 1);
 	int t = this->btoi(res, this->n);
 	delete[] va; 
 	delete[] vb; 
@@ -197,6 +201,15 @@ int Field_X::mul(int a, int b) {
 	// al^i*al^j
 	int mul_index = (index_al[a] + index_al[b]) % m;
 	return mg[mul_index];
+}
+
+int Field_X::div(int a, int b) {
+	if (a == 0) {
+		return 0;
+	}
+	// al^i¡Âal^j
+	int div_index = (index_al[a] - index_al[b] + m) % m;
+	return mg[div_index];
 }
 
 // selfMul returns a^k where a is an element in Field F2^n.Only used in init Field_X
@@ -265,6 +278,16 @@ int Field_X::ord(int a) {
 		}
 	}
 	return 1;
+}
+
+// return the inverse element of a
+int Field_X::inv(int a) {
+	if (a == 1) {
+		return 1;
+	}
+	int index_a = this->index_al[a];
+	int index_inv_a = this->m - index_a;
+	return this->mg[index_inv_a];
 }
 
 
@@ -505,7 +528,7 @@ int Field_X::btoi(int* b, int num) {
 	return res;
 }
 
-void Field_X::div(int* va, int la, int* vb, int lb) {
+void Field_X::module(int* va, int la, int* vb, int lb) {
 	int pa, pb;  
 	for (pa = la - 1; pa >= 0; pa--) {
 		if (va[pa] != 0) { break; }
@@ -533,7 +556,7 @@ bool Field_X::isDivisible(int a, int b, int num) {
 
 	this->itob(a, va, num + 1); 
 	this->itob(b, vb, num);
-	this->div(va, num + 1, vb, num);
+	this->module(va, num + 1, vb, num);
 	bool res = (this->btoi(va, num) == 0);
 	delete[] va; 
 	delete[] vb;

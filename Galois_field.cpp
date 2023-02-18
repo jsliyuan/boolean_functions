@@ -32,7 +32,11 @@ void Field::IrrPoly() {
 
 // add returns a xor b
 int Field::add(int a,int b){
-	return a^b;
+	return a ^ b;
+}
+
+int Field::sub(int a, int b) {
+	return a ^ b;
 }
 
 // mul returns a*b in Field F2^n
@@ -53,13 +57,17 @@ int Field:: mul(int a,int b)  {
 			res[i+j]%=2;
 		}
 	}
-	div(res,2*this->n - 1,this->irrpb, this->n+1);
+	module(res,2*this->n - 1,this->irrpb, this->n+1);
 	int t=this->btoi(res, this->n);
 	delete[] va;
 	delete[] vb;
 	delete[] res;
 	
 	return t;
+}
+
+int Field::div(int a, int b) {
+	return this->mulTab[a][this->inv(b)];
 }
 
 // selfMul returns a^k where a is an element in Field F2^n.
@@ -94,6 +102,14 @@ int Field:: ord(int a) {
 		}
 	}
 	return 1;
+}
+
+// return the inverse element of a
+int Field::inv(int a) {
+	if (a == 1) {
+		return 1;
+	}
+	return this->selfMul(a, this->m - 1);
 }
 
 // Pri returns the primitive root in F2^n
@@ -299,7 +315,7 @@ int Field::btoi(int* b, int num) {
 	return res;
 }
 
-void Field::div(int* va, int la, int* vb, int lb) {
+void Field::module(int* va, int la, int* vb, int lb) {
 	int pa, pb;  
 	for (pa = la - 1; pa >= 0; pa--) {
 		if (va[pa] != 0) { break; }
@@ -326,7 +342,7 @@ bool Field::isDivisible(int a, int b, int num) {
 	int* vb = new int[num];
 	this->itob(a, va, num + 1); 
 	this->itob(b, vb, num);
-	this->div(va, num + 1, vb, num);
+	this->module(va, num + 1, vb, num);
 	bool res = (this->btoi(va, num) == 0);
 	delete[] va; 
 	delete[] vb;
@@ -374,7 +390,15 @@ const int* Field::get_root_list() {
 	return mg;
 }
 
+// return the multiple table
+int** Field::get_mul_table() {
+	return mulTab;
+}
 
+// return the addtional table
+int** Field::get_add_table() {
+	return addTab;
+}
 
 
 

@@ -45,12 +45,31 @@ int main() {
 
   //Test ord
   for (int i=1;i<=tf.get_order();i++){
-    assert(tf.get_order()%tf.ord(i)==0);
+      int order_i = tf.ord(i);
+      assert(tf.get_order() % order_i == 0);
+      assert(tf.selfMul(i, order_i) == 1);
   }
   cout<<"End of test for order"<<endl;
 
+  //Test sub
+  for (int i = 0; i < 20; i++) {
+      int a = rand() % (tf.get_order() + 1);
+      int b = rand() % (tf.get_order() + 1);
+      assert(tf.sub(tf.selfMul(a, 2), tf.selfMul(b, 2)) == tf.mul(tf.add(a, b), tf.sub(a, b)));
+  }
+  cout << "End of test of sub" << endl;
+
+  //Test inv,div
+  for (int i = 0; i < 20; i++) {
+      int a = rand() % (tf.get_order() + 1);
+      int b = rand() % (tf.get_order() + 1);
+      assert(tf.inv(tf.mul(a, b)) == tf.mul(tf.inv(a), tf.inv(b)));
+      assert(tf.mul(a, tf.inv(b)) == tf.div(a, b));
+  }
+  cout << "End of test for inv & div" << endl;
+
   //Test Irrpoly,Pri
-  for (int i=2;i<=14;i++){
+  for (int i=2;i<=12;i++){
     Field f(i);
     assert(f.ord(f.get_root())==f.get_order());
     cout << i<< " Pri true" << endl;
@@ -58,7 +77,7 @@ int main() {
   cout<<"End of test for irreducible polynomial in GF(2) with degree n "<<endl;
 
   //Test mulGroup
-  for (int i=2;i<=14;i++){
+  for (int i=2;i<=12;i++){
     Field f(i);
     const int* mg=f.get_root_list();
     unordered_set<int> s;

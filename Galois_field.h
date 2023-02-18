@@ -14,15 +14,21 @@ public:
 
 	void IrrPoly();  //calculate the irreducible polynomial
 
-	int add(int a,int b);
+	int add(int a, int b);	//a+b
 
-	int mul(int a,int b);
+	int sub(int a, int b);  //a-b
+
+	int mul(int a, int b);	//a*b
+
+	int div(int a, int b);	//a÷b
 
 	int selfMul(int a,int k);  //a^k
 
 	int ord(int a);  //the order of a
 
 	void Pri();  //calculate the primitive root
+
+	int inv(int a);  //the inverse element of a
 
 	void mulGroup();  // MulGroup inits the multiple group of F2^n in form of [1,al,al^2...,al^(2^n-2)]
 
@@ -45,7 +51,7 @@ public:
 	// btoi converts binary array to int.
 	int btoi(int* b, int n);
 	//
-	void div(int* va, int la, int* vb, int lb);
+	void module(int* va, int la, int* vb, int lb);
 	//
 	// IsDivisible decides that whether g can be divided by f in Field F_2.
 	bool isDivisible(int a, int b, int n);
@@ -72,6 +78,11 @@ public:
 	//return [1,al,al^2,...,al^(2^n-2)]
 	const int* get_root_list();
 
+	// return the multiple table
+	int** get_mul_table();
+
+	// return the addtional table
+	int** get_add_table();
 
 private:
 	int n;  //2^n
@@ -81,7 +92,7 @@ private:
 	int al;  //primitive root
 	int* mg;  //[1,al,al^2,...,al^(2^n-2)]
 	int** mulTab;  //multiple table
-	int** addTab;  //addition table
+	int** addTab;  //addition table(可以考虑去了，性能没增加多少内存多了一倍)
 };
 
 

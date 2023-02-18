@@ -1,5 +1,4 @@
 #include "boolean_fun.h"
-#include "Galois_field.h"
 #include <assert.h>
 #include <iostream>
 #include <math.h>
@@ -9,10 +8,11 @@ using namespace std;
 
 int main() {
     // Test truth_table_to_univariate,univariate_to_truth_table
-    int n = 10;
+    int n = 12;
     int test_amount = 20;
     Field_X tf(n);
 	BooleanFun g(n);
+    cout << "End of initialization of field and booleanfun." << endl;
     for (int k = 0; k < test_amount; k++) {
         g.set_truth_table_random();
         

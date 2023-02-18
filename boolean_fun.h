@@ -229,9 +229,9 @@ class BooleanFun {
     // str is an univariate representation of vector boolean function.
     // For example:
     // str="x^3+x^7" corresponds to the boolean function tr(x^3+x^7).
-    void set_trace_univariate(const string& str,Field& f);
+    void set_trace_univariate(const std::string& str,Field& f);
 
-    void set_trace_univariate(const string& str,Field_X& f);
+    void set_trace_univariate(const std::string& str,Field_X& f);
 
     // Returns the un.
     // Read-only.

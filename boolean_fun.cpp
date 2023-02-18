@@ -845,8 +845,9 @@ const int* BooleanFun::get_anf_ptr() {
 
 // Converts the truth table to uni-variate representation
 void BooleanFun::truth_table_to_univariate(Field& f) {
-    int m = f.m;
-    int* mg = f.mg;
+    int m = f.get_order();
+    const int* mg = f.get_root_list();
+    int** addTab = f.get_add_table();
     un[m] = 0;
     for (int i = 0; i < m; i++) {
         int t = 0;
@@ -856,7 +857,7 @@ void BooleanFun::truth_table_to_univariate(Field& f) {
                 if (p < 0) {
                     p += m;
                 }
-                t = f.addTab[t][mg[p]];
+                t = addTab[t][mg[p]];
             }
         }
         un[i] = t;
@@ -873,8 +874,8 @@ void BooleanFun::truth_table_to_univariate(Field& f) {
 }
 
 void BooleanFun::truth_table_to_univariate(Field_X& f) {
-    int m = f.m;
-    int* mg = f.mg;
+    int m = f.get_order();
+    const int* mg = f.get_root_list();
     un[m] = 0;
     for (int i = 0; i < m; i++) {
         int t = 0;
@@ -902,12 +903,13 @@ void BooleanFun::truth_table_to_univariate(Field_X& f) {
 
 // Decides if the vector boolean function with un as its univariate coefficients is boolean
 bool BooleanFun::is_univariate_boolean(Field& f) {
-    int m = f.m;
+    int m = f.get_order();
+    int** mulTab = f.get_mul_table();
     if (un[0] != 0 && un[0] != 1) { return false; }
     if (un[m] != 0 && un[m] != 1) { return false; }
     for (int i = 1; i < m; i++) {
         int j = (2 * i) % m;
-        if (un[j] != f.mulTab[un[i]][un[i]]) {
+        if (un[j] != mulTab[un[i]][un[i]]) {
             return false;
         }
     }
@@ -915,7 +917,7 @@ bool BooleanFun::is_univariate_boolean(Field& f) {
 }
 
 bool BooleanFun::is_univariate_boolean(Field_X& f) {
-    int m = f.m;
+    int m = f.get_order();
     if (un[0] != 0 && un[0] != 1) { return false; }
     if (un[m] != 0 && un[m] != 1) { return false; }
     for (int i = 1; i < m; i++) {
@@ -929,19 +931,21 @@ bool BooleanFun::is_univariate_boolean(Field_X& f) {
 
 // Calculates the value in x of the boolean function with un as its uni-variate representation.
 void BooleanFun::univariate_to_truth_table(Field& f) {
-    int m = f.m;
+    int m = f.get_order();
+    int** addTab = f.get_add_table();
+    int** mulTab = f.get_mul_table();
     truth_table[0] = un[0];
     for (int x = 1; x < m + 1; x++) {  //current variable
         int t = 1;
         for (int j = 0; j <= m; j++) {
-            truth_table[x] = f.addTab[truth_table[x]][f.mulTab[t][un[j]]];
-            t = f.mulTab[x][t]; //x^j
+            truth_table[x] = addTab[truth_table[x]][mulTab[t][un[j]]];
+            t = mulTab[x][t]; //x^j
         }
     }
 }
 
 void BooleanFun::univariate_to_truth_table(Field_X& f) {
-    int m = f.m;
+    int m = f.get_order();
     truth_table[0] = un[0];
     for (int x = 1; x < m + 1; x++) {  //current variable
         int t = 1;
@@ -995,7 +999,7 @@ void BooleanFun::set_trace_univariate(const string& str,Field& f) {
     //un is incorrect...
     univariate_to_truth_table(f);
     for (int i = 0; i < 1 << n;i++) {
-        truth_table[i] = f.tr(truth_table[i]);
+        truth_table[i] = f.tr1(truth_table[i]);
     }
     //f->Tr(un, truth_table);
     //truth_table_to_anf();
@@ -1041,7 +1045,7 @@ void BooleanFun::set_trace_univariate(const string& str, Field_X& f) {
     //un is incorrect...
     univariate_to_truth_table(f);
     for (int i = 0; i < 1 << n; i++) {
-        truth_table[i] = f.tr(truth_table[i]);
+        truth_table[i] = f.tr1(truth_table[i]);
     }
     //f->Tr(un, truth_table);
     //truth_table_to_anf();

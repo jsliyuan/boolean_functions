@@ -107,7 +107,7 @@ $ bash all_tests.sh
 to make sure all tests pass.
 
 ### BooleanFun class
-$ g++ -o test.out test_boolean_fun.cpp Galois_field.cpp boolean_fun.cpp affine_trans.cpp rotation_sym.cpp permutation.cpp  Galois_field_util.cpp Galois_field_noninit.cpp
+$ g++ -o test.out test_boolean_fun.cpp Galois_field.cpp boolean_fun.cpp affine_trans.cpp rotation_sym.cpp permutation.cpp Galois_field_noninit.cpp
 
 $ ./test.out
 
