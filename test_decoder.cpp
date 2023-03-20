@@ -3,12 +3,12 @@
 using namespace std;
 
 int main() {
-	int m = 8;
+	int m = 7;
 	int r = 2;
 	srand(time(NULL));
 	BooleanFun f(m);
 	Field gf(m);
-	f.set_trace_univariate("x^7", gf);
+	f.set_trace_univariate("x^254", gf);
 	//f.set_truth_table(0, 1);
 	//f.set_truth_table_done();
 	//cout << f.get_anf() << endl;

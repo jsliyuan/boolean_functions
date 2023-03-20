@@ -9,26 +9,29 @@
 
 class Decoder {
 public:
-	int r;			// r½×·ÇÏßÐÔ¶È
+	int r;			// rï¿½×·ï¿½ï¿½ï¿½ï¿½Ô¶ï¿½
 	int m;			// mÔª
-	BooleanFun* target_f;   // ½âÂëµÄ²¼¶ûº¯Êý
-	int** anf_index;       //  anf_index[i]:¶ÔÓ¦RM(i,j)µÄanfÏî
+	BooleanFun* target_f;   // ï¿½ï¿½ï¿½ï¿½Ä²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	int** anf_index;       //  anf_index[i]:ï¿½ï¿½Ó¦RM(i,j)ï¿½ï¿½anfï¿½ï¿½
 	int** anf_len;	 // 
+	int* F_0;
+	int current_num;
+	int *V0,*V1;
 
 	Decoder(int r, int m, BooleanFun* f);
 
-	// ´æ´¢f¡ÊRM(r-1,m-i),ÓÃstring´æ´¢
+	// ï¿½æ´¢fï¿½ï¿½RM(r-1,m-i),ï¿½ï¿½stringï¿½æ´¢
 	std::string convert_booleanFun_to_string(BooleanFun& f, int len, int* anf_index);  
 
 
 	void compute_Li(double eps, int i, int* F, int m, int r, std::vector<std::string>& res);
 
-	// int->¶þ½øÖÆ±íÊ¾(for test)
+	// int->ï¿½ï¿½ï¿½ï¿½ï¿½Æ±ï¿½Ê¾(for test)
 	std::string int_to_string(int value);
 
 	void gamma_r(double eps, int i, BooleanFun* q, int* F, int m, int r, std::vector<std::string>& res);
 
-	// ÅÐ¶ÏretÊÇ·ñÓëtarget_f¾àÀëÂú×ã<=d
+	// ï¿½Ð¶ï¿½retï¿½Ç·ï¿½ï¿½ï¿½target_fï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½<=d
 	bool if_less_than_d(BooleanFun* ret,int d);
 
 	bool main_decoder(int d);
