@@ -24,8 +24,8 @@ string Decoder::convert_booleanFun_to_string(BooleanFun& f, int len, int* anf_in
 void Decoder::compute_Li(double eps, int i, int* F, int m, int r, vector<string>& res) {
 	//printf("[compute_Li] eps:%f, r:%d, m:%d, i:%d start...\n", eps, r, m, i);
 	// 计算V
-	//int* V0 = new int[1<<(m - i)];
-	//int* V1 = new int[1<<(m - i)];
+	/*int* V0 = new int[1<<(m - i)];
+	int* V1 = new int[1<<(m - i)];*/
 	for (int j = 0; j < 1 << (m - i); j++) {
 		V0[j] = abs(F[j] + F[j + (1 << (m - i))]);
 		V1[j] = abs(F[j] - F[j + (1 << (m - i))]);
@@ -48,13 +48,18 @@ void Decoder::compute_Li(double eps, int i, int* F, int m, int r, vector<string>
 		if (S + sumD >= pow(2, m) * eps) {
 			res.push_back("0");
 		}
+
+		delete[] D;
 		return;
 	}
 
-	BooleanFun q(m - i);
+	//BooleanFun q(m - i);
+	for (int k = 0; k < 1 << (m - i); k++) {
+		boolean_funs[i]->set_anf_coe(k, 0);
+	}
 	double eps_ = pow(2, i) * eps - pow(2, i) * double(S)/pow(2,m);
 	//printf("[compute_Li] S:%d, eps:%f\n", S, eps_);
-	gamma_r(eps_, 1, &q, D, m - i, r - 1, res);
+	gamma_r(eps_, 1, boolean_funs[i], D, m - i, r - 1, res);
 	//printf("[compute_Li] eps:%f, r:%d, m:%d, i:%d end...\n", eps, r, m, i);
 
 	delete[] D;
@@ -75,7 +80,7 @@ string Decoder::int_to_string(int value) {
 }
 
 Decoder::Decoder(int r, int m, BooleanFun* f) :r(r), m(m), target_f(f) {
-	cout << target_f->get_anf() << endl;;
+	cout << target_f->get_anf() << endl;
 
 	// compute anf_index,anf_len
 	int len = 1;     // RM(r,m)涉及的所有anf项
@@ -115,11 +120,9 @@ Decoder::Decoder(int r, int m, BooleanFun* f) :r(r), m(m), target_f(f) {
 		anf_len[i][0] = 1;
 		for (int j = 1; j <= m; j++) {
 			anf_len[i][j] = anf_len[i - 1][j - 1] + anf_len[i][j - 1];
-			//printf("j:%d; len:%d\n", j, anf_len[i][j]);
 			int pre_index = anf_len[i][j - 1];
 			for (int k = 0; k < anf_len[i - 1][j - 1]; k++) {
 				anf_index[i][pre_index + k] = (1 << (j - 1)) + anf_index[i - 1][k];
-				cout << int_to_string(anf_index[i][pre_index + k]);
 			}
 		}
 	}
@@ -130,9 +133,15 @@ Decoder::Decoder(int r, int m, BooleanFun* f) :r(r), m(m), target_f(f) {
 		F_0[i] = 1 - 2 * target_f->value_dec(i);
 	}
 
-	// generate V0,V1,D
-	V0 = new int[1<<(m-1)];
-	V1 = new int[1<<(m-1)];
+	// init V0,V1
+	V0 = new int[1 << (m - 1)];
+	V1 = new int[1 << (m - 1)];
+
+	// init boolean_funs
+	for (int k = m; k > 0; k--) {
+		BooleanFun* f = new BooleanFun(k);
+		boolean_funs.push_back(f);
+	}
 }
 
 void Decoder::gamma_r(double eps, int i, BooleanFun* q, int* F, int m, int r, vector<string>& res) {
@@ -156,21 +165,20 @@ void Decoder::gamma_r(double eps, int i, BooleanFun* q, int* F, int m, int r, ve
 	//	return;
 	//}
 
-	if (this->current_num){
+	if (this->current_num) {
 		return;
 	}
-	
+
 	if (i == m + 1) {
 		//if (F[0] < 0) {
 		//	q->negate();
 		//}
 		
 		if (abs(F[0]) >= pow(2, m) * eps) {
-			if (r==this->r &&m==this->m){
+			if (this->r == r && this->m == m) {
 				this->current_num++;
-				return ;
-			}	
-		
+				return;
+			}
 			// 转化成string
 			string str;
 			int index;
@@ -184,7 +192,7 @@ void Decoder::gamma_r(double eps, int i, BooleanFun* q, int* F, int m, int r, ve
 				}
 			}
 			if (F[0] >= pow(2, m) * eps) {
-				res.push_back(str);
+				res.emplace_back(str);
 			}
 			if (-F[0] >= pow(2, m) * eps) {
 				str[0] = '1';
@@ -221,9 +229,10 @@ void Decoder::gamma_r(double eps, int i, BooleanFun* q, int* F, int m, int r, ve
 		// compute F_i
 		if (r == 1 || m == i) {
 			int anf_0 = q_i.get_anf_coe(0);
-			for (int k=0;k<1<<(m-i);k++){
+			for (int k = 0; k < 1 << (m - i); k++) {
 				q_i.set_truth_table(k, anf_0);
 			}
+			
 		}
 		else {
 			q_i.set_anf_coe_done();
@@ -238,22 +247,15 @@ void Decoder::gamma_r(double eps, int i, BooleanFun* q, int* F, int m, int r, ve
 			else {
 				F_i[k] += F[k + (1 << (m - i))];
 			}
-			//cout << F_i[k];
 		}
-		//cout << endl;
 
 		gamma_r(eps, i + 1, q, F_i, m, r, res);
-
-		// 如果找到了，直接跳出循环	
-		if (current_num){
-			delete[] F_i;
-			return ;
-		}
-
-		for (int k = 0; k < (1 << (m - i)); k++) {
-			q_i.set_truth_table(k, 0);
-		}
 		
+		if (this->current_num) {
+			delete[] F_i;
+			vector<string>().swap(res_Li);
+			return;
+		}		
 	}
 
 	// restore q
@@ -262,6 +264,7 @@ void Decoder::gamma_r(double eps, int i, BooleanFun* q, int* F, int m, int r, ve
 	}
 
 	delete[] F_i;
+	vector<string>().swap(res_Li);
 	//printf("[gamma_r] current m:%d , r: %d ,i:%d, eps: %f end......\n", m, r, i, eps);
 	return ;
 }
@@ -283,14 +286,17 @@ bool Decoder::if_less_than_d(BooleanFun* ret,int d) {
 bool Decoder::main_decoder(int d) {
 	double eps = 1 - (double)d / (double)(1 << (m - 1));
 	printf("current eps : %f\n", eps);
-	BooleanFun q_init(m);
+	
+	// init boolean_funs[0]
+	for (int i = 0; i < 1 << m; i++) {
+		boolean_funs[0]->set_anf_coe(i, 0);
+	}
 
-	// restore current_num
-	this->current_num=0;
-
+	this->current_num = 0;
 	vector<string> res;
-	gamma_r(eps, 1, &q_init, F_0, m, r, res);
-	if (res.size()!=0) {
+	gamma_r(eps, 1, boolean_funs[0], F_0, m, r, res);
+	vector<string>().swap(res);
+	if (this->current_num) {
 		// 二次校验一下
 		//assert(if_less_than_d(ret, d));
 		return true;
