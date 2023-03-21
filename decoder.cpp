@@ -142,6 +142,16 @@ Decoder::Decoder(int r, int m, BooleanFun* f) :r(r), m(m), target_f(f) {
 		BooleanFun* f = new BooleanFun(k);
 		boolean_funs.push_back(f);
 	}
+
+	// init q_i_funs
+	for (int k = 0; k < m; k++) {
+		BooleanFun* f = new BooleanFun(k);
+		q_i_funs.push_back(f);
+	}
+}
+
+Decoder::~Decoder() {
+	
 }
 
 void Decoder::gamma_r(double eps, int i, BooleanFun* q, int* F, int m, int r, vector<string>& res) {
@@ -174,7 +184,7 @@ void Decoder::gamma_r(double eps, int i, BooleanFun* q, int* F, int m, int r, ve
 		//	q->negate();
 		//}
 		
-		if (abs(F[0]) >= pow(2, m) * eps) {
+		//if (abs(F[0]) >= pow(2, m) * eps) {
 			if (this->r == r && this->m == m) {
 				this->current_num++;
 				return;
@@ -198,14 +208,14 @@ void Decoder::gamma_r(double eps, int i, BooleanFun* q, int* F, int m, int r, ve
 				str[0] = '1';
 				res.push_back(str);
 			}
-		}
+		//}
 
 		//printf("[gamma_r] current m:%d , r: %d ,i:%d, eps: %f end with res ......", m, r, i, eps);
 		//cout << str << endl;
 		return ;
 	}
 
-	BooleanFun q_i(m - i);  // 用来存q_i
+	BooleanFun* q_i = q_i_funs[m - i];  // 用来存q_i
 	int* F_i = new int[1 << (m - i)];
 	vector<string> res_Li;  // 用来储存q_i∈RM(r-1,m-i)
 
@@ -217,31 +227,31 @@ void Decoder::gamma_r(double eps, int i, BooleanFun* q, int* F, int m, int r, ve
 		for (int k = 0; k < bf.size();k++) {
 			int index = anf_index[r - 1][k] + (1 << (m - i));
 			if (bf[k] == '1') {
-				q_i.set_anf_coe(anf_index[r - 1][k], 1);
+				q_i->set_anf_coe(anf_index[r - 1][k], 1);
 				q->set_anf_coe(index, 1);
 			}
 			else {
-				q_i.set_anf_coe(anf_index[r - 1][k], 0);
+				q_i->set_anf_coe(anf_index[r - 1][k], 0);
 				q->set_anf_coe(index, 0);
 			}
 		}
 
 		// compute F_i
 		if (r == 1 || m == i) {
-			int anf_0 = q_i.get_anf_coe(0);
+			int anf_0 = q_i->get_anf_coe(0);
 			for (int k = 0; k < 1 << (m - i); k++) {
-				q_i.set_truth_table(k, anf_0);
+				q_i->set_truth_table(k, anf_0);
 			}
 			
 		}
 		else {
-			q_i.set_anf_coe_done();
+			q_i->set_anf_coe_done();
 		}
 
 		for (int k = 0; k < (1 << (m - i)); k++) {
 			F_i[k] = F[k];
 			//printf("%d:q_%d[k]=%d\n", k, i, q_i.value_dec(k));
-			if (q_i.value_dec(k)) {
+			if (q_i->value_dec(k)) {
 				F_i[k] -= F[k + (1 << (m - i))];
 			}
 			else {

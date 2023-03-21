@@ -17,9 +17,12 @@ public:
 	int* F_0;
 	int* V0, * V1;
 	int current_num;
-	std::vector<BooleanFun*> boolean_funs;
+	std::vector<BooleanFun*> boolean_funs;  // 用于gamma_r中参数传递
+	std::vector<BooleanFun*> q_i_funs;      // 用于记录q_i
 
 	Decoder(int r, int m, BooleanFun* f);
+
+	~Decoder();
 
 	// 存储f∈RM(r-1,m-i),用string存储
 	std::string convert_booleanFun_to_string(BooleanFun& f, int len, int* anf_index);  
