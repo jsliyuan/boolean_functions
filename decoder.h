@@ -14,6 +14,10 @@ public:
 	BooleanFun* target_f;   // 解码的布尔函数
 	int** anf_index;       //  anf_index[i]:对应RM(i,j)的anf项
 	int** anf_len;	 // 
+	int* F_0;
+	int* V0, * V1;
+	int current_num;
+	std::vector<BooleanFun*> boolean_funs;
 
 	Decoder(int r, int m, BooleanFun* f);
 
