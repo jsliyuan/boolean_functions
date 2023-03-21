@@ -54,9 +54,9 @@ void Decoder::compute_Li(double eps, int i, int* F, int m, int r, vector<string>
 	}
 
 	//BooleanFun q(m - i);
-	for (int k = 0; k < 1 << (m - i); k++) {
-		boolean_funs[i]->set_anf_coe(k, 0);
-	}
+	//for (int k = 0; k < 1 << (m - i); k++) {
+	//	boolean_funs[i]->set_anf_coe(k, 0);
+	//}
 	double eps_ = pow(2, i) * eps - pow(2, i) * double(S)/pow(2,m);
 	//printf("[compute_Li] S:%d, eps:%f\n", S, eps_);
 	gamma_r(eps_, 1, boolean_funs[i], D, m - i, r - 1, res);
@@ -79,7 +79,7 @@ string Decoder::int_to_string(int value) {
 	return s;
 }
 
-Decoder::Decoder(int r, int m, BooleanFun* f) :r(r), m(m), target_f(f) {
+Decoder::Decoder(int r, int m, BooleanFun* f, int limit_num) :r(r), m(m), target_f(f), limit_num(limit_num) {
 	cout << target_f->get_anf() << endl;
 
 	// compute anf_index,anf_len
@@ -151,7 +151,19 @@ Decoder::Decoder(int r, int m, BooleanFun* f) :r(r), m(m), target_f(f) {
 }
 
 Decoder::~Decoder() {
-	
+	for (int i = 0; i <= r; i++) {
+		delete[] anf_index[i];
+		delete[] anf_len[i];
+	}
+	delete[] anf_index;
+	delete[] anf_len;
+	delete[] F_0;
+	delete[] V0;
+	delete[] V1;
+	for (int i = 0; i < m; i++) {
+		boolean_funs[i]->~BooleanFun();
+		q_i_funs[i]->~BooleanFun();
+	}
 }
 
 void Decoder::gamma_r(double eps, int i, BooleanFun* q, int* F, int m, int r, vector<string>& res) {
@@ -176,6 +188,9 @@ void Decoder::gamma_r(double eps, int i, BooleanFun* q, int* F, int m, int r, ve
 	//}
 
 	if (this->current_num) {
+		return;
+	}
+	if (res.size() > limit_num) {
 		return;
 	}
 
@@ -209,9 +224,6 @@ void Decoder::gamma_r(double eps, int i, BooleanFun* q, int* F, int m, int r, ve
 				res.push_back(str);
 			}
 		//}
-
-		//printf("[gamma_r] current m:%d , r: %d ,i:%d, eps: %f end with res ......", m, r, i, eps);
-		//cout << str << endl;
 		return ;
 	}
 
@@ -224,7 +236,7 @@ void Decoder::gamma_r(double eps, int i, BooleanFun* q, int* F, int m, int r, ve
 	for (const string& bf : res_Li) {
 		// cout << "[gamma_r] bf:" << bf << endl;
 		// q^[i] ← q^[i−1] + x_iq_[i]
-		for (int k = 0; k < bf.size();k++) {
+		for (int k = 0; k < bf.size(); k++) {
 			int index = anf_index[r - 1][k] + (1 << (m - i));
 			if (bf[k] == '1') {
 				q_i->set_anf_coe(anf_index[r - 1][k], 1);
@@ -274,7 +286,6 @@ void Decoder::gamma_r(double eps, int i, BooleanFun* q, int* F, int m, int r, ve
 	}
 
 	delete[] F_i;
-	vector<string>().swap(res_Li);
 	//printf("[gamma_r] current m:%d , r: %d ,i:%d, eps: %f end......\n", m, r, i, eps);
 	return ;
 }
@@ -318,7 +329,22 @@ bool Decoder::main_decoder(int d) {
 
 // return the r-th-order nonlinearty of target_f
 int Decoder::r_th_order_nonlinearty() {
-	int left = 0;
+	// 考虑用已有的上下界结论来限制初始区间
+
+	// 下界:概率下界
+	int len = 1;     
+	int cur = 1;
+	for (int i = 1; i <= r; i++) {
+		cur *= (m - i + 1);
+		cur /= i;
+		len += cur;
+	}
+	int lower_bound = pow(2, m - 1) - pow(2, (double)(m - 1) / 2.0) * sqrt(len);
+	cout << "lower_bound:" << lower_bound << endl;
+
+	// 上界:p(r, n) <= p(r - 1, n - 1) + p(r, n - 1)
+
+	int left = lower_bound;
 	int right = 1 << (m - 1);
 	while (left < right) {
 		int mid = (left + right) / 2;

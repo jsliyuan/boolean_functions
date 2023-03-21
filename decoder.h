@@ -19,8 +19,9 @@ public:
 	int current_num;
 	std::vector<BooleanFun*> boolean_funs;  // 用于gamma_r中参数传递
 	std::vector<BooleanFun*> q_i_funs;      // 用于记录q_i
+	int limit_num;  // 用来限制每次gamma_r调用的返回函数数量
 
-	Decoder(int r, int m, BooleanFun* f);
+	Decoder(int r, int m, BooleanFun* f, int limit_num);
 
 	~Decoder();
 
