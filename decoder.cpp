@@ -389,8 +389,27 @@ int Decoder::r_th_order_nonlinearty() {
 
 	// 上界:p(r, n) <= p(r - 1, n - 1) + p(r, n - 1)
 	int upper_bound = 1 << (m - 1);
-	if (r == 3 && m == 8) {
-		upper_bound = 60;
+	if (r == 3) {
+		if (m == 7) {
+			upper_bound = 20;
+		}
+		else if (m == 8) {
+			upper_bound = 60;
+		}
+		else if (m == 9) {
+			upper_bound = 156;
+		}
+	}
+	else if (r == 4) {
+		if (m == 7) {
+			upper_bound = 8;
+		}
+		else if (m == 8) {
+			upper_bound = 28;
+		}
+		else if (m == 9) {
+			upper_bound = 88;
+		}
 	}
 
 	int left = max(lower_bound,0);
