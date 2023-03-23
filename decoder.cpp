@@ -1,6 +1,7 @@
 ﻿#include"decoder.h"
 #include <cassert>
 #include <math.h>
+#include<algorithm>
 
 using namespace std;
 
@@ -37,11 +38,23 @@ void Decoder::compute_Li(double eps, int i, int* F, int m, int r, vector<string>
 	int sumD = 0;
 	for (int j = 0; j < 1 << (m - i); j++) {
 		D[j] = (V0[j] - V1[j]) / 2;
+		//cout << D[j] << " ";
 		sumD += D[j];
 		S += (V0[j] + V1[j]) / 2;
 	}
+	/*cout << endl;
+	cout << "S:" << S << endl;*/
 
 	if (m == i || r == 1) {
+		//int len = anf_len[r - 1][m - i];
+		//string str('0', len);
+		//if (S - sumD >= pow(2, m) * eps) {
+		//	str[0] = '1';
+		//	res.push_back(str);
+		//}
+		//if (S + sumD >= pow(2, m) * eps) {
+		//	res.push_back(str);
+		//}
 		if (S - sumD >= pow(2, m) * eps) {
 			res.push_back("1");
 		}
@@ -58,7 +71,7 @@ void Decoder::compute_Li(double eps, int i, int* F, int m, int r, vector<string>
 	//	boolean_funs[i]->set_anf_coe(k, 0);
 	//}
 	double eps_ = pow(2, i) * eps - pow(2, i) * double(S)/pow(2,m);
-	//printf("[compute_Li] S:%d, eps:%f\n", S, eps_);
+	//printf("[compute_Li] eps:%f\n", eps_);
 	gamma_r(eps_, 1, boolean_funs[i], D, m - i, r - 1, res);
 	//printf("[compute_Li] eps:%f, r:%d, m:%d, i:%d end...\n", eps, r, m, i);
 
@@ -118,12 +131,16 @@ Decoder::Decoder(int r, int m, BooleanFun* f, int limit_num) :r(r), m(m), target
 	for (int i = 2; i <= r; i++) {
 		anf_index[i][0] = 0;
 		anf_len[i][0] = 1;
+		//cout << i <<"---------------------"<< endl;
 		for (int j = 1; j <= m; j++) {
 			anf_len[i][j] = anf_len[i - 1][j - 1] + anf_len[i][j - 1];
+			//cout << j<<":"<<anf_len[i][j] << endl;
 			int pre_index = anf_len[i][j - 1];
 			for (int k = 0; k < anf_len[i - 1][j - 1]; k++) {
 				anf_index[i][pre_index + k] = (1 << (j - 1)) + anf_index[i - 1][k];
+				//cout << anf_index[i][pre_index + k]<<" ";
 			}
+			//cout << endl;
 		}
 	}
 
@@ -131,7 +148,9 @@ Decoder::Decoder(int r, int m, BooleanFun* f, int limit_num) :r(r), m(m), target
 	F_0 = new int[1 << m];
 	for (int i = 0; i < 1 << m; i++) {
 		F_0[i] = 1 - 2 * target_f->value_dec(i);
+		//cout << F_0[i] << " ";
 	}
+	//cout << endl;
 
 	// init V0,V1
 	V0 = new int[1 << (m - 1)];
@@ -166,6 +185,10 @@ Decoder::~Decoder() {
 	}
 }
 
+//static bool cmp(const pair<int, string>& a, const pair<int, string>& b) {
+//	return a.first > b.first;//根据fisrt的值降序排序
+//}
+
 void Decoder::gamma_r(double eps, int i, BooleanFun* q, int* F, int m, int r, vector<string>& res) {
 	//printf("[gamma_r] current m:%d , r: %d ,i:%d, eps: %f start....\n", m, r, i, eps);
 	//if (eps > 1) {
@@ -190,9 +213,9 @@ void Decoder::gamma_r(double eps, int i, BooleanFun* q, int* F, int m, int r, ve
 	if (this->current_num) {
 		return;
 	}
-	if (res.size() > limit_num) {
-		return;
-	}
+	//if (res.size() > limit_num) {
+	//	cout << r << " " << m << endl;
+	//}
 
 	if (i == m + 1) {
 		//if (F[0] < 0) {
@@ -202,6 +225,9 @@ void Decoder::gamma_r(double eps, int i, BooleanFun* q, int* F, int m, int r, ve
 		//if (abs(F[0]) >= pow(2, m) * eps) {
 			if (this->r == r && this->m == m) {
 				this->current_num++;
+				if (F[0] < 0) {
+					q->negate();
+				}
 				return;
 			}
 			// 转化成string
@@ -217,7 +243,7 @@ void Decoder::gamma_r(double eps, int i, BooleanFun* q, int* F, int m, int r, ve
 				}
 			}
 			if (F[0] >= pow(2, m) * eps) {
-				res.emplace_back(str);
+				res.push_back(str);
 			}
 			if (-F[0] >= pow(2, m) * eps) {
 				str[0] = '1';
@@ -232,7 +258,12 @@ void Decoder::gamma_r(double eps, int i, BooleanFun* q, int* F, int m, int r, ve
 	vector<string> res_Li;  // 用来储存q_i∈RM(r-1,m-i)
 
 	compute_Li(eps, i, F, m, r, res_Li);
+	//sort(res_Li.begin(), res_Li.end(), cmp);
 	//printf("[gamma_r] current m:%d , r: %d ,i:%d, eps: %f ,num:%d\n", m, r, i, eps,res_Li.size());
+	//for (const string& bf : res_Li) {
+	//	cout << bf << " " ;
+	//}
+	//cout << endl;
 	for (const string& bf : res_Li) {
 		// cout << "[gamma_r] bf:" << bf << endl;
 		// q^[i] ← q^[i−1] + x_iq_[i]
@@ -254,7 +285,6 @@ void Decoder::gamma_r(double eps, int i, BooleanFun* q, int* F, int m, int r, ve
 			for (int k = 0; k < 1 << (m - i); k++) {
 				q_i->set_truth_table(k, anf_0);
 			}
-			
 		}
 		else {
 			q_i->set_anf_coe_done();
@@ -285,13 +315,21 @@ void Decoder::gamma_r(double eps, int i, BooleanFun* q, int* F, int m, int r, ve
 		q->set_anf_coe(anf_index[r - 1][k] + (1 << (m - i)), 0);
 	}
 
+	// restore q_i
+	for (int k = 0; k < 1 << (m - i); k++) {
+		q_i->set_anf_coe(k, 0);
+	}
+	for (int k = 0; k < 1 << (m - i); k++) {
+		q_i->set_truth_table(k, 0);
+	}
+
 	delete[] F_i;
 	//printf("[gamma_r] current m:%d , r: %d ,i:%d, eps: %f end......\n", m, r, i, eps);
 	return ;
 }
 
 // 判断ret是否与target_f距离满足<=d
-bool Decoder::if_less_than_d(BooleanFun* ret,int d) {
+int Decoder::if_less_than_d(BooleanFun* ret,int d) {
 	ret->set_anf_coe_done();
 	int sum = 0;
 	for (int i = 0; i < 1 << m; i++) {
@@ -300,11 +338,12 @@ bool Decoder::if_less_than_d(BooleanFun* ret,int d) {
 		}
 	}
 	cout << "ret's weight:" << sum << endl;
-	return sum <= d;
+	assert(sum <= d);
+	return sum;
 }
 
 // 半径为d范围有函数则返回true
-bool Decoder::main_decoder(int d) {
+int Decoder::main_decoder(int d) {
 	double eps = 1 - (double)d / (double)(1 << (m - 1));
 	printf("current eps : %f\n", eps);
 	
@@ -312,18 +351,24 @@ bool Decoder::main_decoder(int d) {
 	for (int i = 0; i < 1 << m; i++) {
 		boolean_funs[0]->set_anf_coe(i, 0);
 	}
+	// init q_i_funs
+	for (int k = 0; k < m; k++) {
+		for (int p = 0; p < 1 << (k); p++) {
+			q_i_funs[k]->set_anf_coe(p, 0);
+			q_i_funs[k]->set_truth_table(p, 0);
+		}
+	}
 
 	this->current_num = 0;
 	vector<string> res;
 	gamma_r(eps, 1, boolean_funs[0], F_0, m, r, res);
-	vector<string>().swap(res);
+	
 	if (this->current_num) {
 		// 二次校验一下
-		//assert(if_less_than_d(ret, d));
-		return true;
+		return if_less_than_d(boolean_funs[0], d);
 	}
 	else {
-		return false;
+		return -1;
 	}
 }
 
@@ -340,17 +385,22 @@ int Decoder::r_th_order_nonlinearty() {
 		len += cur;
 	}
 	int lower_bound = pow(2, m - 1) - pow(2, (double)(m - 1) / 2.0) * sqrt(len);
-	cout << "lower_bound:" << lower_bound << endl;
+	//cout << "lower_bound:" << lower_bound << endl;
 
 	// 上界:p(r, n) <= p(r - 1, n - 1) + p(r, n - 1)
+	int upper_bound = 1 << (m - 1);
+	if (r == 3 && m == 8) {
+		upper_bound = 60;
+	}
 
-	int left = lower_bound;
-	int right = 1 << (m - 1);
+	int left = max(lower_bound,0);
+	int right = min(1 << (m - 1), upper_bound);
 	while (left < right) {
 		int mid = (left + right) / 2;
 		printf("current interval:[%d, %d]; distance :%d\n", left, right, mid);
-		if (main_decoder(mid)) {
-			right = mid;
+		int ret = main_decoder(mid);
+		if (ret != -1) {
+			right = ret;
 		}
 		else {
 			left = mid + 1;

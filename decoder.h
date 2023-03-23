@@ -37,9 +37,9 @@ public:
 	void gamma_r(double eps, int i, BooleanFun* q, int* F, int m, int r, std::vector<std::string>& res);
 
 	// ÅĞ¶ÏretÊÇ·ñÓëtarget_f¾àÀëÂú×ã<=d
-	bool if_less_than_d(BooleanFun* ret,int d);
+	int if_less_than_d(BooleanFun* ret,int d);
 
-	bool main_decoder(int d);
+	int main_decoder(int d);
 
 	int r_th_order_nonlinearty();
 };
